@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - ERP Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar-collapsed {
+            width: 70px !important;
+        }
+        .sidebar-collapsed .menu-text {
+            display: none !important;
+        }
+        .sidebar-collapsed .menu-item {
+            justify-content: center !important;
+        }
+        .sidebar-collapsed .submenu {
+            display: none !important;
+        }
+        .sidebar-collapsed ~ .main-content {
+            margin-left: 70px !important;
+        }
+        .supply-chain-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .heatmap-cell {
+            transition: all 0.3s ease;
+        }
+        .heatmap-cell:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Top Navigation Bar -->
+    <div class="fixed top-0 left-0 right-0 bg-white shadow-sm z-10">
+        <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center">
+                <button id="sidebar-toggle" class="text-gray-600 mr-4">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center">
+                    <img src="https://via.placeholder.com/40" alt="Company Logo" class="h-8 w-8 mr-2">
+                    <span class="text-lg font-semibold text-gray-800">Sharma Ji Ka Aata</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-600 hover:text-orange-500">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button class="text-gray-600 hover:text-orange-500">
+                        <i class="fas fa-question-circle text-xl"></i>
+                    </button>
+                </div>
+                <div class="relative group">
+                    <button class="flex items-center space-x-2">
+                        <img src="https://via.placeholder.com/32" alt="User" class="h-8 w-8 rounded-full">
+                        <span class="text-gray-700">Admin User</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden group-hover:block">
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-500">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-500">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 hover:text-orange-500">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed top-0 left-0 bottom-0 w-64 bg-white shadow-md z-10 pt-16 transition-all duration-300">
+        <div class="overflow-y-auto h-full pb-20">
+            <div class="px-4 py-4 border-b">
+                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">ERP MODULES</h3>
+            </div>
+            <nav class="mt-2">
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-lock mr-3"></i>
+                        <span class="menu-text">Access & Admin</span>
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-boxes mr-3"></i>
+                        <a href="./product_catalog_management/01_product_family_master.html"  class="menu-text">Product & Catalog Management</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-shopping-cart mr-3"></i>
+                        <a href="./procurement/00_dashboard_procurement_reports.html"  class="menu-text">Procurement Management</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-warehouse mr-3"></i>
+                        <a href="./Raw_material_management/00_Inventory_dashboard.html"  class="menu-text">Raw Material Inventory (Store)</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-industry mr-3"></i>
+                        <a href="./Planning_and_production/00_production_report.html"  class="menu-text">Production & Planning</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-check-circle mr-3"></i>
+                        <a href="#"  class="menu-text">Quality Control (RM + Production)</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-pallet mr-3"></i>
+                        <a href="./Finished_goods/00_fg_report.html"  class="menu-text">Finished Goods Inventory</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-truck mr-3"></i>
+                        <a href="#"  class="menu-text">Dispatch & Logistics</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-file-invoice-dollar mr-3"></i>
+                        <a href="./Sales_and_Chanel/01_channel_po_entry.html"  class="menu-text">Sales & Channel (POs & Order Tracking)</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-money-bill-wave mr-3"></i>
+                        <a href="#"  class="menu-text">Accounts & Finance</a >
+                    </div>
+                </div>
+                
+                <div class="menu-group">
+                    <div class="menu-item px-4 py-3 flex items-center text-gray-700 hover:bg-orange-50 hover:text-orange-500 cursor-pointer">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <a href="./Index.html"  class="highlight-orange menu-text">Reports & Dashboards</a >
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content pt-16 ml-64 transition-all duration-300">
+        <div class="p-6">
+            <!-- Supply Chain Cycle Map -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Supply Chain Cycle</h2>
+                <div class="overflow-x-auto">
+                    <div class="flex justify-between items-center space-x-2 min-w-max">
+                        <!-- Vendor Selection -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-users text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Vendor Selection</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Purchase Order -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-file-invoice text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Purchase Order</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- GRN Inward -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-amber-100 rounded-full mb-2">
+                                <i class="fas fa-dolly text-amber-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">GRN Inward</span>
+                            <span class="text-xs text-amber-500 mt-1">⚠️ Pending (2)</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Store Inventory -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-warehouse text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Store Inventory</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Production Planning -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-project-diagram text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Production Planning</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Batch Creation -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-box-open text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Batch Creation</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Quality Check -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-red-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-red-100 rounded-full mb-2">
+                                <i class="fas fa-check-double text-red-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Quality Check</span>
+                            <span class="text-xs text-red-500 mt-1">❌ Delayed (3)</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- FG Stock -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-pallet text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">FG Stock</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Dispatch -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-truck text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Dispatch</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Customer Order -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-green-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-green-100 rounded-full mb-2">
+                                <i class="fas fa-file-alt text-green-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Customer Order</span>
+                            <span class="text-xs text-green-500 mt-1">✅ Normal</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-center h-0 w-16 border-t-2 border-dashed border-gray-300"></div>
+                        
+                        <!-- Payment Cycle -->
+                        <div class="supply-chain-node flex flex-col items-center p-3 bg-white border border-amber-200 rounded-lg cursor-pointer hover:border-orange-300 w-32">
+                            <div class="flex items-center justify-center h-10 w-10 bg-amber-100 rounded-full mb-2">
+                                <i class="fas fa-rupee-sign text-amber-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Payment Cycle</span>
+                            <span class="text-xs text-amber-500 mt-1">⚠️ Pending (₹1.2L)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Panel -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <!-- Open Purchase Orders -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Open Purchase Orders</p>
+                            <p class="text-2xl font-bold mt-1">24</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">+2 today</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-shopping-cart text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- GRNs Due Today -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">GRNs Due Today</p>
+                            <p class="text-2xl font-bold mt-1">5</p>
+                        </div>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">2 delayed</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-dolly text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Pending QC Batches -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Pending QC Batches</p>
+                            <p class="text-2xl font-bold mt-1">8</p>
+                        </div>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">3 critical</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-check-double text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- FG Ready for Dispatch -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">FG Ready for Dispatch</p>
+                            <p class="text-2xl font-bold mt-1">42</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">12 new</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-pallet text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Sales Orders In Progress -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Sales Orders In Progress</p>
+                            <p class="text-2xl font-bold mt-1">18</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">3 urgent</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-file-invoice-dollar text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Inventory Adjustment Flags -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Inventory Adjustment Flags</p>
+                            <p class="text-2xl font-bold mt-1">7</p>
+                        </div>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">2 critical</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-exclamation-triangle text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Outstanding Payments -->
+                <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Outstanding Payments</p>
+                            <p class="text-2xl font-bold mt-1">₹2.4L</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">₹1.2L overdue</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                            View <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </a>
+                        <i class="fas fa-rupee-sign text-gray-300 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module Quick Access Grid -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Access</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Procurement -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-shopping-cart text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Procurement</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-list-ul text-gray-500 mr-2 text-xs"></i> PO List
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-plus-circle text-gray-500 mr-2 text-xs"></i> Create PO
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Raw Material Store -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-warehouse text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Raw Material Store</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-boxes text-gray-500 mr-2 text-xs"></i> Stock View
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-arrow-down text-gray-500 mr-2 text-xs"></i> Inward Entry
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Production -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-industry text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Production</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-calendar-alt text-gray-500 mr-2 text-xs"></i> Plan Batch
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-tachometer-alt text-gray-500 mr-2 text-xs"></i> Live Batches
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- QC -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-check-circle text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Quality Control</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-flask text-gray-500 mr-2 text-xs"></i> RM QC
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-check-double text-gray-500 mr-2 text-xs"></i> Production QC
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- FG Inventory -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-pallet text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">FG Inventory</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-clock text-gray-500 mr-2 text-xs"></i> Aging Report
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-exchange-alt text-gray-500 mr-2 text-xs"></i> Inter-Zone Transfer
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Sales -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-file-invoice-dollar text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Sales</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-store text-gray-500 mr-2 text-xs"></i> Channel POs
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-link text-gray-500 mr-2 text-xs"></i> PO-Batch Link
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Logistics -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-truck text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Logistics</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-clipboard-list text-gray-500 mr-2 text-xs"></i> Dispatch Sheet
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Finance -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-money-bill-wave text-orange-500"></i>
+                            </div>
+                            <h3 class="font-medium text-gray-800">Finance</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <a href="#" class="block px-3 py-2 text-sm bg-white rounded border border-gray-200 hover:bg-orange-50 hover:border-orange-200 flex items-center">
+                                <i class="fas fa-tachometer-alt text-gray-500 mr-2 text-xs"></i> Accounts Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts & Announcements -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 lg:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-gray-800">Alerts & Notifications</h2>
+                        <a href="#" class="text-orange-500 text-sm font-medium">View All</a>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border border-red-100">
+                            <div class="bg-red-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">3 Batches Pending QC</h4>
+                                <p class="text-sm text-gray-600 mt-1">Wheat Flour batches #B-1024, #B-1025, #B-1026 are delayed in QC process.</p>
+                                <p class="text-xs text-gray-500 mt-2">2 hours ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-3 bg-amber-50 rounded-lg border border-amber-100">
+                            <div class="bg-amber-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-clock text-amber-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">2 Delayed GRNs</h4>
+                                <p class="text-sm text-gray-600 mt-1">GRN #GRN-5678 (Wheat) and #GRN-5679 (Packaging) are overdue.</p>
+                                <p class="text-xs text-gray-500 mt-2">Today, 10:45 AM</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg border border-blue-100">
+                            <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">FG Inventory Expiring Soon</h4>
+                                <p class="text-sm text-gray-600 mt-1">5 batches of Atta (Premium) will expire in next 7 days.</p>
+                                <p class="text-xs text-gray-500 mt-2">Yesterday, 4:30 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-gray-800">Announcements</h2>
+                        <a href="#" class="text-orange-500 text-sm font-medium">View All</a>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-100 pb-4">
+                            <h4 class="font-medium text-gray-800">Monthly Maintenance</h4>
+                            <p class="text-sm text-gray-600 mt-1">ERP system will be down for maintenance on 25th June from 10 PM to 2 AM.</p>
+                            <p class="text-xs text-gray-500 mt-2">Posted: 2 days ago</p>
+                        </div>
+                        
+                        <div class="border-b border-gray-100 pb-4">
+                            <h4 class="font-medium text-gray-800">New QC Process</h4>
+                            <p class="text-sm text-gray-600 mt-1">Updated quality check procedures for wheat procurement effective immediately.</p>
+                            <p class="text-xs text-gray-500 mt-2">Posted: 1 week ago</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-medium text-gray-800">Vendor Portal Upgrade</h4>
+                            <p class="text-sm text-gray-600 mt-1">Vendor self-service portal will be upgraded next week with new features.</p>
+                            <p class="text-xs text-gray-500 mt-2">Posted: 2 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Charts & Heatmaps -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Production Analytics</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-medium text-gray-700">POs Raised vs Received This Week</h3>
+                            <select class="text-sm border border-gray-300 rounded px-2 py-1 bg-white">
+                                <option>This Week</option>
+                                <option>Last Week</option>
+                                <option>This Month</option>
+                            </select>
+                        </div>
+                        <div class="h-64 rounded-lg">
+                            <canvas id="poChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-medium text-gray-700">Vendor Category Spend</h3>
+                            <select class="text-sm border border-gray-300 rounded px-2 py-1 bg-white">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                                <option>This Quarter</option>
+                            </select>
+                        </div>
+                        <div class="h-64 rounded-lg">
+                            <canvas id="vendorChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-medium text-gray-700">FG Production vs Sales Demand Trend</h3>
+                            <select class="text-sm border border-gray-300 rounded px-2 py-1 bg-white">
+                                <option>Last 30 Days</option>
+                                <option>Last 60 Days</option>
+                                <option>Last 90 Days</option>
+                            </select>
+                        </div>
+                        <div class="h-64 rounded-lg">
+                            <canvas id="productionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-medium text-gray-700">QC Rejections by Zone</h3>
+                            <select class="text-sm border border-gray-300 rounded px-2 py-1 bg-white">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                                <option>This Quarter</option>
+                            </select>
+                        </div>
+                        <div class="h-64 rounded-lg">
+                            <canvas id="qcChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // PO Chart (Bar)
+            const poCtx = document.getElementById('poChart').getContext('2d');
+            new Chart(poCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                    datasets: [
+                        {
+                            label: 'POs Raised',
+                            data: [12, 19, 8, 15, 10, 5],
+                            backgroundColor: '#F7941D',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'POs Received',
+                            data: [8, 15, 12, 10, 7, 3],
+                            backgroundColor: '#4CAF50',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Vendor Spend Chart (Pie)
+            const vendorCtx = document.getElementById('vendorChart').getContext('2d');
+            new Chart(vendorCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Wheat', 'Packaging', 'Logistics', 'Misc'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            '#F7941D',
+                            '#4CAF50',
+                            '#2196F3',
+                            '#9C27B0'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Production vs Sales Chart (Line)
+            const productionCtx = document.getElementById('productionChart').getContext('2d');
+            new Chart(productionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [
+                        {
+                            label: 'Production (MT)',
+                            data: [120, 150, 110, 130],
+                            borderColor: '#F7941D',
+                            backgroundColor: 'rgba(247, 148, 29, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Sales Demand (MT)',
+                            data: [100, 140, 120, 150],
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            // QC Rejections Chart (Bar - horizontal)
+            const qcCtx = document.getElementById('qcChart').getContext('2d');
+            new Chart(qcCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Zone A', 'Zone B', 'Zone C', 'Zone D'],
+                    datasets: [{
+                        label: 'QC Rejections',
+                        data: [12, 19, 8, 15],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        // Sidebar toggle functionality
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('sidebar-collapsed');
+            document.getElementById('main-content').classList.toggle('ml-64');
+            document.getElementById('main-content').classList.toggle('ml-16');
+        });
+
+        // Auto-refresh simulation
+        setInterval(function() {
+            console.log("Auto-refreshing data...");
+            // In a real application, this would fetch updated data from the server
+        }, 300000); // 5 minutes
+
+        // Simulate clicking on supply chain nodes
+        document.querySelectorAll('.supply-chain-node').forEach(node => {
+            node.addEventListener('click', function() {
+                const moduleName = this.querySelector('span:first-child').textContent;
+                alert(`Navigating to ${moduleName} module...`);
+                // In a real application, this would redirect to the appropriate module
+            });
+        });
+
+        // Simulate clicking on metric cards
+        document.querySelectorAll('.bg-white.rounded-lg.shadow-sm.p-4').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('a')) {
+                    const cardTitle = this.querySelector('p:first-child').textContent;
+                    alert(`Opening detailed view for ${cardTitle}...`);
+                    // In a real application, this would redirect to the detailed view
+                }
+            });
+        });
+    </script>
+</body>
+</html>

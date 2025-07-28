@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel & Regional Pricing | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F7941D',
+                        secondary: '#F8F9FA',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-item.active {
+            background-color: rgba(247, 148, 29, 0.1);
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.has-child.active > div:first-child span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .price-active {
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        .price-expired {
+            background-color: rgba(220, 53, 69, 0.05);
+        }
+        .price-upcoming {
+            background-color: rgba(23, 162, 184, 0.05);
+        }
+        .badge-active {
+            background-color: #28a745;
+        }
+        .badge-expired {
+            background-color: #dc3545;
+        }
+        .badge-upcoming {
+            background-color: #17a2b8;
+        }
+        .table-row:hover {
+            background-color: #f8f9fa;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        [contenteditable="true"]:hover {
+            background-color: #fff;
+            box-shadow: 0 0 0 1px #F7941D;
+        }
+        [contenteditable="true"]:focus {
+            outline: none;
+            background-color: #fff;
+            box-shadow: 0 0 0 2px #F7941D;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+            <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./01_product_family_master.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Product Family Master</span>
+                            </a>
+                            
+                            <a href="./02_sku_crud.html" class="block px-3 py-2 text-sm font-medium rounded-md bg-gray-50">
+                                  <span>SKU Creation & Edit</span>
+                            </a>
+                            
+                            <a href="./03_label_media_upload.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Label & Media Upload</span>
+                            </a>
+                            
+                            <a href="./04_chanel_price_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Channel & Regional Pricing</span>
+                            </a>
+                            
+                            <a href="./05_sku_catalog_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU List & Catalog View</span>
+                            </a>
+                            
+                            <a href="./06_batch_setting.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Settings (FG SKUs)</span>
+                            </a>
+                            
+                            <a href="./07_notes_audit_logs_sku.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU Audit Log & Notes</span>
+                              
+
+                            </a>
+                        </div>
+                        
+                         <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Procurement Management
+                        </a>
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        >
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Header -->
+            <div class="bg-white border-b border-gray-200 p-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-gray-800">Channel & Regional Pricing</h2>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-600">Welcome, Pricing Manager</span>
+                        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and Actions -->
+            <div class="bg-white p-4 border-b border-gray-200">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex-1 min-w-[200px]">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search SKU</label>
+                        <div class="relative">
+                            <input type="text" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" placeholder="SKU code or name">
+                            <div class="absolute left-3 top-2.5 text-gray-400">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-48">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Channel</label>
+                        <select class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">All Channels</option>
+                            <option value="zepto">Zepto</option>
+                            <option value="bb">BigBasket</option>
+                            <option value="d2c">D2C</option>
+                            <option value="horeca">HORECA</option>
+                        </select>
+                    </div>
+                    <div class="w-48">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Region</label>
+                        <select class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">All Regions</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="pune">Pune</option>
+                            <option value="bangalore">Bangalore</option>
+                        </select>
+                    </div>
+                    <div class="self-end">
+                        <button id="addPriceBtn" class="bg-primary hover:bg-orange-600 text-white py-2 px-4 rounded-md flex items-center space-x-2">
+                            <i class="fas fa-plus"></i>
+                            <span>Add New Price Version</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Table -->
+            <div class="flex-1 overflow-auto">
+                <div class="min-w-full overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-primary">
+                                    <div class="flex items-center">
+                                        SKU Code
+                                        <i class="fas fa-sort ml-1 text-gray-400 hover:text-primary"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-primary">
+                                    <div class="flex items-center">
+                                        Channel
+                                        <i class="fas fa-sort ml-1 text-gray-400 hover:text-primary"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Region</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-primary">
+                                    <div class="flex items-center">
+                                        Base Price
+                                        <i class="fas fa-sort ml-1 text-gray-400 hover:text-primary"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Price</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-primary">
+                                    <div class="flex items-center">
+                                        Effective From
+                                        <i class="fas fa-sort ml-1 text-gray-400 hover:text-primary"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Effective To</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Active Price -->
+                            <tr class="table-row price-active">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat 1kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹60</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹5</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹55</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Aug-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">31-Aug-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full badge-active text-white">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-primary hover:text-orange-600 mr-3 edit-price-btn">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 view-history-btn">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Ongoing Price -->
+                            <tr class="table-row price-active">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat 1kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BigBasket</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mumbai</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹60</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹0</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹60</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Jul-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ongoing</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full badge-active text-white">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-primary hover:text-orange-600 mr-3 edit-price-btn">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 view-history-btn">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Upcoming Price -->
+                            <tr class="table-row price-upcoming">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG003</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multigrain 5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">HORECA</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pune</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹280</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" contenteditable="true">₹30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹250</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15-Jul-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15-Sep-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full badge-upcoming text-white">Upcoming</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-primary hover:text-orange-600 mr-3 edit-price-btn">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 view-history-btn">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Expired Price -->
+                            <tr class="table-row price-expired">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Atta 2kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">D2C</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Bangalore</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹120</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹10</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹110</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Jan-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30-Jun-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full badge-expired text-white">Expired</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-gray-400 mr-3" disabled>
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 view-history-btn">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between">
+                    <div class="text-sm text-gray-700 mb-2 sm:mb-0">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">12</span> results
+                    </div>
+                    <div class="flex space-x-1">
+                        <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Previous</span>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="bg-primary text-white px-4 py-2 border border-primary text-sm font-medium">
+                            1
+                        </button>
+                        <button class="bg-white text-gray-700 px-4 py-2 border border-gray-300 text-sm font-medium hover:bg-gray-50">
+                            2
+                        </button>
+                        <button class="bg-white text-gray-700 px-4 py-2 border border-gray-300 text-sm font-medium hover:bg-gray-50">
+                            3
+                        </button>
+                        <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Next</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Price Modal -->
+    <div id="priceModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modalTitle">Add New Price Version</h3>
+                            <div class="mt-2 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">SKU</label>
+                                    <select class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select SKU</option>
+                                        <option value="FG001">FG001 - Whole Wheat 1kg</option>
+                                        <option value="FG002">FG002 - Atta 2kg</option>
+                                        <option value="FG003">FG003 - Multigrain 5kg</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Channel</label>
+                                        <select class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                            <option value="">Select Channel</option>
+                                            <option value="zepto">Zepto</option>
+                                            <option value="bb">BigBasket</option>
+                                            <option value="d2c">D2C</option>
+                                            <option value="horeca">HORECA</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Region</label>
+                                        <select class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                            <option value="">Select Region</option>
+                                            <option value="delhi">Delhi</option>
+                                            <option value="mumbai">Mumbai</option>
+                                            <option value="pune">Pune</option>
+                                            <option value="bangalore">Bangalore</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Base Price (₹)</label>
+                                        <input type="number" class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" placeholder="0.00">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Discount (₹)</label>
+                                        <input type="number" class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Effective From</label>
+                                        <input type="date" class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Effective To</label>
+                                        <input type="date" class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Comment</label>
+                                    <textarea class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" rows="3" placeholder="Reason for this price change..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm">
+                        Save Price
+                    </button>
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm close-modal">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price History Modal -->
+    <div id="historyModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Price History - FG001 (Whole Wheat 1kg)</h3>
+                            <div class="mt-2">
+                                <div class="overflow-y-auto max-h-96">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Version</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Channel</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Region</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Price</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Changed By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">v5</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹55</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Aug-2025 to 31-Aug-2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rahul Sharma (01-Jul-2025)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">v4</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹58</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Jun-2025 to 31-Jul-2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Priya Gupta (15-May-2025)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">v3</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹60</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Apr-2025 to 31-May-2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rahul Sharma (20-Mar-2025)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">v2</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹62</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Feb-2025 to 31-Mar-2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Amit Patel (15-Jan-2025)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">v1</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₹65</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01-Jan-2025 to 31-Jan-2025</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">System (01-Jan-2025)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm close-modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal handling
+        const addPriceBtn = document.getElementById('addPriceBtn');
+        const priceModal = document.getElementById('priceModal');
+        const historyModal = document.getElementById('historyModal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        const editPriceBtns = document.querySelectorAll('.edit-price-btn');
+        const viewHistoryBtns = document.querySelectorAll('.view-history-btn');
+
+        addPriceBtn.addEventListener('click', () => {
+            priceModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        });
+
+        editPriceBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('modalTitle').textContent = 'Edit Price Version';
+                priceModal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            });
+        });
+
+        viewHistoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                historyModal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            });
+        });
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                priceModal.classList.add('hidden');
+                historyModal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === priceModal) {
+                priceModal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+            if (event.target === historyModal) {
+                historyModal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+
+        // Calculate net price when base price or discount changes
+        document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+            el.addEventListener('input', function() {
+                const row = this.closest('tr');
+                const basePriceCell = row.querySelector('td:nth-child(5)');
+                const discountCell = row.querySelector('td:nth-child(6)');
+                const netPriceCell = row.querySelector('td:nth-child(7)');
+                
+                const basePrice = parseFloat(basePriceCell.textContent.replace('₹', '')) || 0;
+                const discount = parseFloat(discountCell.textContent.replace('₹', '')) || 0;
+                
+                const netPrice = basePrice - discount;
+                netPriceCell.textContent = `₹${netPrice}`;
+            });
+        });
+    </script>
+</body>
+</html>

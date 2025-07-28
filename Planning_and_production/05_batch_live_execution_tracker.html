@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Batch Execution | Sharma Ji Ka Aata</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF3E2;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .progress-bar {
+            height: 24px;
+            border-radius: 12px;
+            background-color: #E5E7EB;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 12px;
+            background-color: #F7941D;
+            transition: width 0.5s ease;
+        }
+        .tab-active {
+            border-bottom: 3px solid #F7941D;
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .input-highlight {
+            border: 1px solid #F7941D;
+            box-shadow: 0 0 0 2px rgba(247, 148, 29, 0.2);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: absolute;
+                z-index: 10;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+     <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_production_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Reports</span>
+                            </a>
+                             <a href="./01_production_order_create.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Planning</span>
+                            </a>
+                             <a href="./02_material_checker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Material Availability Checker</span>
+                            </a>
+                             <a href="./03_production_order_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Order List</span>
+                            </a>
+                             <a href="./04_batch_create_and_assignment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Creation & Assignment</span>
+                            </a>
+                             <a href="./05_batch_live_execution_tracker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Live Batch Execution</span>
+                            </a>
+                             <a href="./06_downtime_setup_log.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Downtime & Setup Log</span>
+                            </a>
+                             <a href="./07_quality_check_trigger_and_batch_status.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>QC Trigger & Status Page</span>
+                            </a>
+                             <a href="./08_batch_closure.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Closure Page</span>
+                            </a>
+                        </div>
+                
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 flex flex-col overflow-hidden md:ml-64">
+            <!-- Mobile Header -->
+            <div class="md:hidden bg-white p-4 border-b border-gray-200 flex items-center">
+                <button id="mobileSidebarToggle" class="text-gray-500 mr-4">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="text-xl font-bold">Live Batch Execution</h1>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-6">
+                <div class="max-w-6xl mx-auto">
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Live Batch Execution</h1>
+                            <p class="text-gray-600">Track and record batch production in real-time</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 flex space-x-2">
+                            <div class="relative flex-1 md:w-64">
+                                <input type="text" id="batchSearch" placeholder="Search or scan Batch ID" 
+                                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                <div class="absolute left-3 top-2.5 text-gray-400">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="absolute right-3 top-2.5 text-gray-400">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                        <div class="flex flex-wrap gap-3">
+                            <button id="startBatchBtn" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-play mr-2"></i> Start Batch
+                            </button>
+                            <button id="endBatchBtn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center" disabled>
+                                <i class="fas fa-stop mr-2"></i> End Batch
+                            </button>
+                            <button id="pauseBatchBtn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center" disabled>
+                                <i class="fas fa-pause mr-2"></i> Pause for Downtime
+                            </button>
+                            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-camera mr-2"></i> Add Photo
+                            </button>
+                            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-users mr-2"></i> View Team
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <div class="flex space-x-8">
+                            <button id="executionTab" class="tab-active pb-3 px-1 text-sm font-medium">Execution Details</button>
+                            <button id="machineTab" class="pb-3 px-1 text-sm font-medium text-gray-500 hover:text-gray-700">Machine Performance</button>
+                        </div>
+                    </div>
+
+                    <!-- Execution Panel -->
+                    <div id="executionPanel" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Left Column -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Batch ID</label>
+                                    <input type="text" id="batchId" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" readonly>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Assigned SKU</label>
+                                    <input type="text" id="assignedSku" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50" readonly>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Planned Quantity (kg)</label>
+                                    <input type="text" id="plannedQuantity" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50" readonly>
+                                    <div class="progress-bar mt-2">
+                                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                        <span>0 kg</span>
+                                        <span id="plannedQtyDisplay">0 kg</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                                        <input type="text" id="startTime" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50" readonly>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                                        <input type="text" id="endTime" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Actual Output Quantity (kg)</label>
+                                    <input type="number" id="actualOutput" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" min="0" step="0.1">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Material Loss Quantity (kg)</label>
+                                    <input type="number" id="materialLoss" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" min="0" step="0.1">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Loss Reason (if any)</label>
+                                    <select id="lossReason" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                                        <option value="">Select reason</option>
+                                        <option value="scrap">Scrap</option>
+                                        <option value="spill">Spill</option>
+                                        <option value="machine">Machine Issue</option>
+                                        <option value="quality">Quality Rejection</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Remarks / Notes</label>
+                                    <textarea id="remarks" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Machine Performance Panel (Hidden by default) -->
+                    <div id="machinePanel" class="bg-white rounded-lg shadow-sm p-6 mb-6 hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Machine Speed Setting</label>
+                                    <div class="flex items-center">
+                                        <input type="range" id="machineSpeed" min="0" max="100" value="75" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        <span id="speedValue" class="ml-3 text-gray-700">75%</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Temperature (°C)</label>
+                                    <input type="number" id="temperature" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" value="28">
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pressure (psi)</label>
+                                    <input type="number" id="pressure" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" value="15">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Operator Feedback</label>
+                                    <textarea id="operatorFeedback" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder="Any observations or issues..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">Warning Signals</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <button class="px-3 py-1.5 bg-red-100 text-red-700 rounded-full text-sm flex items-center">
+                                    <i class="fas fa-exclamation-triangle mr-1.5"></i> Overheating
+                                </button>
+                                <button class="px-3 py-1.5 bg-yellow-100 text-yellow-700 rounded-full text-sm flex items-center">
+                                    <i class="fas fa-tachometer-alt mr-1.5"></i> Speed Fluctuation
+                                </button>
+                                <button class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm flex items-center">
+                                    <i class="fas fa-bolt mr-1.5"></i> Power Surge
+                                </button>
+                                <button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm flex items-center">
+                                    <i class="fas fa-plus mr-1.5"></i> Add Custom
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Tools -->
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <div class="flex flex-wrap gap-3 justify-between">
+                            <button id="pauseBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center" disabled>
+                                <i class="fas fa-pause mr-2"></i> Pause Batch
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-camera mr-2"></i> Add Photo / Log Issue
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-users mr-2"></i> View Assigned Team
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center">
+                                <i class="fas fa-clock mr-2"></i> Link to Downtime Log
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Downtime Reason Modal -->
+    <div id="downtimeModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-orange-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <i class="fas fa-pause text-orange-500"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Log Downtime</h3>
+                            <div class="mt-2">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Downtime Reason</label>
+                                        <select id="downtimeReason" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                                            <option value="">Select reason</option>
+                                            <option value="maintenance">Scheduled Maintenance</option>
+                                            <option value="breakdown">Machine Breakdown</option>
+                                            <option value="cleaning">Cleaning</option>
+                                            <option value="material">Material Shortage</option>
+                                            <option value="power">Power Failure</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Estimated Duration (minutes)</label>
+                                        <input type="number" id="downtimeDuration" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" min="1" value="15">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                                        <textarea id="downtimeNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="confirmDowntime" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Confirm Downtime
+                    </button>
+                    <button type="button" id="cancelDowntime" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const executionTab = document.getElementById('executionTab');
+        const machineTab = document.getElementById('machineTab');
+        const executionPanel = document.getElementById('executionPanel');
+        const machinePanel = document.getElementById('machinePanel');
+        const startBatchBtn = document.getElementById('startBatchBtn');
+        const endBatchBtn = document.getElementById('endBatchBtn');
+        const pauseBatchBtn = document.getElementById('pauseBatchBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const downtimeModal = document.getElementById('downtimeModal');
+        const confirmDowntime = document.getElementById('confirmDowntime');
+        const cancelDowntime = document.getElementById('cancelDowntime');
+        const batchSearch = document.getElementById('batchSearch');
+        const actualOutput = document.getElementById('actualOutput');
+        const progressFill = document.getElementById('progressFill');
+        const plannedQtyDisplay = document.getElementById('plannedQtyDisplay');
+        const machineSpeed = document.getElementById('machineSpeed');
+        const speedValue = document.getElementById('speedValue');
+
+        // Sample batch data
+        const sampleBatches = {
+            'BATCH-2023-001': {
+                sku: 'SKA-WF-5KG',
+                plannedQty: 5000,
+                startTime: '',
+                endTime: '',
+                actualOutput: 0,
+                materialLoss: 0,
+                status: 'pending'
+            },
+            'BATCH-2023-002': {
+                sku: 'SKA-WF-10KG',
+                plannedQty: 3000,
+                startTime: '',
+                endTime: '',
+                actualOutput: 0,
+                materialLoss: 0,
+                status: 'pending'
+            }
+        };
+
+        // Current batch
+        let currentBatch = null;
+
+        // Event Listeners
+        mobileSidebarToggle.addEventListener('click', () => {
+            sidebar.classList.add('sidebar-open');
+        });
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-open');
+        });
+
+        executionTab.addEventListener('click', () => {
+            executionTab.classList.add('tab-active');
+            machineTab.classList.remove('tab-active');
+            executionPanel.classList.remove('hidden');
+            machinePanel.classList.add('hidden');
+        });
+
+        machineTab.addEventListener('click', () => {
+            machineTab.classList.add('tab-active');
+            executionTab.classList.remove('tab-active');
+            machinePanel.classList.remove('hidden');
+            executionPanel.classList.add('hidden');
+        });
+
+        startBatchBtn.addEventListener('click', () => {
+            if (!currentBatch) {
+                alert('Please search and select a batch first');
+                return;
+            }
+            
+            const now = new Date();
+            currentBatch.startTime = now.toLocaleString();
+            currentBatch.status = 'running';
+            
+            document.getElementById('startTime').value = currentBatch.startTime;
+            document.getElementById('batchId').value = batchSearch.value;
+            document.getElementById('assignedSku').value = currentBatch.sku;
+            document.getElementById('plannedQuantity').value = currentBatch.plannedQty;
+            plannedQtyDisplay.textContent = `${currentBatch.plannedQty} kg`;
+            
+            startBatchBtn.classList.remove('bg-orange-500');
+            startBatchBtn.classList.add('bg-gray-200', 'text-gray-700');
+            startBatchBtn.disabled = true;
+            
+            endBatchBtn.classList.remove('bg-gray-200');
+            endBatchBtn.classList.add('bg-orange-500', 'text-white');
+            endBatchBtn.disabled = false;
+            
+            pauseBatchBtn.classList.remove('bg-gray-200');
+            pauseBatchBtn.classList.add('bg-orange-500', 'text-white');
+            pauseBatchBtn.disabled = false;
+            
+            pauseBtn.disabled = false;
+            
+            batchSearch.disabled = true;
+        });
+
+        endBatchBtn.addEventListener('click', () => {
+            const now = new Date();
+            currentBatch.endTime = now.toLocaleString();
+            currentBatch.status = 'completed';
+            
+            document.getElementById('endTime').value = currentBatch.endTime;
+            
+            endBatchBtn.classList.remove('bg-orange-500');
+            endBatchBtn.classList.add('bg-gray-200', 'text-gray-700');
+            endBatchBtn.disabled = true;
+            
+            pauseBatchBtn.classList.remove('bg-orange-500');
+            pauseBatchBtn.classList.add('bg-gray-200', 'text-gray-700');
+            pauseBatchBtn.disabled = true;
+            
+            pauseBtn.disabled = true;
+            
+            // In a real app, you would save the data here
+            alert('Batch completed successfully! Data saved.');
+        });
+
+        pauseBatchBtn.addEventListener('click', () => {
+            downtimeModal.classList.remove('hidden');
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            downtimeModal.classList.remove('hidden');
+        });
+
+        confirmDowntime.addEventListener('click', () => {
+            const reason = document.getElementById('downtimeReason').value;
+            const duration = document.getElementById('downtimeDuration').value;
+            const notes = document.getElementById('downtimeNotes').value;
+            
+            if (!reason) {
+                alert('Please select a downtime reason');
+                return;
+            }
+            
+            // In a real app, you would log this downtime
+            console.log(`Downtime logged: ${reason} for ${duration} minutes. Notes: ${notes}`);
+            
+            downtimeModal.classList.add('hidden');
+            alert('Downtime logged successfully');
+        });
+
+        cancelDowntime.addEventListener('click', () => {
+            downtimeModal.classList.add('hidden');
+        });
+
+        batchSearch.addEventListener('input', (e) => {
+            const batchId = e.target.value.toUpperCase();
+            if (sampleBatches[batchId]) {
+                currentBatch = {...sampleBatches[batchId]};
+                batchSearch.classList.add('input-highlight');
+                
+                // Enable start button
+                startBatchBtn.disabled = false;
+            } else {
+                batchSearch.classList.remove('input-highlight');
+                startBatchBtn.disabled = true;
+            }
+        });
+
+        actualOutput.addEventListener('input', (e) => {
+            if (!currentBatch) return;
+            
+            const output = parseFloat(e.target.value) || 0;
+            currentBatch.actualOutput = output;
+            
+            // Update progress bar
+            const progress = (output / currentBatch.plannedQty) * 100;
+            progressFill.style.width = `${Math.min(progress, 100)}%`;
+        });
+
+        machineSpeed.addEventListener('input', (e) => {
+            speedValue.textContent = `${e.target.value}%`;
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default values
+            document.getElementById('batchId').value = '';
+            document.getElementById('assignedSku').value = '';
+            document.getElementById('plannedQuantity').value = '';
+            document.getElementById('startTime').value = '';
+            document.getElementById('endTime').value = '';
+            document.getElementById('actualOutput').value = '';
+            document.getElementById('materialLoss').value = '';
+            document.getElementById('lossReason').value = '';
+            document.getElementById('remarks').value = '';
+            
+            // Disable buttons initially
+            startBatchBtn.disabled = true;
+            endBatchBtn.disabled = true;
+            pauseBatchBtn.disabled = true;
+            pauseBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

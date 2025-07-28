@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Family Master | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: rgba(247, 148, 29, 0.1);
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active-parent {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.active-child {
+            color: #F7941D;
+            font-weight: 600;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .table-row:hover {
+            background-color: #f8f9fa;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .multiselect-dropdown {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+             <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./01_product_family_master.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Product Family Master</span>
+                            </a>
+                            
+                            <a href="./02_sku_crud.html" class="block px-3 py-2 text-sm font-medium rounded-md bg-gray-50">
+                                  <span>SKU Creation & Edit </span>
+                            </a>
+                            
+                            <a href="./03_label_media_upload.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Label & Media Upload</span>
+                            </a>
+                            
+                            <a href="./04_chanel_price_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Channel & Regional Pricing</span>
+                            </a>
+                            
+                            <a href="./05_sku_catalog_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU List & Catalog View</span>
+                            </a>
+                            
+                            <a href="./06_batch_setting.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Settings (FG SKUs)</span>
+                            </a>
+                            
+                            <a href="./07_notes_audit_logs_sku.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU Audit Log & Notes</span>
+                              
+
+                            </a>
+                        </div>
+                        
+                        <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Procurement Management
+                        </a>
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                        <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">Product Family Master</h1>
+                    <div class="flex space-x-2">
+                        <button id="exportBtn" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center space-x-2">
+                            <i class="fas fa-file-export"></i>
+                            <span>Export CSV</span>
+                        </button>
+                        <button id="addFamilyBtn" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center space-x-2">
+                            <i class="fas fa-plus"></i>
+                            <span>Add New Family</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters and Search -->
+            <div class="bg-white p-4 border-b border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <option value="">All Types</option>
+                            <option value="Perishable">Perishable</option>
+                            <option value="Non-Perishable">Non-Perishable</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <option value="">All Departments</option>
+                            <option value="Production">Production</option>
+                            <option value="QC">Quality Control</option>
+                            <option value="Procurement">Procurement</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Process</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <option value="">All Processes</option>
+                            <option value="Chakki">Chakki</option>
+                            <option value="Blending">Blending</option>
+                            <option value="Pouch Fill">Pouch Fill</option>
+                            <option value="Bar Wrapper">Bar Wrapper</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                        <div class="relative">
+                            <input type="text" placeholder="Search family name..." class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <div class="absolute left-3 top-2.5 text-gray-400">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family List Table -->
+            <div class="p-4">
+                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-orange-600">
+                                        <div class="flex items-center">
+                                            Family Name
+                                            <i class="fas fa-sort ml-2 text-gray-400 hover:text-orange-600"></i>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-orange-600">
+                                        <div class="flex items-center">
+                                            Shelf Life (Days)
+                                            <i class="fas fa-sort ml-2 text-gray-400 hover:text-orange-600"></i>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applicable Process</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-orange-600">
+                                        <div class="flex items-center">
+                                            Department Owner
+                                            <i class="fas fa-sort ml-2 text-gray-400 hover:text-orange-600"></i>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Flour</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">180</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Perishable</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chakki, Blending</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Production</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-family-btn">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ghee</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">365</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Non-Perishable</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pouch Fill</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">QC</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-family-btn">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Energy Bar</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">270</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Perishable</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Bar Wrapper</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Production</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-family-btn">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Spices</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">360</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Non-Perishable</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pouch Fill, Packaging</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Production</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-family-btn">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ready Mix</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">180</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Perishable</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Blending, Packaging</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Production</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-family-btn">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Previous</a>
+                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Next</a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">12</span> entries
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="z-10 bg-orange-50 border-orange-500 text-orange-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Family Modal -->
+    <div id="familyModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+                <div class="border-b border-gray-200 px-6 py-4">
+                    <h3 class="text-lg font-medium text-gray-900" id="modalTitle">Add New Product Family</h3>
+                </div>
+                <div class="px-6 py-4">
+                    <form id="familyForm">
+                        <div class="mb-4">
+                            <label for="familyName" class="block text-sm font-medium text-gray-700 mb-1">Product Family Name *</label>
+                            <input type="text" id="familyName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="shelfLife" class="block text-sm font-medium text-gray-700 mb-1">Default Shelf Life (days) *</label>
+                            <input type="number" id="shelfLife" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type *</label>
+                            <select id="type" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                                <option value="">Select Type</option>
+                                <option value="Perishable">Perishable</option>
+                                <option value="Non-Perishable">Non-Perishable</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Applicable Process *</label>
+                            <div class="relative">
+                                <div id="processDropdown" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 cursor-pointer flex justify-between items-center">
+                                    <span id="selectedProcesses">Select processes</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div id="processOptions" class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg hidden multiselect-dropdown">
+                                    <div class="p-2">
+                                        <div class="flex items-center mb-1">
+                                            <input type="checkbox" id="process1" value="Chakki" class="mr-2">
+                                            <label for="process1">Chakki</label>
+                                        </div>
+                                        <div class="flex items-center mb-1">
+                                            <input type="checkbox" id="process2" value="Blending" class="mr-2">
+                                            <label for="process2">Blending</label>
+                                        </div>
+                                        <div class="flex items-center mb-1">
+                                            <input type="checkbox" id="process3" value="Pouch Fill" class="mr-2">
+                                            <label for="process3">Pouch Fill</label>
+                                        </div>
+                                        <div class="flex items-center mb-1">
+                                            <input type="checkbox" id="process4" value="Bar Wrapper" class="mr-2">
+                                            <label for="process4">Bar Wrapper</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="process5" value="Packaging" class="mr-2">
+                                            <label for="process5">Packaging</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department Ownership *</label>
+                            <select id="department" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                                <option value="">Select Department</option>
+                                <option value="Production">Production</option>
+                                <option value="QC">Quality Control</option>
+                                <option value="Procurement">Procurement</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                            <textarea id="notes" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="border-t border-gray-200 px-6 py-4 flex justify-end">
+                    <button id="cancelBtn" type="button" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 mr-3">
+                        Cancel
+                    </button>
+                    <button id="saveBtn" type="button" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700">
+                        Save Family
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('familyModal');
+        const addFamilyBtn = document.getElementById('addFamilyBtn');
+        const editFamilyBtns = document.querySelectorAll('.edit-family-btn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const familyForm = document.getElementById('familyForm');
+        
+        // Process selection dropdown
+        const processDropdown = document.getElementById('processDropdown');
+        const processOptions = document.getElementById('processOptions');
+        const selectedProcesses = document.getElementById('selectedProcesses');
+        const processCheckboxes = document.querySelectorAll('#processOptions input[type="checkbox"]');
+        
+        // Open modal for adding new family
+        addFamilyBtn.addEventListener('click', () => {
+            modalTitle.textContent = 'Add New Product Family';
+            familyForm.reset();
+            selectedProcesses.textContent = 'Select processes';
+            processCheckboxes.forEach(checkbox => checkbox.checked = false);
+            modal.classList.remove('hidden');
+        });
+        
+        // Open modal for editing family (sample functionality)
+        editFamilyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modalTitle.textContent = 'Edit Product Family';
+                
+                // Sample data for editing
+                document.getElementById('familyName').value = 'Flour';
+                document.getElementById('shelfLife').value = '180';
+                document.getElementById('type').value = 'Perishable';
+                document.getElementById('department').value = 'Production';
+                document.getElementById('notes').value = 'Standard wheat flour products';
+                
+                // Check relevant processes
+                document.getElementById('process1').checked = true;
+                document.getElementById('process2').checked = true;
+                selectedProcesses.textContent = 'Chakki, Blending';
+                
+                modal.classList.remove('hidden');
+            });
+        });
+        
+        // Close modal
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+        
+        // Save family (sample functionality)
+        saveBtn.addEventListener('click', () => {
+            if (familyForm.checkValidity()) {
+                alert('Product family saved successfully!');
+                modal.classList.add('hidden');
+            } else {
+                alert('Please fill all required fields!');
+            }
+        });
+        
+        // Process selection dropdown toggle
+        processDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            processOptions.classList.toggle('hidden');
+        });
+        
+        // Update selected processes display
+        processCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const selected = Array.from(processCheckboxes)
+                    .filter(c => c.checked)
+                    .map(c => c.value);
+                
+                if (selected.length === 0) {
+                    selectedProcesses.textContent = 'Select processes';
+                } else {
+                    selectedProcesses.textContent = selected.join(', ');
+                }
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!processDropdown.contains(e.target) && !processOptions.contains(e.target)) {
+                processOptions.classList.add('hidden');
+            }
+        });
+        
+        // Export CSV functionality
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            alert('Exporting to CSV...');
+        });
+    </script>
+</body>
+</html>

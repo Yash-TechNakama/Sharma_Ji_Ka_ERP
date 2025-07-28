@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Order List | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF3E2;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.highlighted span {
+            color: #F7941D;
+            font-weight: 700;
+        }
+        .status-draft {
+            background-color: #FFEECC;
+            color: #E68A00;
+        }
+        .status-inprogress {
+            background-color: #E0F2FE;
+            color: #0284C7;
+        }
+        .status-completed {
+            background-color: #DCFCE7;
+            color: #16A34A;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .status-qchold {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+        .priority-routine {
+            background-color: #E0F2FE;
+            color: #0284C7;
+        }
+        .priority-urgent {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+        .priority-backfill {
+            background-color: #EDE9FE;
+            color: #7C3AED;
+        }
+        .table-row:hover {
+            background-color: #F8FAFC;
+        }
+        .action-sidebar {
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 1024px) {
+            .sidebar-collapsed {
+                transform: translateX(-100%);
+            }
+            .sidebar-expanded {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans flex h-screen overflow-hidden">
+    <!-- Mobile Sidebar Toggle -->
+    <div class="lg:hidden fixed top-4 left-4 z-50">
+        <button id="sidebarToggle" class="p-2 rounded-md bg-white shadow-md text-gray-700">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_production_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Reports</span>
+                            </a>
+                             <a href="./01_production_order_create.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Planning</span>
+                            </a>
+                             <a href="./02_material_checker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Material Availability Checker</span>
+                            </a>
+                             <a href="./03_production_order_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Production Order List</span>
+                            </a>
+                             <a href="./04_batch_create_and_assignment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Creation & Assignment</span>
+                            </a>
+                             <a href="./05_batch_live_execution_tracker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Live Batch Execution</span>
+                            </a>
+                             <a href="./06_downtime_setup_log.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Downtime & Setup Log</span>
+                            </a>
+                             <a href="./07_quality_check_trigger_and_batch_status.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>QC Trigger & Status Page</span>
+                            </a>
+                             <a href="./08_batch_closure.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Closure Page</span>
+                            </a>
+                        </div>
+                
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+    </div>
+        
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm z-30">
+            <div class="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-clipboard-list mr-2 text-amber-600"></i>
+                        Production Orders
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+                            <i class="fas fa-bell"></i>
+                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="h-8 w-8 rounded-full bg-amber-600 flex items-center justify-center text-white font-semibold">SK</div>
+                        <span class="ml-2 text-sm font-medium text-gray-700 hidden md:inline">Supervisor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-gray-50">
+            <!-- Filters Section -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">SKU</label>
+                        <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                            <option>All SKUs</option>
+                            <option>Whole Wheat - 1kg</option>
+                            <option>Multigrain - 5kg</option>
+                            <option>Energy Bar - 50g</option>
+                            <option>Premium Atta - 10kg</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                        <div class="flex space-x-2">
+                            <input type="date" class="w-1/2 rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                            <input type="date" class="w-1/2 rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Shift</label>
+                        <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                            <option>All Shifts</option>
+                            <option>Morning (6AM-2PM)</option>
+                            <option>Evening (2PM-10PM)</option>
+                            <option>Night (10PM-6AM)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                            <option>All Statuses</option>
+                            <option>Draft</option>
+                            <option>In Progress</option>
+                            <option>Completed</option>
+                            <option>QC Hold</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                        <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm">
+                            <option>All Priorities</option>
+                            <option>Routine</option>
+                            <option>Backfill</option>
+                            <option>Urgent</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                        <div class="relative">
+                            <input type="text" placeholder="Search by SKU name or Production Plan ID" class="w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 text-sm pl-10">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center">
+                            <i class="fas fa-filter mr-2"></i> Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Production Orders Table -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-sm font-medium text-gray-700">Showing 3 of 18 Production Orders</h2>
+                    <div class="flex space-x-2">
+                        <button class="text-gray-500 hover:text-gray-700 p-1 rounded-md">
+                            <i class="fas fa-file-export"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-gray-700 p-1 rounded-md">
+                            <i class="fas fa-print"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-gray-700 p-1 rounded-md">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Plan ID
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        SKU Name
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Qty Planned
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Scheduled Date
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Shift
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Status
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Priority
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
+                                    <div class="flex items-center">
+                                        Assigned Team
+                                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Row 1 -->
+                            <tr class="table-row hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    PLAN/2025/013
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    Whole Wheat – 1kg
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    10,000 Pcs
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    28-Jul-2025
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1 text-gray-400"></i>
+                                        Morning
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium status-inprogress">
+                                        <i class="fas fa-circle-notch mr-1"></i> In Progress
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium priority-urgent">
+                                        Urgent
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    Chakki Line 1
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-amber-600 hover:text-amber-900 mr-3">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900" disabled>
+                                        <i class="fas fa-pencil-alt"></i> Edit
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="table-row hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    PLAN/2025/014
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    Multigrain – 5kg
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    4,000 Pcs
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    28-Jul-2025
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1 text-gray-400"></i>
+                                        Night
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium status-draft">
+                                        <i class="far fa-file-alt mr-1"></i> Draft
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium priority-routine">
+                                        Routine
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    —
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-amber-600 hover:text-amber-900 mr-3">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 mr-3">
+                                        <i class="fas fa-pencil-alt"></i> Edit
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-user-plus"></i> Assign
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr class="table-row hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    PLAN/2025/012
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    Energy Bar – 50g
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    20,000 Pcs
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    27-Jul-2025
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1 text-gray-400"></i>
+                                        Evening
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium status-completed">
+                                        <i class="fas fa-check-circle mr-1"></i> Completed
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium priority-backfill">
+                                        Backfill
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    Line A
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-amber-600 hover:text-amber-900 mr-3">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900" disabled>
+                                        <i class="fas fa-pencil-alt"></i> Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-4 py-3 border-t border-gray-200 flex items-center justify-between">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Previous
+                        </button>
+                        <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Next
+                        </button>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">18</span> results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button aria-current="page" class="z-10 bg-amber-50 border-amber-500 text-amber-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    1
+                                </button>
+                                <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    2
+                                </button>
+                                <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    3
+                                </button>
+                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                    ...
+                                </span>
+                                <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    6
+                                </button>
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Action Sidebar -->
+    <div id="actionSidebar" class="action-sidebar w-80 bg-white shadow-lg border-l border-gray-200 flex-shrink-0 h-full fixed right-0 top-0 translate-x-full lg:translate-x-0 z-30">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+            <h2 class="text-lg font-medium text-gray-900">Order Details</h2>
+            <button id="closeSidebar" class="lg:hidden text-gray-400 hover:text-gray-500">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="overflow-y-auto h-[calc(100%-64px)] p-4">
+            <div class="mb-6">
+                <h3 class="text-sm font-medium text-gray-900 mb-2">PLAN/2025/013</h3>
+                <p class="text-sm text-gray-500 mb-1">Whole Wheat – 1kg</p>
+                <p class="text-sm font-medium text-gray-900">10,000 Pcs</p>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Schedule</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-xs text-gray-500">Scheduled Date</p>
+                        <p class="text-sm font-medium text-gray-900">28-Jul-2025</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500">Shift</p>
+                        <p class="text-sm font-medium text-gray-900">Morning</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-xs text-gray-500">Status</p>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium status-inprogress">
+                            <i class="fas fa-circle-notch mr-1"></i> In Progress
+                        </span>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500">Priority</p>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium priority-urgent">
+                            Urgent
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Assigned Team</h4>
+                <p class="text-sm font-medium text-gray-900">Chakki Line 1</p>
+                <p class="text-xs text-gray-500 mt-1">Team Lead: Rajesh Kumar</p>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Batches</h4>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">BATCH/2025/013/1</p>
+                            <p class="text-xs text-gray-500">5,000 Pcs (50%)</p>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium status-inprogress">
+                            Running
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">BATCH/2025/013/2</p>
+                            <p class="text-xs text-gray-500">5,000 Pcs (Pending)</p>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium status-draft">
+                            Not Started
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">QC Status</h4>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-5 w-5 text-green-500">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">Batch 1: Passed</p>
+                        <p class="text-xs text-gray-500">Checked by: Quality Team A</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 space-y-3">
+                <button class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center">
+                    <i class="fas fa-plus-circle mr-2"></i> Create Batch
+                </button>
+                <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center">
+                    <i class="fas fa-lock mr-2"></i> Close Plan
+                </button>
+                <button class="w-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center">
+                    <i class="fas fa-copy mr-2"></i> Duplicate Plan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle mobile sidebar
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('sidebar-collapsed');
+            sidebar.classList.toggle('sidebar-expanded');
+        });
+
+        // Toggle action sidebar on mobile
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const actionSidebar = document.getElementById('actionSidebar');
+            actionSidebar.classList.add('translate-x-full');
+        });
+
+        // Simulate opening action sidebar when clicking "View" on a row
+        document.querySelectorAll('[data-action="view"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const actionSidebar = document.getElementById('actionSidebar');
+                actionSidebar.classList.remove('translate-x-full');
+            });
+        });
+
+        // Make table rows clickable
+        document.querySelectorAll('.table-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const actionSidebar = document.getElementById('actionSidebar');
+                actionSidebar.classList.remove('translate-x-full');
+            });
+        });
+
+        // Sort functionality for table headers
+        document.querySelectorAll('th[scope="col"]').forEach(header => {
+            header.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-sort')) {
+                    icon.classList.remove('fa-sort');
+                    icon.classList.add('fa-sort-up');
+                } else if (icon.classList.contains('fa-sort-up')) {
+                    icon.classList.remove('fa-sort-up');
+                    icon.classList.add('fa-sort-down');
+                } else {
+                    icon.classList.remove('fa-sort-down');
+                    icon.classList.add('fa-sort');
+                }
+                // Actual sorting logic would go here
+            });
+        });
+    </script>
+</body>
+</html>

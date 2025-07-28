@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Channel-Wise Demand Summary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item:hover {
+            background-color: #f3f4f6;
+        }
+        .highlight-row {
+            background-color: #fff3e0;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .spike-indicator {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .gap-indicator {
+            color: #22c55e;
+            font-weight: bold;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+       <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                           Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                        
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Sales & Channel (POs & Order Tracking)
+                        </div>
+                        
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./01_channel_po_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Channel PO Entry</span>
+                            </a>
+                            <a href="./02_po_calendar_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO Calendar & Fulfillment View</span>
+                            </a>
+                            <a href="./03_channel_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">Channel-Wise Demand Summary</span>
+                            </a>
+                            <a href="./04_PO-to-batch-linking.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO-to-Batch Linking</span>
+                            </a>
+                            <a href="./05_sales_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Sales Order List</span>
+                            </a>
+                            <a href="./06_platform_add_settings.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Platform Account & Terms</span>
+                            </a>
+  
+                        </div>
+                        
+             
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SKU Demand Summary by Channel</h1>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600 flex items-center">
+                            <i class="fas fa-download mr-2"></i> Export
+                        </button>
+                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="bg-white p-4 border-b border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                        <div class="relative">
+                            <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Select date range" id="dateRange">
+                            <i class="fas fa-calendar absolute right-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Channel</label>
+                        <select class="w-full p-2 border border-gray-300 rounded">
+                            <option value="">All Channels</option>
+                            <option value="zepto">Zepto</option>
+                            <option value="bb">BigBasket</option>
+                            <option value="blinkit">Blinkit</option>
+                            <option value="d2c">D2C</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">SKU</label>
+                        <select class="w-full p-2 border border-gray-300 rounded">
+                            <option value="">All SKUs</option>
+                            <option value="fg001">FG001 - Whole Wheat 1kg</option>
+                            <option value="fg004">FG004 - Ghee 500ml</option>
+                            <option value="fg009">FG009 - Energy Bar 50g</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <select class="w-full p-2 border border-gray-300 rounded">
+                            <option value="">All Locations</option>
+                            <option value="north">North Region</option>
+                            <option value="south">South Region</option>
+                            <option value="east">East Region</option>
+                            <option value="west">West Region</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="w-full p-2 bg-orange-500 text-white rounded hover:bg-orange-600">Apply Filters</button>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center">
+                    <div class="flex items-center mr-4">
+                        <input type="radio" id="daily" name="aggregation" class="mr-2" checked>
+                        <label for="daily" class="text-sm">Daily View</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="weekly" name="aggregation" class="mr-2">
+                        <label for="weekly" class="text-sm">Weekly View</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demand Table -->
+            <div class="p-4">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="sku">
+                                        SKU Code <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="product">
+                                        Product Name <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="channel">
+                                        Channel <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="qty">
+                                        Total Ordered Qty <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="frequency">
+                                        Order Frequency <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="avg">
+                                        Avg Order Size <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="last">
+                                        Last Ordered <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sortable" data-column="forecast">
+                                        Forecasted Demand <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="highlight-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat 1kg</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zepto</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">42,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Daily</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3,000 units</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        3,200 units/week
+                                        <span class="spike-indicator ml-2">+6.7%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ghee 500ml</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BigBasket</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Weekly</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1,500 units</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        1,600 units/week
+                                        <span class="gap-indicator ml-2">-6.7%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG009</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Energy Bar 50g</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Blinkit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12,500</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Weekly</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2,000 units</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">27-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2,100 units/week</td>
+                                </tr>
+                                <!-- Additional rows would go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
+                            </a>
+                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Next
+                            </a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">12</span> results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="z-10 bg-orange-50 border-orange-500 text-orange-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        1
+                                    </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        2
+                                    </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        3
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- SKU Demand Trend -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">SKU Demand Trend (Last 8 Weeks)</h3>
+                    <div class="chart-container">
+                        <canvas id="demandTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Channel Split -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Channel Split</h3>
+                    <div class="chart-container">
+                        <canvas id="channelSplitChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Top 5 High-Moving SKUs -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Top 5 High-Moving SKUs</h3>
+                    <div class="chart-container">
+                        <canvas id="topSkusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize date range picker
+        document.addEventListener('DOMContentLoaded', function() {
+            // This would be replaced with actual date picker initialization
+            document.getElementById('dateRange').value = '01-Jul-2025 to 31-Jul-2025';
+            
+            // Table sorting functionality
+            const sortableHeaders = document.querySelectorAll('.sortable');
+            sortableHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const column = this.getAttribute('data-column');
+                    // Sort logic would go here
+                    console.log(`Sorting by ${column}`);
+                });
+            });
+            
+            // Initialize charts
+            initCharts();
+        });
+
+        function initCharts() {
+            // SKU Demand Trend Chart (Line)
+            const trendCtx = document.getElementById('demandTrendChart').getContext('2d');
+            new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+                    datasets: [
+                        {
+                            label: 'FG001 - Whole Wheat 1kg',
+                            data: [2800, 2900, 3100, 2950, 3200, 3300, 3400, 3500],
+                            borderColor: '#F7941D',
+                            backgroundColor: 'rgba(247, 148, 29, 0.1)',
+                            tension: 0.1,
+                            fill: true
+                        },
+                        {
+                            label: 'FG004 - Ghee 500ml',
+                            data: [1400, 1500, 1550, 1450, 1600, 1500, 1550, 1650],
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.1,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+            
+            // Channel Split Chart (Doughnut)
+            const channelCtx = document.getElementById('channelSplitChart').getContext('2d');
+            new Chart(channelCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Zepto', 'BigBasket', 'Blinkit', 'D2C', 'Others'],
+                    datasets: [{
+                        data: [42, 25, 18, 10, 5],
+                        backgroundColor: [
+                            '#F7941D',
+                            '#4CAF50',
+                            '#2196F3',
+                            '#9C27B0',
+                            '#607D8B'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+            
+            // Top SKUs Chart (Bar)
+            const topSkusCtx = document.getElementById('topSkusChart').getContext('2d');
+            new Chart(topSkusCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['FG001', 'FG004', 'FG009', 'FG012', 'FG015'],
+                    datasets: [{
+                        label: 'Total Ordered Qty (in thousands)',
+                        data: [42, 15, 12.5, 9, 7],
+                        backgroundColor: [
+                            'rgba(247, 148, 29, 0.7)',
+                            'rgba(76, 175, 80, 0.7)',
+                            'rgba(33, 150, 243, 0.7)',
+                            'rgba(156, 39, 176, 0.7)',
+                            'rgba(96, 125, 139, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(247, 148, 29, 1)',
+                            'rgba(76, 175, 80, 1)',
+                            'rgba(33, 150, 243, 1)',
+                            'rgba(156, 39, 176, 1)',
+                            'rgba(96, 125, 139, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

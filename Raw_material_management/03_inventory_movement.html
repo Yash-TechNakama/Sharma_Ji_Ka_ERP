@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Raw Material Inventory Movement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .movement-card {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .movement-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .reason-other {
+            display: none;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-white border-r border-gray-200">
+                <div class="flex items-center justify-center h-16 px-4 bg-white border-b border-gray-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-warehouse text-2xl text-orange-500 mr-2"></i>
+                        <span class="text-xl font-semibold text-gray-800">Sharma Ji ERP</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto">
+                    <nav class="flex-1 space-y-2">
+                        <div class="space-y-1">
+                            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Phase 1 ERP Modules</p>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-lock mr-3 text-gray-400"></i>
+                                Access & Admin
+                            </a>
+                              <a href="../product_catalog_management/01_product_family_master.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-boxes mr-3 text-gray-400"></i>
+                                Product & Catalog Management
+                            </a>
+                            <a href="../procurement/00_dashboard_procurement_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-shopping-cart mr-3 text-gray-400"></i>
+                                Procurement Management
+                            </a>
+                            <div class="space-y-1">
+                                <button class="flex items-center w-full px-3 py-2 text-sm font-medium text-left bg-orange-50 rounded-md text-orange-600">
+                                    <i class="fas fa-pallet mr-3 text-orange-500"></i>
+                                    Raw Material Inventory (Store)
+                                    <i class="fas fa-chevron-down ml-auto text-orange-400 text-xs"></i>
+                                </button>
+                                <div class="pl-8 space-y-1">
+                                    <a href="./00_Inventory_dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-tachometer-alt mr-3 text-gray-400"></i>
+                                        Inventory Dashboard
+                                    </a>
+                                    <a href="./01_add_inward_entry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-arrow-down mr-3 text-gray-400"></i>
+                                        Inward Entry (GRN)
+                                    </a>
+                                    <a href="./02_Qc_status_view.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-check-circle mr-3 text-gray-400"></i>
+                                        QC Status View
+                                    </a>
+                                    <a href="./03_inventory_movement.html" class="flex items-center px-3 py-2 text-sm font-medium text-orange-600 rounded-md bg-orange-50">
+                                        <i class="fas fa-exchange-alt mr-3 text-orange-500"></i>
+                                        Inventory Movement
+                                    </a>
+                                    <a href="./04_stock_ledger.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-book mr-3 text-gray-400"></i>
+                                        Stock Ledger
+                                    </a>
+                                    <a href="./05_reorder_alerts.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-bell mr-3 text-gray-400"></i>
+                                        Reorder & Low Stock Alerts
+                                    </a>
+                                    <a href="./06_move_to_production.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-industry mr-3 text-gray-400"></i>
+                                        Issue to Production
+                                    </a>
+                                    <a href="./07_physical_stock_reconcilliation.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-clipboard-check mr-3 text-gray-400"></i>
+                                        Physical Stock Reconciliation
+                                    </a>
+                                    <a href="./08_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-chart-bar mr-3 text-gray-400"></i>
+                                        Reports
+                                    </a>
+                                </div>
+                            </div>
+                             <a href="../Planning_and_production/00_production_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-cogs mr-3 text-gray-400"></i>
+                                Production & Planning
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-flask mr-3 text-gray-400"></i>
+                                Quality Control (RM + Production)
+                            </a>
+                           <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-truck mr-3 text-gray-400"></i>
+                                Dispatch & Logistics
+                            </a>
+                             <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-money-bill-wave mr-3 text-gray-400"></i>
+                                Accounts & Finance
+                            </a>
+                            <a href="../Index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-chart-line mr-3 text-gray-400"></i>
+                                Reports & Dashboards
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navigation -->
+            <div class="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-200">
+                <div class="flex items-center">
+                    <button class="md:hidden text-gray-500 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="ml-4 text-lg font-semibold text-gray-800">Inventory Movement</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <div class="relative">
+                        <button class="flex items-center text-gray-400 hover:text-gray-500 focus:outline-none">
+                            <span class="ml-2 text-sm font-medium text-gray-700">Store Admin</span>
+                            <i class="ml-1 fas fa-chevron-down text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="flex-1 overflow-auto p-6">
+                <!-- Section 1: Create New Movement Entry -->
+                <div class="mb-8 movement-card bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-semibold text-gray-800">
+                            <i class="fas fa-plus-circle text-orange-500 mr-2"></i> Create New Movement Entry
+                        </h2>
+                        <span class="text-sm text-gray-500">All fields are required unless marked optional</span>
+                    </div>
+                    
+                    <form id="movementForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" id="movementDate" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Moved By</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" value="store_admin" readonly>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">SKU / Material</label>
+                                <div class="dropdown relative">
+                                    <button type="button" class="w-full flex justify-between items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-left focus:outline-none focus:ring-orange-500 focus:border-orange-500" id="skuDropdown">
+                                        <span>Select SKU</span>
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </button>
+                                    <div class="dropdown-content mt-1 border border-gray-200 rounded-md">
+                                        <input type="text" placeholder="Search SKU..." class="w-full p-2 border-b border-gray-200 focus:outline-none">
+                                        <div class="p-1">
+                                            <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectSKU('MP Wheat A Grade', 'WHEAT-MP-001')">MP Wheat A Grade (WHEAT-MP-001)</a>
+                                            <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectSKU('Pouch Film 25kg', 'POUCH-FILM-25')">Pouch Film 25kg (POUCH-FILM-25)</a>
+                                            <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectSKU('Edible Oil', 'OIL-ED-5L')">Edible Oil (OIL-ED-5L)</a>
+                                            <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectSKU('Sugar Premium', 'SUGAR-PRM-50')">Sugar Premium (SUGAR-PRM-50)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedSKU" name="sku" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Batch No.</label>
+                                <div class="dropdown relative">
+                                    <button type="button" class="w-full flex justify-between items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-left focus:outline-none focus:ring-orange-500 focus:border-orange-500" id="batchDropdown" disabled>
+                                        <span>Select Batch (choose SKU first)</span>
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </button>
+                                    <div class="dropdown-content mt-1 border border-gray-200 rounded-md" id="batchOptions">
+                                        <!-- Batch options will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedBatch" name="batch" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Qty to Move</label>
+                                <div class="flex">
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder="Enter quantity" required>
+                                    <span class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm rounded-r-md" id="uomDisplay">UOM</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">From Location (Bin)</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" required>
+                                    <option value="">Select Bin</option>
+                                    <option value="BIN-1A">BIN-1A (Wheat Zone)</option>
+                                    <option value="BIN-1B">BIN-1B (Wheat Zone)</option>
+                                    <option value="BIN-2A">BIN-2A (Packing Zone)</option>
+                                    <option value="BIN-2B">BIN-2B (Packing Zone)</option>
+                                    <option value="QC-HOLD">QC-HOLD (Quality Control)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">To Location (Bin)</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" required>
+                                    <option value="">Select Bin</option>
+                                    <option value="BIN-1A">BIN-1A (Wheat Zone)</option>
+                                    <option value="BIN-1B">BIN-1B (Wheat Zone)</option>
+                                    <option value="BIN-2A">BIN-2A (Packing Zone)</option>
+                                    <option value="BIN-2B">BIN-2B (Packing Zone)</option>
+                                    <option value="QC-HOLD">QC-HOLD (Quality Control)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Reason for Movement</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" id="reasonSelect" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="Bin full">Bin full</option>
+                                    <option value="QC Hold to Active">QC Hold to Active</option>
+                                    <option value="Zone cleanup">Zone cleanup</option>
+                                    <option value="Other">Other (specify)</option>
+                                </select>
+                                <div class="mt-2 reason-other" id="reasonOther">
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder="Specify reason">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Remarks (Optional)</label>
+                                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" rows="2" placeholder="Additional notes"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Attach Document (optional)</label>
+                                <div class="mt-1 flex items-center">
+                                    <label for="file-upload" class="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                        <i class="fas fa-paperclip mr-1"></i> Choose File
+                                    </label>
+                                    <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                    <span class="ml-3 text-sm text-gray-500" id="file-name">No file chosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 flex justify-end">
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                Cancel
+                            </button>
+                            <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                <i class="fas fa-save mr-2"></i> Save Movement Entry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Section 2: Movement Log Table -->
+                <div class="mb-8 movement-card bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-semibold text-gray-800">
+                            <i class="fas fa-history text-orange-500 mr-2"></i> Movement Log (Last 30 Days)
+                        </h2>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                <i class="fas fa-filter mr-1"></i> Filters
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                <i class="fas fa-download mr-1"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch No.</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From Bin</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To Bin</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Moved By</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">01-Aug-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">MP Wheat A Grade</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BATCH-071</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1,000 Kg</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BIN-1A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BIN-2B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Bin full</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">store_admin</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">30-Jul-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pouch Film</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BATCH-065</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5,000 U</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">PACK-1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">QC-HOLD</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">QC Failed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">qa_user</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">28-Jul-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Edible Oil</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BATCH-042</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">200 L</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BIN-3A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BIN-3B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Zone cleanup</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">store_admin</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25-Jul-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sugar Premium</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BATCH-038</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">500 Kg</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">QC-HOLD</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">BIN-4A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">QC Passed</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">qa_user</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="text-sm text-gray-500">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">8</span> movements
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
+                            </button>
+                            <button class="px-3 py-1 border border-orange-300 rounded-md text-sm font-medium text-white bg-orange-600 hover:bg-orange-700">
+                                1
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                2
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section 3: Movement Summary Panel -->
+                <div class="movement-card bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-semibold text-gray-800">
+                            <i class="fas fa-chart-pie text-orange-500 mr-2"></i> Movement Summary
+                        </h2>
+                        <button class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                            <i class="fas fa-download mr-1"></i> Export Movement Report
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Total Movements</p>
+                            <p class="text-2xl font-semibold text-gray-800">8</p>
+                            <p class="text-xs text-gray-500">Last 7 days</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Volume Moved (Wheat)</p>
+                            <p class="text-2xl font-semibold text-gray-800">12,000 Kg</p>
+                            <p class="text-xs text-gray-500">Last 7 days</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">QC-hold Movements</p>
+                            <p class="text-2xl font-semibold text-gray-800">3</p>
+                            <p class="text-xs text-gray-500">Last 7 days</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Most Active Bin</p>
+                            <p class="text-2xl font-semibold text-gray-800">BIN-1B</p>
+                            <p class="text-xs text-gray-500">Last 7 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('movementDate').value = today;
+            
+            // File upload display
+            document.getElementById('file-upload').addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+                document.getElementById('file-name').textContent = fileName;
+            });
+            
+            // Reason other toggle
+            document.getElementById('reasonSelect').addEventListener('change', function() {
+                const reasonOther = document.getElementById('reasonOther');
+                if (this.value === 'Other') {
+                    reasonOther.style.display = 'block';
+                } else {
+                    reasonOther.style.display = 'none';
+                }
+            });
+        });
+        
+        // SKU selection
+        function selectSKU(name, code) {
+            document.getElementById('skuDropdown').innerHTML = `<span>${name} (${code})</span><i class="fas fa-chevron-down text-xs"></i>`;
+            document.getElementById('selectedSKU').value = code;
+            
+            // Enable batch dropdown
+            document.getElementById('batchDropdown').disabled = false;
+            document.getElementById('batchDropdown').innerHTML = `<span>Select Batch</span><i class="fas fa-chevron-down text-xs"></i>`;
+            
+            // Set UOM based on SKU
+            let uom = 'Kg';
+            if (code === 'POUCH-FILM-25') uom = 'U';
+            if (code === 'OIL-ED-5L') uom = 'L';
+            document.getElementById('uomDisplay').textContent = uom;
+            
+            // Populate batch options based on SKU
+            const batchOptions = document.getElementById('batchOptions');
+            batchOptions.innerHTML = `
+                <input type="text" placeholder="Search Batch..." class="w-full p-2 border-b border-gray-200 focus:outline-none">
+                <div class="p-1">
+                    ${getBatchOptions(code)}
+                </div>
+            `;
+        }
+        
+        function getBatchOptions(skuCode) {
+            if (skuCode === 'WHEAT-MP-001') {
+                return `
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-071', '2023-07-15')">BATCH-071 (15-Jul-23)</a>
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-068', '2023-07-01')">BATCH-068 (01-Jul-23)</a>
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-065', '2023-06-20')">BATCH-065 (20-Jun-23)</a>
+                `;
+            } else if (skuCode === 'POUCH-FILM-25') {
+                return `
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-065', '2023-07-10')">BATCH-065 (10-Jul-23)</a>
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-062', '2023-06-28')">BATCH-062 (28-Jun-23)</a>
+                `;
+            } else if (skuCode === 'OIL-ED-5L') {
+                return `
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-042', '2023-06-15')">BATCH-042 (15-Jun-23)</a>
+                `;
+            } else if (skuCode === 'SUGAR-PRM-50') {
+                return `
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-038', '2023-06-10')">BATCH-038 (10-Jun-23)</a>
+                    <a href="#" class="block px-2 py-1 hover:bg-gray-100" onclick="selectBatch('BATCH-035', '2023-05-25')">BATCH-035 (25-May-23)</a>
+                `;
+            }
+            return '';
+        }
+        
+        function selectBatch(batchNo, batchDate) {
+            document.getElementById('batchDropdown').innerHTML = `<span>${batchNo} (${batchDate})</span><i class="fas fa-chevron-down text-xs"></i>`;
+            document.getElementById('selectedBatch').value = batchNo;
+        }
+        
+        // Form submission
+        document.getElementById('movementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Movement entry saved successfully!');
+            // Here you would typically send the form data to the server
+        });
+    </script>
+</body>
+</html>

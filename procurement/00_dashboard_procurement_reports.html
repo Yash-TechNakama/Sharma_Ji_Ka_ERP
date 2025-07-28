@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement Reports | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar-collapse {
+            transition: all 0.3s ease;
+        }
+        .report-card {
+            transition: all 0.3s ease;
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .sidebar-item.active {
+            background-color: #FEF3E7;
+            border-left: 4px solid #F7941D;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                z-index: 100;
+                left: -100%;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .main-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+              <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Procurement Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./00_dashboard_procurement_reports.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Procurement Reports</span>
+                            </a>
+                            <a href="./01_list_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order List</span>
+                            </a>
+                            <a href="./02_add_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Create New Purchase Order</span>
+                            </a>
+                            <a href="./03_detail_view_purchase_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order Detail View</span>
+                            </a>
+                            <a href="./04_GRN_add.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>GRN Entry</span>
+                            </a>
+                            <a href="./05_GRN_list_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>GRN List View</span>
+                            </a>
+                            <a href="./06_vendor_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Vendor Management</span>
+                            </a>
+                        </div>
+                        
+        
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <div class="bg-white shadow-sm p-4 flex items-center">
+                <button id="mobileSidebarToggle" class="mr-4 md:hidden">
+                    <i class="fas fa-bars text-orange-500"></i>
+                </button>
+                <h1 class="text-xl font-bold text-gray-800">Procurement Reports</h1>
+                <div class="ml-auto flex items-center">
+                    <div class="relative mr-4">
+                        <i class="fas fa-bell text-gray-500"></i>
+                        <span class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/32" alt="User" class="h-8 w-8 rounded-full mr-2">
+                        <span class="text-sm">Admin User</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white shadow-sm p-4 mb-4">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                        <div class="flex items-center">
+                            <input type="date" class="border rounded-l px-3 py-2 text-sm w-32">
+                            <span class="px-2 bg-gray-100 py-2 text-sm">to</span>
+                            <input type="date" class="border rounded-r px-3 py-2 text-sm w-32">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Vendor</label>
+                        <select class="border rounded px-3 py-2 text-sm w-48">
+                            <option>All Vendors</option>
+                            <option>Wheat Suppliers Ltd.</option>
+                            <option>PP Bags Co.</option>
+                            <option>Spices Wholesalers</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Material Type</label>
+                        <select class="border rounded px-3 py-2 text-sm w-48">
+                            <option>All Materials</option>
+                            <option>Wheat</option>
+                            <option>PP Bags</option>
+                            <option>Spices</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PO Status</label>
+                        <select class="border rounded px-3 py-2 text-sm w-48">
+                            <option>All Status</option>
+                            <option>Open</option>
+                            <option>Completed</option>
+                            <option>Partially Received</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">GRN Status</label>
+                        <select class="border rounded px-3 py-2 text-sm w-48">
+                            <option>All Status</option>
+                            <option>Pending QC</option>
+                            <option>Approved</option>
+                            <option>Rejected</option>
+                        </select>
+                    </div>
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm mt-6">
+                        <i class="fas fa-filter mr-2"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Cards -->
+            <div class="flex-1 overflow-y-auto p-4">
+                <!-- Purchase Summary Report -->
+                <div class="report-card bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                    <div class="bg-orange-500 text-white px-4 py-3 flex items-center cursor-pointer" onclick="toggleReportCard('purchaseSummary')">
+                        <i class="fas fa-file-invoice-dollar mr-2"></i>
+                        <span class="font-medium">Purchase Summary Report</span>
+                        <i class="fas fa-chevron-down ml-auto transition-transform duration-300" id="purchaseSummaryIcon"></i>
+                    </div>
+                    <div class="p-4" id="purchaseSummaryContent">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                            <div class="bg-gray-50 p-4 rounded">
+                                <div class="text-sm text-gray-500 mb-1">Total POs Created</div>
+                                <div class="text-2xl font-bold text-orange-500">142</div>
+                                <div class="text-xs text-gray-500 mt-1">+12% from last month</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded">
+                                <div class="text-sm text-gray-500 mb-1">Ordered vs Received</div>
+                                <div class="text-2xl font-bold">1,420 <span class="text-lg text-gray-500">/</span> <span class="text-green-500">1,210</span></div>
+                                <div class="text-xs text-gray-500 mt-1">85% fulfillment rate</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded">
+                                <div class="text-sm text-gray-500 mb-1">Total Procurement Value</div>
+                                <div class="text-2xl font-bold">₹24.8L</div>
+                                <div class="text-xs text-gray-500 mt-1">Avg. ₹17,465 per PO</div>
+                            </div>
+                        </div>
+                        <div class="chart-container mb-4">
+                            <canvas id="purchaseTrendChart"></canvas>
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm mr-2">
+                                <i class="fas fa-eye mr-2"></i> View Details
+                            </button>
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">
+                                <i class="fas fa-file-pdf mr-2"></i> Export PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRN Tracker -->
+                <div class="report-card bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                    <div class="bg-orange-500 text-white px-4 py-3 flex items-center cursor-pointer" onclick="toggleReportCard('grnTracker')">
+                        <i class="fas fa-clipboard-check mr-2"></i>
+                        <span class="font-medium">GRN Tracker</span>
+                        <i class="fas fa-chevron-down ml-auto transition-transform duration-300" id="grnTrackerIcon"></i>
+                    </div>
+                    <div class="p-4" id="grnTrackerContent">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div class="bg-gray-50 p-3 rounded">
+                                <div class="text-sm text-gray-500 mb-1">GRNs Created</div>
+                                <div class="text-xl font-bold">98</div>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded">
+                                <div class="text-sm text-blue-500 mb-1">Pending QC</div>
+                                <div class="text-xl font-bold text-blue-500">12</div>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded">
+                                <div class="text-sm text-green-500 mb-1">Approved</div>
+                                <div class="text-xl font-bold text-green-500">78</div>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded">
+                                <div class="text-sm text-red-500 mb-1">Rejected</div>
+                                <div class="text-xl font-bold text-red-500">8</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div class="chart-container">
+                                <canvas id="grnStatusChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="grnTrendChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto mb-4">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">GRN No.</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PO Reference</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Received Qty</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">GRN-2023-056</td>
+                                        <td class="px-4 py-2 text-sm">PO-2023-142</td>
+                                        <td class="px-4 py-2 text-sm">Wheat Suppliers Ltd.</td>
+                                        <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Pending QC</span></td>
+                                        <td class="px-4 py-2 text-sm">500 kg</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">GRN-2023-055</td>
+                                        <td class="px-4 py-2 text-sm">PO-2023-141</td>
+                                        <td class="px-4 py-2 text-sm">PP Bags Co.</td>
+                                        <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Approved</span></td>
+                                        <td class="px-4 py-2 text-sm">2000 pcs</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">GRN-2023-054</td>
+                                        <td class="px-4 py-2 text-sm">PO-2023-140</td>
+                                        <td class="px-4 py-2 text-sm">Spices Wholesalers</td>
+                                        <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Rejected</span></td>
+                                        <td class="px-4 py-2 text-sm">50 kg</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                            <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm mr-2">
+                                <i class="fas fa-eye mr-2"></i> View All GRNs
+                            </button>
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">
+                                <i class="fas fa-file-excel mr-2"></i> Export Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vendor Spend Report -->
+                <div class="report-card bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                    <div class="bg-orange-500 text-white px-4 py-3 flex items-center cursor-pointer" onclick="toggleReportCard('vendorSpend')">
+                        <i class="fas fa-building mr-2"></i>
+                        <span class="font-medium">Vendor Spend Report</span>
+                        <i class="fas fa-chevron-down ml-auto transition-transform duration-300" id="vendorSpendIcon"></i>
+                    </div>
+                    <div class="p-4" id="vendorSpendContent">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-2">Top 5 Vendors by Purchase Value</h3>
+                                <div class="bg-gray-50 rounded p-4">
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-32 text-sm">Wheat Suppliers Ltd.</div>
+                                        <div class="flex-1 bg-gray-200 h-4 rounded-full">
+                                            <div class="bg-orange-500 h-4 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <div class="w-16 text-right text-sm font-medium">₹12.4L</div>
+                                    </div>
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-32 text-sm">PP Bags Co.</div>
+                                        <div class="flex-1 bg-gray-200 h-4 rounded-full">
+                                            <div class="bg-orange-400 h-4 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                        <div class="w-16 text-right text-sm font-medium">₹8.2L</div>
+                                    </div>
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-32 text-sm">Spices Wholesalers</div>
+                                        <div class="flex-1 bg-gray-200 h-4 rounded-full">
+                                            <div class="bg-orange-300 h-4 rounded-full" style="width: 35%"></div>
+                                        </div>
+                                        <div class="w-16 text-right text-sm font-medium">₹3.1L</div>
+                                    </div>
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-32 text-sm">Packaging Inc.</div>
+                                        <div class="flex-1 bg-gray-200 h-4 rounded-full">
+                                            <div class="bg-orange-200 h-4 rounded-full" style="width: 25%"></div>
+                                        </div>
+                                        <div class="w-16 text-right text-sm font-medium">₹1.8L</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-32 text-sm">Logistics Partners</div>
+                                        <div class="flex-1 bg-gray-200 h-4 rounded-full">
+                                            <div class="bg-orange-100 h-4 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                        <div class="w-16 text-right text-sm font-medium">₹0.9L</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-2">Vendor Performance Metrics</h3>
+                                <div class="chart-container">
+                                    <canvas id="vendorPerformanceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto mb-4">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total POs</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Spend</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Avg. Delivery Time</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">QC Score</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Payment Completion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">Wheat Suppliers Ltd.</td>
+                                        <td class="px-4 py-2 text-sm">42</td>
+                                        <td class="px-4 py-2 text-sm">₹12,42,500</td>
+                                        <td class="px-4 py-2 text-sm">3.2 days</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                                </div>
+                                                <span>85%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 72%"></div>
+                                                </div>
+                                                <span>72%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">PP Bags Co.</td>
+                                        <td class="px-4 py-2 text-sm">28</td>
+                                        <td class="px-4 py-2 text-sm">₹8,20,750</td>
+                                        <td class="px-4 py-2 text-sm">2.8 days</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                                                </div>
+                                                <span>92%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                                </div>
+                                                <span>85%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">Spices Wholesalers</td>
+                                        <td class="px-4 py-2 text-sm">15</td>
+                                        <td class="px-4 py-2 text-sm">₹3,10,200</td>
+                                        <td class="px-4 py-2 text-sm">4.5 days</td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                                                </div>
+                                                <span>78%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                                                </div>
+                                                <span>65%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">
+                                <i class="fas fa-file-excel mr-2"></i> Download Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Trend Analysis -->
+                <div class="report-card bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                    <div class="bg-orange-500 text-white px-4 py-3 flex items-center cursor-pointer" onclick="toggleReportCard('priceTrend')">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        <span class="font-medium">Price Trend Analysis</span>
+                        <i class="fas fa-chevron-down ml-auto transition-transform duration-300" id="priceTrendIcon"></i>
+                    </div>
+                    <div class="p-4" id="priceTrendContent">
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mr-2">Material:</label>
+                                <select class="border rounded px-3 py-1 text-sm">
+                                    <option>Wheat</option>
+                                    <option>PP Bags</option>
+                                    <option>Spices</option>
+                                    <option>Packaging Material</option>
+                                </select>
+                                <label class="block text-sm font-medium text-gray-700 ml-4 mr-2">Time Period:</label>
+                                <select class="border rounded px-3 py-1 text-sm">
+                                    <option>Last 6 Months</option>
+                                    <option>Last 3 Months</option>
+                                    <option>Last Month</option>
+                                    <option>Last Week</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container mb-4">
+                            <canvas id="priceTrendChart"></canvas>
+                        </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-yellow-800">Price Anomaly Detected</h3>
+                                    <div class="mt-2 text-sm text-yellow-700">
+                                        <p>Wheat prices increased by 18% in the last week compared to the previous month's average.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm mr-2">
+                                <i class="fas fa-eye mr-2"></i> View Details
+                            </button>
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">
+                                <i class="fas fa-file-pdf mr-2"></i> Export Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending POs & GRNs -->
+                <div class="report-card bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                    <div class="bg-orange-500 text-white px-4 py-3 flex items-center cursor-pointer" onclick="toggleReportCard('pendingItems')">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span class="font-medium">Pending POs & GRNs</span>
+                        <i class="fas fa-chevron-down ml-auto transition-transform duration-300" id="pendingItemsIcon"></i>
+                    </div>
+                    <div class="p-4" id="pendingItemsContent">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Open POs with No GRN</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PO No.</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Days Open</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">PO-2023-145</td>
+                                                <td class="px-4 py-2 text-sm">Wheat Suppliers Ltd.</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">7 days</span></td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">PO-2023-144</td>
+                                                <td class="px-4 py-2 text-sm">PP Bags Co.</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">5 days</span></td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">PO-2023-143</td>
+                                                <td class="px-4 py-2 text-sm">Spices Wholesalers</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">10 days</span></td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mt-3 text-right">
+                                    <button class="text-orange-500 hover:text-orange-700 text-sm">
+                                        <i class="fas fa-download mr-1"></i> Export List
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">GRNs Missing Invoice/QC</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">GRN No.</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Missing</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Days Pending</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">GRN-2023-057</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Invoice</span></td>
+                                                <td class="px-4 py-2 text-sm">5 days</td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">GRN-2023-056</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">QC</span></td>
+                                                <td class="px-4 py-2 text-sm">3 days</td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-2 text-sm">GRN-2023-055</td>
+                                                <td class="px-4 py-2 text-sm"><span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Both</span></td>
+                                                <td class="px-4 py-2 text-sm">7 days</td>
+                                                <td class="px-4 py-2 text-sm">
+                                                    <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
+                                                    <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-bell"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mt-3 text-right">
+                                    <button class="text-orange-500 hover:text-orange-700 text-sm">
+                                        <i class="fas fa-download mr-1"></i> Export List
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('mobileSidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.add('active');
+        });
+
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.remove('active');
+        });
+
+        // Toggle report cards
+        function toggleReportCard(id) {
+            const content = document.getElementById(id + 'Content');
+            const icon = document.getElementById(id + 'Icon');
+            
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Initialize all report cards as expanded
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportCards = ['purchaseSummary', 'grnTracker', 'vendorSpend', 'priceTrend', 'pendingItems'];
+            reportCards.forEach(id => {
+                document.getElementById(id + 'Content').style.display = 'block';
+                document.getElementById(id + 'Icon').classList.add('fa-chevron-up');
+            });
+
+            // Initialize charts
+            initCharts();
+        });
+
+        // Chart initialization
+        function initCharts() {
+            // Purchase Trend Chart
+            const purchaseTrendCtx = document.getElementById('purchaseTrendChart').getContext('2d');
+            new Chart(purchaseTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'POs Created',
+                            data: [18, 22, 25, 28, 24, 25],
+                            borderColor: '#F7941D',
+                            backgroundColor: 'rgba(247, 148, 29, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Procurement Value (Lakhs)',
+                            data: [3.2, 3.8, 4.1, 4.5, 4.2, 4.8],
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.3,
+                            fill: true,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of POs'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Value (₹ Lakhs)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // GRN Status Chart
+            const grnStatusCtx = document.getElementById('grnStatusChart').getContext('2d');
+            new Chart(grnStatusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Approved', 'Pending QC', 'Rejected'],
+                    datasets: [{
+                        data: [78, 12, 8],
+                        backgroundColor: ['#4CAF50', '#2196F3', '#F44336'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+
+            // GRN Trend Chart
+            const grnTrendCtx = document.getElementById('grnTrendChart').getContext('2d');
+            new Chart(grnTrendCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'GRNs Created',
+                            data: [12, 15, 18, 14, 16, 23],
+                            backgroundColor: 'rgba(247, 148, 29, 0.7)'
+                        },
+                        {
+                            label: 'Approved',
+                            data: [9, 12, 15, 11, 13, 18],
+                            backgroundColor: 'rgba(76, 175, 80, 0.7)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Vendor Performance Chart
+            const vendorPerformanceCtx = document.getElementById('vendorPerformanceChart').getContext('2d');
+            new Chart(vendorPerformanceCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Delivery Time', 'Quality Score', 'Price Competitiveness', 'Payment Terms', 'Responsiveness'],
+                    datasets: [
+                        {
+                            label: 'Wheat Suppliers Ltd.',
+                            data: [85, 85, 75, 70, 80],
+                            backgroundColor: 'rgba(247, 148, 29, 0.2)',
+                            borderColor: '#F7941D',
+                            pointBackgroundColor: '#F7941D',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#F7941D'
+                        },
+                        {
+                            label: 'PP Bags Co.',
+                            data: [90, 92, 85, 85, 88],
+                            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                            borderColor: '#4CAF50',
+                            pointBackgroundColor: '#4CAF50',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#4CAF50'
+                        },
+                        {
+                            label: 'Spices Wholesalers',
+                            data: [70, 78, 80, 65, 75],
+                            backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                            borderColor: '#2196F3',
+                            pointBackgroundColor: '#2196F3',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#2196F3'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 50,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+
+            // Price Trend Chart
+            const priceTrendCtx = document.getElementById('priceTrendChart').getContext('2d');
+            new Chart(priceTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    datasets: [
+                        {
+                            label: 'Wheat (₹/kg)',
+                            data: [24.5, 24.8, 25.2, 25.0, 26.5, 28.9],
+                            borderColor: '#F7941D',
+                            backgroundColor: 'rgba(247, 148, 29, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'PP Bags (₹/pc)',
+                            data: [8.2, 8.1, 8.3, 8.2, 8.4, 8.5],
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                box1: {
+                                    type: 'box',
+                                    xMin: 'Week 5',
+                                    xMax: 'Week 6',
+                                    yMin: 0,
+                                    yMax: 30,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                                    borderColor: 'rgba(255, 99, 132, 0.5)',
+                                    borderWidth: 1,
+                                    label: {
+                                        content: 'Price Spike',
+                                        enabled: true,
+                                        position: 'top'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

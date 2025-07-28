@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Platform Account & Terms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .sidebar-item.active .sidebar-text {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.has-children.active .sidebar-text {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-subitem.active {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .status-active {
+            background-color: #10B981;
+        }
+        .status-inactive {
+            background-color: #EF4444;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+       <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                           Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                        
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Sales & Channel (POs & Order Tracking)
+                        </div>
+                        
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./01_channel_po_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Channel PO Entry</span>
+                            </a>
+                            <a href="./02_po_calendar_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO Calendar & Fulfillment View</span>
+                            </a>
+                            <a href="./03_channel_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Channel-Wise Demand Summary</span>
+                            </a>
+                            <a href="./04_PO-to-batch-linking.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO-to-Batch Linking</span>
+                            </a>
+                            <a href="./05_sales_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Sales Order List</span>
+                            </a>
+                            <a href="./06_platform_add_settings.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">Platform Account & Terms</span>
+                            </a>
+  
+                        </div>
+                        
+             
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Sales Channel Master (Platform Setup)</h2>
+                        <p class="text-gray-600">Manage platform accounts, terms, and configurations</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button id="addPlatformBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Add New Platform
+                        </button>
+                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md flex items-center">
+                            <i class="fas fa-file-export mr-2"></i> Export List
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Platform List Table -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Channel Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GSTIN</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credit Period</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Hub(s)</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Default Packaging</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active POs</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-store text-orange-500"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Zepto</div>
+                                                <div class="text-sm text-gray-500">Quick Commerce</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">27AACZ1234Z1Z</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mumbai, Pune</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Master Carton</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-btn" data-id="1"><i class="fas fa-edit"></i></button>
+                                        <button class="text-blue-600 hover:text-blue-900"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-shopping-basket text-blue-500"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">BigBasket</div>
+                                                <div class="text-sm text-gray-500">Online Grocery</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">29AABT9876K1Z</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">21 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Bangalore Hub</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Primary Pack</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-btn" data-id="2"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-bolt text-green-500"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Blinkit</div>
+                                                <div class="text-sm text-gray-500">Quick Commerce</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">07AAFZ3212L1Z</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi, Noida</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multipack</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-orange-600 hover:text-orange-900 mr-3 edit-btn" data-id="3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-blue-600 hover:text-blue-900"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add/Edit Platform Modal -->
+    <div id="platformModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity modal-overlay" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full slide-in">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Add New Platform</h3>
+                                <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <form id="platformForm">
+                                    <div class="grid grid-cols-1 gap-y-4 gap-x-6 sm:grid-cols-6">
+                                        <div class="sm:col-span-6">
+                                            <label for="channelName" class="block text-sm font-medium text-gray-700">Channel Name</label>
+                                            <select id="channelName" name="channelName" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                                                <option value="">Select or type new</option>
+                                                <option value="Zepto">Zepto</option>
+                                                <option value="BigBasket">BigBasket</option>
+                                                <option value="Blinkit">Blinkit</option>
+                                                <option value="Swiggy Instamart">Swiggy Instamart</option>
+                                                <option value="JioMart">JioMart</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="sm:col-span-6">
+                                            <label for="gstNumber" class="block text-sm font-medium text-gray-700">GST Number</label>
+                                            <input type="text" name="gstNumber" id="gstNumber" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        
+                                        <div class="sm:col-span-3">
+                                            <label for="creditPeriod" class="block text-sm font-medium text-gray-700">Credit Period (days)</label>
+                                            <input type="number" name="creditPeriod" id="creditPeriod" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        
+                                        <div class="sm:col-span-3">
+                                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                            <div class="mt-1">
+                                                <label class="inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" id="status" name="status" class="sr-only peer" checked>
+                                                    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                                                    <span class="ms-3 text-sm font-medium text-gray-700">Active</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="sm:col-span-6">
+                                            <label for="deliveryHubs" class="block text-sm font-medium text-gray-700">Delivery Hubs</label>
+                                            <select id="deliveryHubs" name="deliveryHubs" multiple class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                                                <option value="Mumbai">Mumbai</option>
+                                                <option value="Delhi">Delhi</option>
+                                                <option value="Bangalore">Bangalore</option>
+                                                <option value="Pune">Pune</option>
+                                                <option value="Hyderabad">Hyderabad</option>
+                                                <option value="Chennai">Chennai</option>
+                                                <option value="Noida">Noida</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="sm:col-span-6">
+                                            <label for="defaultPackaging" class="block text-sm font-medium text-gray-700">Default Packaging Type</label>
+                                            <select id="defaultPackaging" name="defaultPackaging" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                                                <option value="">Select packaging</option>
+                                                <option value="Master Carton">Master Carton</option>
+                                                <option value="Primary Pack">Primary Pack</option>
+                                                <option value="Multipack">Multipack</option>
+                                                <option value="Bulk Bag">Bulk Bag</option>
+                                                <option value="Retail Pack">Retail Pack</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="sm:col-span-3">
+                                            <label for="contactName" class="block text-sm font-medium text-gray-700">Contact Person Name</label>
+                                            <input type="text" name="contactName" id="contactName" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        
+                                        <div class="sm:col-span-3">
+                                            <label for="contactPhone" class="block text-sm font-medium text-gray-700">Contact Phone</label>
+                                            <input type="tel" name="contactPhone" id="contactPhone" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        
+                                        <div class="sm:col-span-6">
+                                            <label for="contactEmail" class="block text-sm font-medium text-gray-700">Contact Email</label>
+                                            <input type="email" name="contactEmail" id="contactEmail" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        
+                                        <div class="sm:col-span-6">
+                                            <label for="paymentTerms" class="block text-sm font-medium text-gray-700">Payment Terms Notes</label>
+                                            <textarea id="paymentTerms" name="paymentTerms" rows="3" class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="savePlatform" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Save Platform
+                    </button>
+                    <button type="button" id="cancelModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const addPlatformBtn = document.getElementById('addPlatformBtn');
+        const platformModal = document.getElementById('platformModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelModal = document.getElementById('cancelModal');
+        const savePlatform = document.getElementById('savePlatform');
+        const modalTitle = document.getElementById('modalTitle');
+        const platformForm = document.getElementById('platformForm');
+        const editButtons = document.querySelectorAll('.edit-btn');
+        
+        // Show modal for adding new platform
+        addPlatformBtn.addEventListener('click', () => {
+            modalTitle.textContent = 'Add New Platform';
+            platformForm.reset();
+            platformModal.classList.remove('hidden');
+        });
+        
+        // Show modal for editing platform
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modalTitle.textContent = 'Edit Platform';
+                // In a real app, you would populate the form with data from the platform
+                // For demo purposes, we'll just show the modal with some sample data
+                document.getElementById('channelName').value = 'Zepto';
+                document.getElementById('gstNumber').value = '27AACZ1234Z1Z';
+                document.getElementById('creditPeriod').value = '14';
+                document.getElementById('status').checked = true;
+                document.getElementById('deliveryHubs').value = ['Mumbai', 'Pune'];
+                document.getElementById('defaultPackaging').value = 'Master Carton';
+                document.getElementById('contactName').value = 'Rahul Sharma';
+                document.getElementById('contactPhone').value = '9876543210';
+                document.getElementById('contactEmail').value = 'rahul@zepto.com';
+                document.getElementById('paymentTerms').value = 'Payment to be made within 14 days of invoice date. Late payments subject to 1.5% monthly interest.';
+                
+                platformModal.classList.remove('hidden');
+            });
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            platformModal.classList.add('hidden');
+        });
+        
+        cancelModal.addEventListener('click', () => {
+            platformModal.classList.add('hidden');
+        });
+        
+        // Save platform (just close modal in this demo)
+        savePlatform.addEventListener('click', () => {
+            // In a real app, you would save the data here
+            alert('Platform saved successfully!');
+            platformModal.classList.add('hidden');
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === platformModal) {
+                platformModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - QC Status View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF3E7;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.highlighted span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .status-pending {
+            background-color: #E5E7EB;
+            color: #4B5563;
+        }
+        .status-inprocess {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        .status-passed {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        .status-failed {
+            background-color: #FEE2E2;
+            color: #B91C1C;
+        }
+        .qc-modal {
+            transition: all 0.3s ease;
+        }
+        .qc-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .qc-modal.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+       <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-white border-r border-gray-200">
+                <div class="flex items-center justify-center h-16 px-4 bg-white border-b border-gray-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-warehouse text-2xl text-orange-500 mr-2"></i>
+                        <span class="text-xl font-semibold text-gray-800">Sharma Ji ERP</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto">
+                    <nav class="flex-1 space-y-2">
+                        <div class="space-y-1">
+                            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Phase 1 ERP Modules</p>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-lock mr-3 text-gray-400"></i>
+                                Access & Admin
+                            </a>
+                              <a href="../product_catalog_management/01_product_family_master.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-boxes mr-3 text-gray-400"></i>
+                                Product & Catalog Management
+                            </a>
+                            <a href="../procurement/00_dashboard_procurement_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-shopping-cart mr-3 text-gray-400"></i>
+                                Procurement Management
+                            </a>
+                            <div class="space-y-1">
+                                <button class="flex items-center w-full px-3 py-2 text-sm font-medium text-left bg-orange-50 rounded-md text-orange-600">
+                                    <i class="fas fa-pallet mr-3 text-orange-500"></i>
+                                    Raw Material Inventory (Store)
+                                    <i class="fas fa-chevron-down ml-auto text-orange-400 text-xs"></i>
+                                </button>
+                                <div class="pl-8 space-y-1">
+                                    <a href="./00_Inventory_dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-tachometer-alt mr-3 text-gray-400"></i>
+                                        Inventory Dashboard
+                                    </a>
+                                    <a href="./01_add_inward_entry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-arrow-down mr-3 text-gray-400"></i>
+                                        Inward Entry (GRN)
+                                    </a>
+                                    <a href="./02_Qc_status_view.html" class="flex items-center px-3 py-2 text-sm font-medium text-orange-600 rounded-md hover:bg-orange-50">
+                                        <i class="fas fa-check-circle mr-3 text-orange-500"></i>
+                                        QC Status View
+                                    </a>
+                                    <a href="./03_inventory_movement.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md bg-gray-50">
+                                        <i class="fas fa-exchange-alt mr-3 text-gray-400"></i>
+                                        Inventory Movement
+                                    </a>
+                                    <a href="./04_stock_ledger.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-book mr-3 text-gray-400"></i>
+                                        Stock Ledger
+                                    </a>
+                                    <a href="./05_reorder_alerts.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-bell mr-3 text-gray-400"></i>
+                                        Reorder & Low Stock Alerts
+                                    </a>
+                                    <a href="./06_move_to_production.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-industry mr-3 text-gray-400"></i>
+                                        Issue to Production
+                                    </a>
+                                    <a href="./07_physical_stock_reconcilliation.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-clipboard-check mr-3 text-gray-400"></i>
+                                        Physical Stock Reconciliation
+                                    </a>
+                                    <a href="./08_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-chart-bar mr-3 text-gray-400"></i>
+                                        Reports
+                                    </a>
+                                </div>
+                            </div>
+                             <a href="../Planning_and_production/00_production_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-cogs mr-3 text-gray-400"></i>
+                                Production & Planning
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-flask mr-3 text-gray-400"></i>
+                                Quality Control (RM + Production)
+                            </a>
+                           <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-truck mr-3 text-gray-400"></i>
+                                Dispatch & Logistics
+                            </a>
+                             <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-money-bill-wave mr-3 text-gray-400"></i>
+                                Accounts & Finance
+                            </a>
+                            <a href="../Index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-chart-line mr-3 text-gray-400"></i>
+                                Reports & Dashboards
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white border-b border-gray-200 py-4 px-6 flex items-center justify-between">
+                <div class="flex items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">QC Status View</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-gray-500"></i>
+                        <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center">
+                            <span class="text-orange-500 font-medium">SK</span>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">Store Keeper</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Filter Panel -->
+                <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                                <option>Today</option>
+                                <option>Last 7 Days</option>
+                                <option>This Month</option>
+                                <option>Custom Range</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">SKU / Material Name</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500" placeholder="Search...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Vendor Name</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500" placeholder="Search...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">QC Status</label>
+                            <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                                <option>All Status</option>
+                                <option>⏳ Pending</option>
+                                <option>🔍 In Process</option>
+                                <option>✅ Passed</option>
+                                <option>❌ Failed</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+                                Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Table and Quick Access Panels -->
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Main Table -->
+                    <div class="flex-1">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="text-lg font-medium text-gray-800">QC Batch Status</h3>
+                                <div class="flex space-x-2">
+                                    <button class="text-sm text-orange-500 hover:text-orange-700 font-medium">
+                                        <i class="fas fa-download mr-1"></i> Export
+                                    </button>
+                                    <button class="text-sm text-orange-500 hover:text-orange-700 font-medium">
+                                        <i class="fas fa-print mr-1"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch No.</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material Name</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GRN No.</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty (UOM)</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Status</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Done On</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks / Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BATCH-071</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM-WHT-01</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">MP Sharbati Wheat</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GRN/2025/031</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5,000 Kg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full status-pending">⏳ Pending</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button onclick="openQCModal()" class="text-orange-500 hover:text-orange-700 font-medium">View / Mark QC</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BATCH-070</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM-WHT-02</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Durum Wheat</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GRN/2025/030</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2,500 Kg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full status-inprocess">🔍 In Process</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-blue-500 hover:text-blue-700 font-medium">View Progress</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BATCH-069</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM-WHT-04</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Lokwan Wheat</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GRN/2025/028</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,000 Kg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full status-passed">✅ Passed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30-Jul-2025</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-green-500 hover:text-green-700 font-medium">View Report</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BATCH-068</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM-SUG-01</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sugar</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GRN/2025/029</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,000 Kg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full status-passed">✅ Passed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">29-Jul-2025</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-green-500 hover:text-green-700 font-medium">View Report</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">BATCH-066</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PK-01KG</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1kg Pouch Film</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">GRN/2025/027</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10,000 U</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full status-failed">❌ Failed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28-Jul-2025</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="text-red-500">Reason: Seal fail</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                                <div class="text-sm text-gray-500">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> results
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                        Previous
+                                    </button>
+                                    <button class="px-3 py-1 border border-orange-500 rounded-md text-sm font-medium text-white bg-orange-500 hover:bg-orange-600">
+                                        1
+                                    </button>
+                                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                        2
+                                    </button>
+                                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                        3
+                                    </button>
+                                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Access Panels -->
+                    <div class="w-full lg:w-80 space-y-4">
+                        <!-- Awaiting QC -->
+                        <div class="bg-white rounded-lg shadow-sm p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-md font-medium text-gray-800 flex items-center">
+                                    <i class="fas fa-hourglass-half text-gray-500 mr-2"></i>
+                                    Batches Awaiting QC
+                                </h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Batches that need QC inspection before inventory activation.</p>
+                            <button class="w-full text-sm text-orange-500 hover:text-orange-700 font-medium">
+                                View All <i class="fas fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- Passed Today -->
+                        <div class="bg-white rounded-lg shadow-sm p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-md font-medium text-gray-800 flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    Batches Passed Today
+                                </h3>
+                                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">5</span>
+                            </div>
+                            <div class="space-y-2 mb-3">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">MP Sharbati Wheat</span>
+                                    <span class="font-medium">2,500 Kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Sugar</span>
+                                    <span class="font-medium">1,000 Kg</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Pouch Film</span>
+                                    <span class="font-medium">5,000 U</span>
+                                </div>
+                            </div>
+                            <button class="w-full text-sm text-orange-500 hover:text-orange-700 font-medium">
+                                View Details <i class="fas fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- QC Failures -->
+                        <div class="bg-white rounded-lg shadow-sm p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-md font-medium text-gray-800 flex items-center">
+                                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                                    QC Failures This Week
+                                </h3>
+                                <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">3</span>
+                            </div>
+                            <div class="mb-2">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-600">Rejection Rate</span>
+                                    <span class="font-medium">5.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 5.2%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mb-3">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">1kg Pouch Film</span>
+                                    <span class="text-red-500">Seal fail</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Durum Wheat</span>
+                                    <span class="text-red-500">Moisture high</span>
+                                </div>
+                            </div>
+                            <button class="w-full text-sm text-orange-500 hover:text-orange-700 font-medium">
+                                View Rejection Report <i class="fas fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- Download Button -->
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-md text-sm font-medium transition duration-150 ease-in-out flex items-center justify-center">
+                            <i class="fas fa-download mr-2"></i> Download QC Summary Sheet
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- QC Modal -->
+    <div id="qcModal" class="qc-modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-screen overflow-y-auto">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-medium text-gray-800">Mark QC for BATCH-071</h3>
+                <button onclick="closeQCModal()" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Batch No.</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-100" value="BATCH-071" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Material Name</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-100" value="MP Sharbati Wheat" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">GRN No.</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-100" value="GRN/2025/031" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-gray-100" value="5,000 Kg" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">QC Status</label>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                        <button class="qc-status-btn status-pending flex items-center justify-center py-2 px-4 rounded-md border border-gray-300">
+                            <span class="mr-2">⏳</span> Pending
+                        </button>
+                        <button class="qc-status-btn status-inprocess flex items-center justify-center py-2 px-4 rounded-md border border-gray-300">
+                            <span class="mr-2">🔍</span> In Process
+                        </button>
+                        <button class="qc-status-btn status-passed flex items-center justify-center py-2 px-4 rounded-md border border-gray-300">
+                            <span class="mr-2">✅</span> Passed
+                        </button>
+                        <button class="qc-status-btn status-failed flex items-center justify-center py-2 px-4 rounded-md border border-gray-300">
+                            <span class="mr-2">❌</span> Failed
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Test Parameters</label>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Moisture Content</span>
+                            <input type="text" class="w-24 border border-gray-300 rounded-md px-3 py-1 text-sm" placeholder="Value">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Protein Content</span>
+                            <input type="text" class="w-24 border border-gray-300 rounded-md px-3 py-1 text-sm" placeholder="Value">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Foreign Matter</span>
+                            <input type="text" class="w-24 border border-gray-300 rounded-md px-3 py-1 text-sm" placeholder="Value">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Damaged Grains</span>
+                            <input type="text" class="w-24 border border-gray-300 rounded-md px-3 py-1 text-sm" placeholder="Value">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                    <textarea class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500" rows="3" placeholder="Add any remarks or observations..."></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Test Report (Optional)</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <div class="flex text-sm text-gray-600">
+                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-orange-500 hover:text-orange-600 focus-within:outline-none">
+                                    <span>Upload a file</span>
+                                    <input type="file" class="sr-only">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PDF, JPG, PNG up to 5MB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button onclick="closeQCModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-orange-500 hover:bg-orange-600">
+                        Save QC Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // QC Modal Functions
+        function openQCModal() {
+            document.getElementById('qcModal').classList.remove('hidden');
+            document.getElementById('qcModal').classList.add('visible');
+        }
+
+        function closeQCModal() {
+            document.getElementById('qcModal').classList.remove('visible');
+            document.getElementById('qcModal').classList.add('hidden');
+        }
+
+        // QC Status Button Selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const qcStatusBtns = document.querySelectorAll('.qc-status-btn');
+            
+            qcStatusBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    qcStatusBtns.forEach(b => {
+                        b.classList.remove('border-orange-500', 'ring-2', 'ring-orange-200');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('border-orange-500', 'ring-2', 'ring-orange-200');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

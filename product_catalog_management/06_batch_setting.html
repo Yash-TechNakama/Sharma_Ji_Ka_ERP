@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Settings (FG SKUs) | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF3E2;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .color-preview {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen">
+    <!-- Left Sidebar -->
+            <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./01_product_family_master.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Product Family Master</span>
+                            </a>
+                            
+                            <a href="./02_sku_crud.html" class="block px-3 py-2 text-sm font-medium rounded-md bg-gray-50">
+                                  <span> SKU Creation & Edit</span>
+                            </a>
+                            
+                            <a href="./03_label_media_upload.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Label & Media Upload</span>
+                            </a>
+                            
+                            <a href="./04_chanel_price_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Channel & Regional Pricing</span>
+                            </a>
+                            
+                            <a href="./05_sku_catalog_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU List & Catalog View</span>
+                            </a>
+                            
+                            <a href="./06_batch_setting.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange"> Batch Settings (FG SKUs)</span>
+                            </a>
+                            
+                            <a href="./07_notes_audit_logs_sku.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU Audit Log & Notes</span>
+                              
+
+                            </a>
+                        </div>
+                        
+                         <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Procurement Management
+                        </a>
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Main Content -->
+    <div class="flex-1 overflow-y-auto p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Batch Settings for FG SKUs</h1>
+                <p class="text-sm text-gray-500">Define default batch configurations for finished goods</p>
+            </div>
+            <div class="flex space-x-2">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-save mr-1"></i> Save Settings
+                </button>
+                <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-copy mr-1"></i> Copy from Another SKU
+                </button>
+            </div>
+        </div>
+
+        <!-- SKU Selector -->
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+            <div class="flex items-center">
+                <label for="sku-select" class="block text-sm font-medium text-gray-700 mr-2">Select FG SKU:</label>
+                <select id="sku-select" class="block w-64 rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                    <option value="">-- Select SKU --</option>
+                    <option value="SKU001">Premium Atta (1kg)</option>
+                    <option value="SKU002">Multigrain Atta (5kg)</option>
+                    <option value="SKU003">Suji (500g)</option>
+                    <option value="SKU004">Besan (1kg)</option>
+                    <option value="SKU005">Whole Wheat Atta (10kg)</option>
+                </select>
+                <div class="ml-4">
+                    <input type="text" placeholder="Search SKU..." class="block w-64 rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Form -->
+        <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Batch Configuration for <span id="selected-sku" class="highlight-orange">[No SKU Selected]</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Left Column -->
+                <div>
+                    <!-- SKU Code -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">SKU Code</label>
+                        <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-500 text-sm" value="SKU001" readonly>
+                    </div>
+                    
+                    <!-- Default Batch Size -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Default Batch Size</label>
+                        <div class="flex">
+                            <input type="number" class="block w-24 rounded-l-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm" value="500">
+                            <select class="block w-24 rounded-r-md border-l-0 border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                                <option>Kg</option>
+                                <option>g</option>
+                                <option>Lbs</option>
+                                <option>Pieces</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Auto-labeling Components -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Auto-labeling Components</label>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="mrp-checkbox" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
+                                <label for="mrp-checkbox" class="ml-2 block text-sm text-gray-700">MRP</label>
+                                <div class="tooltip ml-1">
+                                    <i class="fas fa-info-circle text-gray-400"></i>
+                                    <span class="tooltiptext">Maximum Retail Price will be auto-filled from SKU pricing</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="pkd-checkbox" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded" checked>
+                                <label for="pkd-checkbox" class="ml-2 block text-sm text-gray-700">PKD (Packed Date)</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="expiry-checkbox" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded" checked>
+                                <label for="expiry-checkbox" class="ml-2 block text-sm text-gray-700">Expiry Date</label>
+                                <div class="tooltip ml-1">
+                                    <i class="fas fa-info-circle text-gray-400"></i>
+                                    <span class="tooltiptext">Calculated based on shelf life defined in SKU</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="barcode-checkbox" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded" checked>
+                                <label for="barcode-checkbox" class="ml-2 block text-sm text-gray-700">Barcode</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Default QC Template -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Default QC Template</label>
+                        <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                            <option>-- Select QC Template --</option>
+                            <option selected>Wheat Flour - Standard QC</option>
+                            <option>Wheat Flour - Premium QC</option>
+                            <option>Besan - Standard QC</option>
+                            <option>Suji - Standard QC</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <!-- Label Field Auto-fill Logic -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Label Field Auto-fill Logic</label>
+                        <div class="flex items-center mb-2">
+                            <input type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded" checked>
+                            <label class="ml-2 block text-sm text-gray-700">Enable Auto-fill Logic</label>
+                        </div>
+                        <div class="ml-6 space-y-2">
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 w-24">PKD:</span>
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                                    <option>Production Date</option>
+                                    <option>Packing Date</option>
+                                    <option>Dispatch Date</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 w-24">Expiry:</span>
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm">
+                                    <option>Production Date + Shelf Life</option>
+                                    <option>Packing Date + Shelf Life</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Batch Color -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Batch Color</label>
+                        <div class="flex items-center">
+                            <span class="text-sm text-gray-600">SKU Color:</span>
+                            <div class="color-preview" style="background-color: #F7941D;"></div>
+                            <span class="text-sm text-gray-600 ml-2">(Linked from SKU master)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Unit Conversions -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Unit Conversions</label>
+                        <p class="text-xs text-gray-500 mb-2">Used by Production, Inventory, and Dispatch modules</p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From Unit</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To Unit</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-2 whitespace-nowrap">Bag (10kg)</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">Pouch (1kg)</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <input type="number" class="w-16 rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm" value="10">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 whitespace-nowrap">Master Carton</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">Retail Pack (500g)</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <input type="number" class="w-16 rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm" value="20">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 whitespace-nowrap">Truck Load</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">Master Carton</td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <input type="number" class="w-16 rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm" value="100">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="mt-2 text-xs text-orange-600 hover:text-orange-800">
+                            <i class="fas fa-plus mr-1"></i> Add New Conversion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Conversion Mapping Table -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Unit Conversion Mapping Table</h2>
+            <p class="text-sm text-gray-600 mb-4">These conversions are used across Production, Inventory, and Dispatch modules for stock reconciliation.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From Unit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To Unit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Bag (10kg)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pouch (1kg)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-orange-600 hover:text-orange-900 mr-3"><i class="fas fa-edit"></i></button>
+                                <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Master Carton</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Retail Pack (500g)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-orange-600 hover:text-orange-900 mr-3"><i class="fas fa-edit"></i></button>
+                                <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Truck Load</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Master Carton</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="text-orange-600 hover:text-orange-900 mr-3"><i class="fas fa-edit"></i></button>
+                                <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 flex justify-between items-center">
+                <div>
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-save mr-1"></i> Save All Conversions
+                    </button>
+                </div>
+                <div>
+                    <button class="bg-white border border-orange-500 text-orange-500 hover:bg-orange-50 px-4 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-plus mr-1"></i> Add New Conversion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update selected SKU display when dropdown changes
+        document.getElementById('sku-select').addEventListener('change', function() {
+            const selected = this.value;
+            const display = selected ? selected : '[No SKU Selected]';
+            document.getElementById('selected-sku').textContent = display;
+        });
+    </script>
+</body>
+</html>

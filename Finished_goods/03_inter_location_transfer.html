@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Inter-Location Transfer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: rgba(247, 148, 29, 0.1);
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .sidebar-item.child {
+            padding-left: 2.5rem;
+        }
+        .sidebar-item.child.active {
+            background-color: rgba(247, 148, 29, 0.2);
+        }
+        .sidebar-item.highlighted {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .status-pending {
+            color: #FFC107;
+        }
+        .status-approved {
+            color: #28A745;
+        }
+        .status-rejected {
+            color: #DC3545;
+        }
+        .status-completed {
+            color: #17A2B8;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #F7941D;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #e07e0c;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            z-index: 1;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .searchable-dropdown {
+            position: relative;
+        }
+        .searchable-dropdown input {
+            width: 100%;
+        }
+        .searchable-dropdown .options {
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .searchable-dropdown .options.show {
+            display: block;
+        }
+        .searchable-dropdown .option {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .searchable-dropdown .option:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden">
+    <!-- Left Sidebar -->
+         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                          <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_fg_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>FG Inventory Reports</span>
+                            </a>
+                            <a href="./01_fg_inward_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Stock Inward </span>
+                            </a>
+                             <a href="./02_fg_overview.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Inventory Overview </span>
+                            </a>
+                             <a href="./03_inter_location_transfer.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">Inter-Location Transfer</span>
+                            </a>
+                             <a href="./04_rejected_stock_controler.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Hold / Rejected Stock Handler</span>
+                            </a>
+                             <a href="./05_fg_expiry_aging_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Aging & Expiry View</span>
+                            </a>
+                             <a href="./06_fg_inventory_ajdustment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Inventory Adjustment</span>
+                            </a>
+  
+                        </div>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-gray-200 p-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-exchange-alt text-orange-500 mr-3"></i>
+                    Inter-Location Transfer
+                </h1>
+                <div class="flex space-x-2">
+                    <button id="initiateTransferBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Initiate Transfer
+                    </button>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded flex items-center">
+                        <i class="fas fa-save mr-2"></i> Save as Draft
+                    </button>
+                    <button id="viewLogBtn" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 px-4 py-2 rounded flex items-center">
+                        <i class="fas fa-list mr-2"></i> View Transfer Log
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <div class="max-w-6xl mx-auto">
+                <!-- Transfer Form -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-truck-loading text-orange-500 mr-2"></i>
+                        Transfer Details
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Source Location -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Source Location <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <option value="">Select Source Location</option>
+                                    <option value="factory_store">Factory Store (A-101)</option>
+                                    <option value="main_warehouse">Main Warehouse (B-201)</option>
+                                    <option value="north_zone">North Zone Storage (C-301)</option>
+                                    <option value="south_zone">South Zone Storage (C-302)</option>
+                                    <option value="dispatch_zone">Dispatch Zone (D-401)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <i class="fas fa-warehouse text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Destination Location -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Destination Location <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <option value="">Select Destination Location</option>
+                                    <option value="factory_store">Factory Store (A-101)</option>
+                                    <option value="main_warehouse">Main Warehouse (B-201)</option>
+                                    <option value="north_zone">North Zone Storage (C-301)</option>
+                                    <option value="south_zone">South Zone Storage (C-302)</option>
+                                    <option value="dispatch_zone">Dispatch Zone (D-401)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SKU Selection -->
+                        <div class="searchable-dropdown">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">SKU <span class="text-red-500">*</span></label>
+                            <input type="text" id="skuSearch" placeholder="Search SKU..." class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <div class="options" id="skuOptions">
+                                <div class="option" data-value="SKU001">Premium Wheat Flour 5kg (SKU001)</div>
+                                <div class="option" data-value="SKU002">Premium Wheat Flour 10kg (SKU002)</div>
+                                <div class="option" data-value="SKU003">Organic Wheat Flour 5kg (SKU003)</div>
+                                <div class="option" data-value="SKU004">Organic Wheat Flour 10kg (SKU004)</div>
+                                <div class="option" data-value="SKU005">Multigrain Atta 5kg (SKU005)</div>
+                                <div class="option" data-value="SKU006">Multigrain Atta 10kg (SKU006)</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Batch ID -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Batch ID <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" id="batchSelect" disabled>
+                                    <option value="">Select SKU first</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <i class="fas fa-barcode text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quantity -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantity to Transfer <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="number" min="1" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="Enter quantity">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <span class="text-gray-500">bags</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Available: <span id="availableQty">-</span> bags</p>
+                        </div>
+                        
+                        <!-- Reason for Transfer -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Reason for Transfer <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <select class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <option value="">Select Reason</option>
+                                    <option value="dispatch">Ready for Dispatch</option>
+                                    <option value="rebalance">Rebalance Inventory</option>
+                                    <option value="clearance">Clearance / Expiry Management</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <i class="fas fa-question-circle text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Remarks -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Remarks (Optional)</label>
+                            <textarea class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" rows="2" placeholder="Additional notes about this transfer..."></textarea>
+                        </div>
+                        
+                        <!-- Approval Toggle -->
+                        <div class="md:col-span-2">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" id="approvalToggle">
+                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                                <span class="ms-3 text-sm font-medium text-gray-700">Approval Required</span>
+                            </label>
+                            <p class="text-xs text-gray-500 mt-1">Transfers over 500 bags or between certain locations require manager approval.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">
+                            <i class="fas fa-times mr-2"></i> Cancel
+                        </button>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center">
+                            <i class="fas fa-check mr-2"></i> Submit Transfer
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Transfer Summary -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-clipboard-list text-orange-500 mr-2"></i>
+                        Transfer Summary
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Summary Card 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Premium Wheat Flour 5kg</h3>
+                                    <p class="text-sm text-gray-500">Batch: WH20230515</p>
+                                </div>
+                                <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">Pending</span>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <div>
+                                    <p class="text-xs text-gray-500">From</p>
+                                    <p class="text-sm font-medium">Factory Store</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">To</p>
+                                    <p class="text-sm font-medium">Dispatch Zone</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Quantity</p>
+                                    <p class="text-sm font-medium">250 bags</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Date</p>
+                                    <p class="text-sm font-medium">15 May 2023</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+                                <span class="text-xs text-gray-500">TRX-20230515-001</span>
+                                <button class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                                    <i class="fas fa-eye mr-1"></i> View
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Summary Card 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Organic Wheat Flour 10kg</h3>
+                                    <p class="text-sm text-gray-500">Batch: WH20230510</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Completed</span>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <div>
+                                    <p class="text-xs text-gray-500">From</p>
+                                    <p class="text-sm font-medium">Main Warehouse</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">To</p>
+                                    <p class="text-sm font-medium">North Zone</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Quantity</p>
+                                    <p class="text-sm font-medium">150 bags</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Date</p>
+                                    <p class="text-sm font-medium">10 May 2023</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+                                <span class="text-xs text-gray-500">TRX-20230510-002</span>
+                                <button class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                                    <i class="fas fa-eye mr-1"></i> View
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Summary Card 3 -->
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Multigrain Atta 5kg</h3>
+                                    <p class="text-sm text-gray-500">Batch: WH20230505</p>
+                                </div>
+                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Rejected</span>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <div>
+                                    <p class="text-xs text-gray-500">From</p>
+                                    <p class="text-sm font-medium">South Zone</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">To</p>
+                                    <p class="text-sm font-medium">Dispatch Zone</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Quantity</p>
+                                    <p class="text-sm font-medium">300 bags</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Date</p>
+                                    <p class="text-sm font-medium">5 May 2023</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+                                <span class="text-xs text-gray-500">TRX-20230505-003</span>
+                                <button class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                                    <i class="fas fa-eye mr-1"></i> View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-center">
+                        <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 px-4 py-2 rounded flex items-center">
+                            <i class="fas fa-history mr-2"></i> Load More Transfers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Transfer Log Modal -->
+    <div id="transferLogModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800">
+                    <i class="fas fa-list-alt text-orange-500 mr-2"></i>
+                    Transfer Log History
+                </h3>
+                <button id="closeLogModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto custom-scrollbar">
+                <div class="mb-4 flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <input type="text" placeholder="Search transfers..." class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 w-64">
+                        <select class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center">
+                            <i class="fas fa-download mr-2"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transfer ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From → To</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TRX-20230515-001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Premium Wheat Flour 5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">WH20230515</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">250 bags</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span>Factory Store</span>
+                                        <i class="fas fa-arrow-right mx-2 text-xs text-gray-400"></i>
+                                        <span>Dispatch Zone</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15 May 2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-500 hover:text-gray-700">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TRX-20230510-002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Organic Wheat Flour 10kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">WH20230510</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">150 bags</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span>Main Warehouse</span>
+                                        <i class="fas fa-arrow-right mx-2 text-xs text-gray-400"></i>
+                                        <span>North Zone</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 May 2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-500 hover:text-gray-700">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">TRX-20230505-003</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multigrain Atta 5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">WH20230505</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">300 bags</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span>South Zone</span>
+                                        <i class="fas fa-arrow-right mx-2 text-xs text-gray-400"></i>
+                                        <span>Dispatch Zone</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 May 2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-500 hover:text-gray-700">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- More rows can be added here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">24</span> transfers
+                    </div>
+                    <div class="flex space-x-1">
+                        <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+                            Previous
+                        </button>
+                        <button class="px-3 py-1 border border-orange-500 rounded-md bg-orange-500 text-white">
+                            1
+                        </button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+                            2
+                        </button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+                            3
+                        </button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Searchable dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // SKU Searchable Dropdown
+            const skuSearch = document.getElementById('skuSearch');
+            const skuOptions = document.getElementById('skuOptions');
+            const options = document.querySelectorAll('.option');
+            
+            skuSearch.addEventListener('focus', function() {
+                skuOptions.classList.add('show');
+            });
+            
+            skuSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                options.forEach(option => {
+                    const text = option.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+            });
+            
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    skuSearch.value = this.textContent;
+                    skuOptions.classList.remove('show');
+                    
+                    // Enable batch select and populate with sample data
+                    const batchSelect = document.getElementById('batchSelect');
+                    batchSelect.disabled = false;
+                    batchSelect.innerHTML = '';
+                    
+                    // Add sample batches based on selected SKU
+                    const skuValue = this.getAttribute('data-value');
+                    const batches = getBatchesForSKU(skuValue);
+                    
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select Batch';
+                    batchSelect.appendChild(defaultOption);
+                    
+                    batches.forEach(batch => {
+                        const option = document.createElement('option');
+                        option.value = batch.id;
+                        option.textContent = batch.id + ' - ' + batch.date + ' (Qty: ' + batch.quantity + ')';
+                        batchSelect.appendChild(option);
+                    });
+                    
+                    // Update available quantity when batch is selected
+                    batchSelect.addEventListener('change', function() {
+                        const selectedBatch = batches.find(b => b.id === this.value);
+                        if (selectedBatch) {
+                            document.getElementById('availableQty').textContent = selectedBatch.quantity;
+                        } else {
+                            document.getElementById('availableQty').textContent = '-';
+                        }
+                    });
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!skuSearch.contains(e.target) && !skuOptions.contains(e.target)) {
+                    skuOptions.classList.remove('show');
+                }
+            });
+            
+            // Sample batch data
+            function getBatchesForSKU(sku) {
+                const batches = {
+                    'SKU001': [
+                        { id: 'WH20230515', date: '15 May 2023', quantity: 500 },
+                        { id: 'WH20230501', date: '1 May 2023', quantity: 320 },
+                        { id: 'WH20230420', date: '20 Apr 2023', quantity: 150 }
+                    ],
+                    'SKU002': [
+                        { id: 'WH20230512', date: '12 May 2023', quantity: 400 },
+                        { id: 'WH20230428', date: '28 Apr 2023', quantity: 280 }
+                    ],
+                    'SKU003': [
+                        { id: 'WH20230508', date: '8 May 2023', quantity: 350 },
+                        { id: 'WH20230425', date: '25 Apr 2023', quantity: 200 }
+                    ],
+                    'SKU004': [
+                        { id: 'WH20230505', date: '5 May 2023', quantity: 420 },
+                        { id: 'WH20230418', date: '18 Apr 2023', quantity: 180 }
+                    ],
+                    'SKU005': [
+                        { id: 'WH20230503', date: '3 May 2023', quantity: 380 },
+                        { id: 'WH20230422', date: '22 Apr 2023', quantity: 220 }
+                    ],
+                    'SKU006': [
+                        { id: 'WH20230510', date: '10 May 2023', quantity: 450 },
+                        { id: 'WH20230430', date: '30 Apr 2023', quantity: 250 }
+                    ]
+                };
+                return batches[sku] || [];
+            }
+            
+            // Transfer Log Modal
+            const viewLogBtn = document.getElementById('viewLogBtn');
+            const closeLogModal = document.getElementById('closeLogModal');
+            const transferLogModal = document.getElementById('transferLogModal');
+            
+            viewLogBtn.addEventListener('click', function() {
+                transferLogModal.classList.remove('hidden');
+            });
+            
+            closeLogModal.addEventListener('click', function() {
+                transferLogModal.classList.add('hidden');
+            });
+            
+            // Close modal when clicking outside
+            transferLogModal.addEventListener('click', function(e) {
+                if (e.target === transferLogModal) {
+                    transferLogModal.classList.add('hidden');
+                }
+            });
+            
+            // Initiate Transfer Button
+            const initiateTransferBtn = document.getElementById('initiateTransferBtn');
+            initiateTransferBtn.addEventListener('click', function() {
+                // Scroll to form
+                document.querySelector('.bg-white.rounded-lg.shadow-md.p-6').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

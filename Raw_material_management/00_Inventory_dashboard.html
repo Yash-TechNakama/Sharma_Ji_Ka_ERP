@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Raw Material Inventory Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F7941D',
+                        secondary: '#F8F9FA',
+                        danger: '#DC3545',
+                        warning: '#FFC107',
+                        success: '#28A745',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar-collapsed {
+            width: 70px;
+        }
+        .sidebar-expanded {
+            width: 250px;
+        }
+        .main-content {
+            transition: margin-left 0.3s ease;
+        }
+        .sidebar-hover:hover {
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        .alert-feed {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        /* Custom scrollbar */
+        .alert-feed::-webkit-scrollbar {
+            width: 5px;
+        }
+        .alert-feed::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .alert-feed::-webkit-scrollbar-thumb {
+            background: #F7941D;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+       <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-white border-r border-gray-200">
+                <div class="flex items-center justify-center h-16 px-4 bg-white border-b border-gray-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-warehouse text-2xl text-orange-500 mr-2"></i>
+                        <span class="text-xl font-semibold text-gray-800">Sharma Ji ERP</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto">
+                    <nav class="flex-1 space-y-2">
+                        <div class="space-y-1">
+                            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Phase 1 ERP Modules</p>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-lock mr-3 text-gray-400"></i>
+                                Access & Admin
+                            </a>
+                            <a href="../product_catalog_management/01_product_family_master.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-boxes mr-3 text-gray-400"></i>
+                                Product & Catalog Management
+                            </a>
+                            <a href="../procurement/00_dashboard_procurement_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-shopping-cart mr-3 text-gray-400"></i>
+                                Procurement Management
+                            </a>
+                            <div class="space-y-1">
+                                <button class="flex items-center w-full px-3 py-2 text-sm font-medium text-left bg-orange-50 rounded-md text-orange-600">
+                                    <i class="fas fa-pallet mr-3 text-orange-500"></i>
+                                    Raw Material Inventory (Store)
+                                    <i class="fas fa-chevron-down ml-auto text-orange-400 text-xs"></i>
+                                </button>
+                                <div class="pl-8 space-y-1">
+                                    <a href="./00_Inventory_dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-orange-600 rounded-md hover:bg-orange-50">
+                                        <i class="fas fa-tachometer-alt mr-3 text-orange-500"></i>
+                                        Inventory Dashboard
+                                    </a>
+                                    <a href="./01_add_inward_entry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-arrow-down mr-3 text-gray-400"></i>
+                                        Inward Entry (GRN)
+                                    </a>
+                                    <a href="./02_Qc_status_view.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-check-circle mr-3 text-gray-400"></i>
+                                        QC Status View
+                                    </a>
+                                    <a href="./03_inventory_movement.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md bg-gray-50">
+                                        <i class="fas fa-exchange-alt mr-3 text-gray-400"></i>
+                                        Inventory Movement
+                                    </a>
+                                    <a href="./04_stock_ledger.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-book mr-3 text-gray-400"></i>
+                                        Stock Ledger
+                                    </a>
+                                    <a href="./05_reorder_alerts.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-bell mr-3 text-gray-400"></i>
+                                        Reorder & Low Stock Alerts
+                                    </a>
+                                    <a href="./06_move_to_production.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-industry mr-3 text-gray-400"></i>
+                                        Issue to Production
+                                    </a>
+                                    <a href="./07_physical_stock_reconcilliation.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-clipboard-check mr-3 text-gray-400"></i>
+                                        Physical Stock Reconciliation
+                                    </a>
+                                    <a href="./08_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-chart-bar mr-3 text-gray-400"></i>
+                                        Reports
+                                    </a>
+                                </div>
+                            </div>
+                            <a href="../Planning_and_production/00_production_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-cogs mr-3 text-gray-400"></i>
+                                Production & Planning
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-flask mr-3 text-gray-400"></i>
+                                Quality Control (RM + Production)
+                            </a>
+                            <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-truck mr-3 text-gray-400"></i>
+                                Dispatch & Logistics
+                            </a>
+                            <a href="../Sales_and_Chanel/01_channel_po_entry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-shopping-bag mr-3 text-gray-400"></i>
+                                Sales & Channel (PO Tracking)
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-money-bill-wave mr-3 text-gray-400"></i>
+                                Accounts & Finance
+                            </a>
+                            <a href="../Index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-chart-line mr-3 text-gray-400"></i>
+                                Reports & Dashboards
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-gray-800">
+                    <i class="fas fa-warehouse text-primary mr-2"></i>
+                    Raw Material Inventory Dashboard
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..." class="pl-8 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-500 hover:text-primary cursor-pointer"></i>
+                            <span class="absolute -top-1 -right-1 bg-danger text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        </div>
+                        <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white font-semibold">SK</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main class="p-4">
+                <!-- Section 1: Real-Time Stock Snapshot -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-success">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-500">Total RM SKUs</p>
+                                <h3 class="text-2xl font-bold">83</h3>
+                            </div>
+                            <i class="fas fa-boxes text-success text-xl"></i>
+                        </div>
+                        <p class="text-xs text-success mt-2"><i class="fas fa-check-circle mr-1"></i> All items accounted</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-success">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-500">In Stock Qty</p>
+                                <h3 class="text-2xl font-bold">1,54,000 Kg</h3>
+                            </div>
+                            <i class="fas fa-weight text-success text-xl"></i>
+                        </div>
+                        <p class="text-xs text-success mt-2"><i class="fas fa-check-circle mr-1"></i> Within capacity</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-warning">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-500">Expiring in 7 Days</p>
+                                <h3 class="text-2xl font-bold">4 Batches</h3>
+                            </div>
+                            <i class="fas fa-hourglass-end text-warning text-xl"></i>
+                        </div>
+                        <p class="text-xs text-warning mt-2"><i class="fas fa-exclamation-triangle mr-1"></i> Requires action</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-warning">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-500">Batches in QC</p>
+                                <h3 class="text-2xl font-bold">6</h3>
+                            </div>
+                            <i class="fas fa-flask text-warning text-xl"></i>
+                        </div>
+                        <p class="text-xs text-warning mt-2"><i class="fas fa-clock mr-1"></i> Pending approval</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-danger">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-500">Under Reorder Level</p>
+                                <h3 class="text-2xl font-bold">9 Items</h3>
+                            </div>
+                            <i class="fas fa-exclamation-triangle text-danger text-xl"></i>
+                        </div>
+                        <p class="text-xs text-danger mt-2"><i class="fas fa-exclamation-circle mr-1"></i> Critical stock</p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Inventory Health Table -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="font-semibold text-lg">
+                            <i class="fas fa-heartbeat text-primary mr-2"></i>
+                            Inventory Health Status
+                        </h3>
+                        <div class="flex space-x-2">
+                            <select class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                <option>All Categories</option>
+                                <option>Wheat</option>
+                                <option>Packaging</option>
+                                <option>Others</option>
+                            </select>
+                            <select class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                <option>All QC Status</option>
+                                <option>Passed</option>
+                                <option>Pending</option>
+                                <option>Failed</option>
+                            </select>
+                            <select class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                <option>All Alerts</option>
+                                <option>Expiry Soon</option>
+                                <option>Reorder</option>
+                                <option>Critical</option>
+                            </select>
+                            <button class="bg-primary text-white px-3 py-1 rounded text-sm hover:bg-opacity-90">
+                                <i class="fas fa-filter mr-1"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">In Stock</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch Age</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Movement</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alert Type</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM-WHT-01</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <i class="fas fa-wheat text-yellow-500 mr-1"></i> MP Sharbati Wheat
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">22,000 Kg</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">18 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Passed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">29-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM-WHT-04</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <i class="fas fa-wheat text-yellow-500 mr-1"></i> Lokwan Wheat
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,500 Kg</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">42 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            <i class="fas fa-clock mr-1"></i> Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            <i class="fas fa-exclamation-circle mr-1"></i> Expiry Soon
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM-POUCH</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <i class="fas fa-box-open text-blue-500 mr-1"></i> 1kg Pouch Film
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Passed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            <i class="fas fa-shopping-cart mr-1"></i> Reorder
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM-LBL-02</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <i class="fas fa-tag text-blue-500 mr-1"></i> Product Labels
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8,500</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Passed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 cursor-pointer">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM-OIL-01</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <i class="fas fa-oil-can text-green-500 mr-1"></i> Edible Oil
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,200 L</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">35 days</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            <i class="fas fa-times mr-1"></i> Failed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20-Jul-2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            <i class="fas fa-ban mr-1"></i> QC Failed
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 flex justify-between items-center">
+                        <p class="text-sm text-gray-500">Showing 5 of 83 items</p>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">Previous</button>
+                            <button class="px-3 py-1 border rounded bg-primary text-white text-sm hover:bg-opacity-90">1</button>
+                            <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">2</button>
+                            <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">3</button>
+                            <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3 & 4: Charts and Movement Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- Top Consumed Materials Chart -->
+                    <div class="lg:col-span-2 bg-white rounded-lg shadow p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-lg">
+                                <i class="fas fa-chart-bar text-primary mr-2"></i>
+                                Top Consumed Materials (Last 30 Days)
+                            </h3>
+                            <div class="flex space-x-2">
+                                <select class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary">
+                                    <option>Kg</option>
+                                    <option>UOM</option>
+                                    <option>% of total</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="consumptionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Movement Summary -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-lg">
+                                <i class="fas fa-exchange-alt text-primary mr-2"></i>
+                                Movement Summary (Last 7 Days)
+                            </h3>
+                            <button class="text-primary text-sm font-medium hover:underline">View All</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                <div class="flex items-center">
+                                    <i class="fas fa-arrows-alt-h text-blue-500 mr-2"></i>
+                                    <span>Internal Transfers</span>
+                                </div>
+                                <span class="font-semibold">8</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                <div class="flex items-center">
+                                    <i class="fas fa-industry text-green-500 mr-2"></i>
+                                    <span>Issues to Production</span>
+                                </div>
+                                <span class="font-semibold">12</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                <div class="flex items-center">
+                                    <i class="fas fa-adjust text-purple-500 mr-2"></i>
+                                    <span>Stock Adjustments</span>
+                                </div>
+                                <span class="font-semibold">3</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                <div class="flex items-center">
+                                    <i class="fas fa-undo text-red-500 mr-2"></i>
+                                    <span>Rejections/Returns</span>
+                                </div>
+                                <span class="font-semibold">1</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <canvas id="movementChart" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Alerts & Warnings Feed -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200">
+                        <h3 class="font-semibold text-lg">
+                            <i class="fas fa-exclamation-triangle text-primary mr-2"></i>
+                            Alerts & Warnings Feed
+                        </h3>
+                    </div>
+                    <div class="alert-feed p-4">
+                        <div class="space-y-4">
+                            <!-- Alert Item -->
+                            <div class="flex items-start p-3 border-l-4 border-danger rounded bg-red-50">
+                                <i class="fas fa-hourglass-end text-danger mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Batch Expiring Soon</p>
+                                    <p class="text-sm text-gray-600">Batch #WH-2307-05 (Lokwan Wheat) will expire in 3 days (5000 Kg)</p>
+                                    <p class="text-xs text-gray-500 mt-1">Today, 10:45 AM</p>
+                                </div>
+                            </div>
+                            <!-- Alert Item -->
+                            <div class="flex items-start p-3 border-l-4 border-warning rounded bg-yellow-50">
+                                <i class="fas fa-flask text-warning mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">QC Delayed</p>
+                                    <p class="text-sm text-gray-600">QC for Batch #PK-2307-02 (1kg Pouch Film) is pending for 2 days</p>
+                                    <p class="text-xs text-gray-500 mt-1">Today, 9:30 AM</p>
+                                </div>
+                            </div>
+                            <!-- Alert Item -->
+                            <div class="flex items-start p-3 border-l-4 border-danger rounded bg-red-50">
+                                <i class="fas fa-shopping-cart text-danger mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Reorder Alert</p>
+                                    <p class="text-sm text-gray-600">Stock for RM-POUCH (1kg Pouch Film) is below reorder level (Current: 12,000, Reorder: 15,000)</p>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday, 4:20 PM</p>
+                                </div>
+                            </div>
+                            <!-- Alert Item -->
+                            <div class="flex items-start p-3 border-l-4 border-warning rounded bg-yellow-50">
+                                <i class="fas fa-unlink text-warning mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Unlinked GRN</p>
+                                    <p class="text-sm text-gray-600">GRN #GRN-2307-12 for Edible Oil is not linked to any PO</p>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday, 2:15 PM</p>
+                                </div>
+                            </div>
+                            <!-- Alert Item -->
+                            <div class="flex items-start p-3 border-l-4 border-danger rounded bg-red-50">
+                                <i class="fas fa-chart-line text-danger mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Overconsumption</p>
+                                    <p class="text-sm text-gray-600">MP Sharbati Wheat consumption exceeds forecast by 15% in Production Order #PO-2307-08</p>
+                                    <p class="text-xs text-gray-500 mt-1">Jul 25, 2025, 11:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-center">
+                        <button class="text-primary font-medium hover:underline">View All Alerts</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Consumption Chart
+        const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
+        const consumptionChart = new Chart(consumptionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['MP Sharbati Wheat', 'Lokwan Wheat', '1kg Pouch Film', 'Product Labels', 'Edible Oil'],
+                datasets: [{
+                    label: 'Quantity Issued (Kg)',
+                    data: [12500, 9800, 7500, 0, 1200],
+                    backgroundColor: [
+                        'rgba(247, 148, 29, 0.7)',
+                        'rgba(247, 148, 29, 0.7)',
+                        'rgba(247, 148, 29, 0.7)',
+                        'rgba(247, 148, 29, 0.7)',
+                        'rgba(247, 148, 29, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(247, 148, 29, 1)',
+                        'rgba(247, 148, 29, 1)',
+                        'rgba(247, 148, 29, 1)',
+                        'rgba(247, 148, 29, 1)',
+                        'rgba(247, 148, 29, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Quantity (Kg)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Movement Chart
+        const movementCtx = document.getElementById('movementChart').getContext('2d');
+        const movementChart = new Chart(movementCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Internal Transfers', 'Issues to Prod.', 'Stock Adjustments', 'Rejections/Returns'],
+                datasets: [{
+                    data: [8, 12, 3, 1],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Randomly update some metrics
+            const randomUpdate = Math.floor(Math.random() * 5);
+            if (randomUpdate === 0) {
+                document.querySelectorAll('.card-metric')[1].textContent = (154000 + Math.floor(Math.random() * 2000)).toLocaleString() + ' Kg';
+            }
+        }, 10000);
+
+        // Make table rows clickable
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                alert('Opening detailed view for: ' + row.cells[1].textContent.trim());
+            });
+        });
+    </script>
+</body>
+</html>

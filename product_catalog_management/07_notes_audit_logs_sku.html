@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKU Audit Log & Notes | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF6E9;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .expandable-row {
+            transition: all 0.3s ease;
+        }
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .expandable-row.expanded .expandable-content {
+            max-height: 500px;
+        }
+        .tag-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        .tag {
+            background-color: #F7941D;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .tag-remove {
+            margin-left: 4px;
+            cursor: pointer;
+        }
+        .mention {
+            background-color: #E3F2FD;
+            color: #1976D2;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .note-card {
+            transition: all 0.2s ease;
+        }
+        .note-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .ql-toolbar.ql-snow {
+            border-radius: 6px 6px 0 0;
+        }
+        .ql-container.ql-snow {
+            border-radius: 0 0 6px 6px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+            <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./01_product_family_master.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Product Family Master</span>
+                            </a>
+                            
+                            <a href="./02_sku_crud.html" class="block px-3 py-2 text-sm font-medium rounded-md bg-gray-50">
+                                  <span>SKU Creation & Edit</span>
+                            </a>
+                            
+                            <a href="./03_label_media_upload.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Label & Media Upload</span>
+                            </a>
+                            
+                            <a href="./04_chanel_price_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Channel & Regional Pricing</span>
+                            </a>
+                            
+                            <a href="./05_sku_catalog_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU List & Catalog View</span>
+                            </a>
+                            
+                            <a href="./06_batch_setting.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Settings (FG SKUs)</span>
+                            </a>
+                            
+                            <a href="./07_notes_audit_logs_sku.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">SKU Audit Log & Notes</span>
+                              
+
+                            </a>
+                        </div>
+                        
+                         <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Procurement Management
+                        </a>
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold text-gray-800">SKU Audit Log & Notes</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <select class="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-orange-500">
+                                <option>Select SKU</option>
+                                <option>ATTA_5KG_PREM</option>
+                                <option>ATTA_10KG_PREM</option>
+                                <option>ATTA_5KG_STD</option>
+                                <option>ATTA_10KG_STD</option>
+                                <option>ATTA_1KG_SAMP</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Live</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="flex-1 overflow-hidden flex">
+                <!-- Audit Log Section -->
+                <div class="w-2/3 overflow-y-auto p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                            <h2 class="font-medium text-gray-800">Audit Log History</h2>
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <select class="block appearance-none bg-white border border-gray-300 text-gray-700 py-1 px-3 pr-8 rounded text-sm leading-tight focus:outline-none focus:border-orange-500">
+                                        <option>Filter by Field</option>
+                                        <option>Shelf Life</option>
+                                        <option>QC Template</option>
+                                        <option>Status</option>
+                                        <option>Pricing</option>
+                                        <option>Category</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <select class="block appearance-none bg-white border border-gray-300 text-gray-700 py-1 px-3 pr-8 rounded text-sm leading-tight focus:outline-none focus:border-orange-500">
+                                        <option>Filter by User</option>
+                                        <option>Yash S.</option>
+                                        <option>Mohit G.</option>
+                                        <option>Admin</option>
+                                        <option>Priya M.</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                                <button class="bg-orange-500 hover:bg-orange-600 text-white py-1 px-3 rounded text-sm flex items-center">
+                                    <i class="fas fa-download mr-1"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field Changed</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Old Value</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New Value</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Changed By</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- Row 1 -->
+                                    <tr class="expandable-row hover:bg-gray-50 cursor-pointer" onclick="toggleRow(this)">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock text-gray-400 mr-2"></i>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">10-Jul-2025</div>
+                                                    <div class="text-xs text-gray-500">14:20</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="tooltip">
+                                                    <span class="text-sm text-gray-900">Shelf Life</span>
+                                                    <span class="tooltiptext">Duration from production until product expiry</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">180 Days</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">270 Days</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">YS</div>
+                                                <span class="ml-2 text-sm text-gray-900">Yash S.</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Based on packaging type</td>
+                                    </tr>
+                                    <tr class="expandable-content">
+                                        <td colspan="6" class="px-6 py-4 bg-gray-50">
+                                            <div class="text-sm text-gray-700">
+                                                <p><strong>Additional Context:</strong> The shelf life was extended after switching to vacuum-sealed packaging which better preserves the flour quality. This change was approved by QC team after accelerated aging tests.</p>
+                                                <div class="mt-2 flex items-center text-xs text-gray-500">
+                                                    <i class="fas fa-link mr-1"></i>
+                                                    <span>Linked to: Packaging Change Request #PR-2025-0456</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Row 2 -->
+                                    <tr class="expandable-row hover:bg-gray-50 cursor-pointer" onclick="toggleRow(this)">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock text-gray-400 mr-2"></i>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">09-Jul-2025</div>
+                                                    <div class="text-xs text-gray-500">09:02</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="tooltip">
+                                                    <span class="text-sm text-gray-900">QC Template</span>
+                                                    <span class="tooltiptext">Quality control checklist used for this product</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Template A</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">Template C</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold">MG</div>
+                                                <span class="ml-2 text-sm text-gray-900">Mohit G.</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Updated post QC fail</td>
+                                    </tr>
+                                    <tr class="expandable-content">
+                                        <td colspan="6" class="px-6 py-4 bg-gray-50">
+                                            <div class="text-sm text-gray-700">
+                                                <p><strong>Additional Context:</strong> QC failure reported for batch #FG-2025-0789 due to moisture content exceeding limits. Template C includes additional moisture tests and stricter acceptance criteria.</p>
+                                                <div class="mt-2 flex items-center text-xs text-gray-500">
+                                                    <i class="fas fa-link mr-1"></i>
+                                                    <span>Linked to: QC Report #QC-2025-0342</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Row 3 -->
+                                    <tr class="expandable-row hover:bg-gray-50 cursor-pointer" onclick="toggleRow(this)">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-clock text-gray-400 mr-2"></i>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">03-Jul-2025</div>
+                                                    <div class="text-xs text-gray-500">18:47</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="tooltip">
+                                                    <span class="text-sm text-gray-900">Status</span>
+                                                    <span class="tooltiptext">Current lifecycle state of the SKU</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Draft</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">Live</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="w-6 h-6 rounded-full bg-gray-500 flex items-center justify-center text-white text-xs font-bold">A</div>
+                                                <span class="ml-2 text-sm text-gray-900">Admin</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">First publish</td>
+                                    </tr>
+                                    <tr class="expandable-content">
+                                        <td colspan="6" class="px-6 py-4 bg-gray-50">
+                                            <div class="text-sm text-gray-700">
+                                                <p><strong>Additional Context:</strong> SKU was moved to Live status after completing all setup including pricing, packaging specifications, and quality control parameters. This makes the product available for order across all channels.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">24</span> entries
+                            </div>
+                            <div class="flex space-x-1">
+                                <button class="px-3 py-1 border border-gray-300 rounded text-sm bg-white text-gray-700 hover:bg-gray-50">
+                                    Previous
+                                </button>
+                                <button class="px-3 py-1 border border-orange-500 rounded text-sm bg-orange-50 text-orange-600 font-medium">
+                                    1
+                                </button>
+                                <button class="px-3 py-1 border border-gray-300 rounded text-sm bg-white text-gray-700 hover:bg-gray-50">
+                                    2
+                                </button>
+                                <button class="px-3 py-1 border border-gray-300 rounded text-sm bg-white text-gray-700 hover:bg-gray-50">
+                                    3
+                                </button>
+                                <button class="px-3 py-1 border border-gray-300 rounded text-sm bg-white text-gray-700 hover:bg-gray-50">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes Panel -->
+                <div class="w-1/3 border-l border-gray-200 overflow-y-auto bg-gray-50 p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <div class="p-4 border-b border-gray-200">
+                            <h2 class="font-medium text-gray-800">Internal Notes</h2>
+                            <p class="text-xs text-gray-500">Add notes visible to your team members</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Add Note</label>
+                                <div class="border border-gray-300 rounded-lg">
+                                    <div id="editor" class="min-h-[100px] p-2"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                                <div class="tag-input-container">
+                                    <div class="tag">
+                                        #MRPChange
+                                        <span class="tag-remove" onclick="removeTag(this)">×</span>
+                                    </div>
+                                    <input type="text" id="tag-input" class="flex-1 min-w-[100px] outline-none text-sm" placeholder="Add tag..." onkeydown="handleTagInput(event)">
+                                </div>
+                                <div class="mt-1 text-xs text-gray-500">Common tags: #QCUpdate, #Marketing, #BlockedSKU</div>
+                            </div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <button class="bg-orange-500 hover:bg-orange-600 text-white py-1 px-3 rounded text-sm flex items-center">
+                                        <i class="fas fa-at mr-1"></i> Mention
+                                    </button>
+                                </div>
+                                <div class="flex items-center">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-orange-500 rounded border-gray-300">
+                                        <span class="ml-2 text-sm text-gray-700">Internal Only</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded text-sm font-medium">
+                                Save Note
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Note 1 -->
+                        <div class="note-card bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">YS</div>
+                                    <div class="ml-2">
+                                        <p class="text-sm font-medium">Yash Sharma</p>
+                                        <p class="text-xs text-gray-500">10-Jul-2025 15:30</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-1">
+                                    <span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded">#MRPChange</span>
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded">#Pricing</span>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-700 mb-2">
+                                <p>MRP needs to be updated from ₹250 to ₹275 for the 5kg premium pack due to increased packaging costs. <span class="mention">@Mohit G.</span> please review the new cost sheet and approve.</p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-gray-500 border-t border-gray-100 pt-2">
+                                <div>
+                                    <i class="fas fa-eye-slash mr-1"></i> Internal Only
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="text-orange-500 hover:text-orange-700">Edit</button>
+                                    <button class="text-red-500 hover:text-red-700">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Note 2 -->
+                        <div class="note-card bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold">MG</div>
+                                    <div class="ml-2">
+                                        <p class="text-sm font-medium">Mohit Gupta</p>
+                                        <p class="text-xs text-gray-500">09-Jul-2025 11:45</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-1">
+                                    <span class="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded">#QCUpdate</span>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-700 mb-2">
+                                <p>QC team identified higher moisture content in recent batches. Temporary hold on production until root cause is identified. <span class="mention">@Priya M.</span> please coordinate with production team.</p>
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Batch #FG-2025-0789: 14.2% moisture (limit 13.5%)</li>
+                                    <li>Batch #FG-2025-0790: 14.5% moisture</li>
+                                </ul>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-gray-500 border-t border-gray-100 pt-2">
+                                <div>
+                                    <i class="fas fa-eye mr-1"></i> Viewable by All
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="text-orange-500 hover:text-orange-700">Edit</button>
+                                    <button class="text-red-500 hover:text-red-700">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Note 3 -->
+                        <div class="note-card bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold">PM</div>
+                                    <div class="ml-2">
+                                        <p class="text-sm font-medium">Priya Mehta</p>
+                                        <p class="text-xs text-gray-500">08-Jul-2025 09:15</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-1">
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded">#Marketing</span>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-700 mb-2">
+                                <p>New promotional campaign starting next month will feature this SKU. Need to ensure sufficient inventory levels. <span class="mention">@Yash S.</span> can you confirm production schedule?</p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-gray-500 border-t border-gray-100 pt-2">
+                                <div>
+                                    <i class="fas fa-eye mr-1"></i> Viewable by All
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="text-orange-500 hover:text-orange-700">Edit</button>
+                                    <button class="text-red-500 hover:text-red-700">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle expandable rows in audit log
+        function toggleRow(row) {
+            row.classList.toggle('expanded');
+            const content = row.nextElementSibling;
+            content.classList.toggle('hidden');
+        }
+
+        // Tag input functionality
+        function handleTagInput(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== '') {
+                addTag(event.target.value.trim());
+                event.target.value = '';
+            }
+        }
+
+        function addTag(tagText) {
+            if (!tagText.startsWith('#')) {
+                tagText = '#' + tagText;
+            }
+            
+            const tagContainer = document.querySelector('.tag-input-container');
+            const tagDiv = document.createElement('div');
+            tagDiv.className = 'tag';
+            tagDiv.innerHTML = `
+                ${tagText}
+                <span class="tag-remove" onclick="removeTag(this)">×</span>
+            `;
+            tagContainer.insertBefore(tagDiv, document.getElementById('tag-input'));
+        }
+
+        function removeTag(element) {
+            element.parentElement.remove();
+        }
+
+        // Initialize Quill editor for rich text notes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate Quill editor initialization
+            const editor = document.getElementById('editor');
+            editor.innerHTML = '<p>Type your note here...</p>';
+            
+            // This would be replaced with actual Quill initialization in a real implementation
+            // var quill = new Quill('#editor', {
+            //     theme: 'snow',
+            //     modules: {
+            //         toolbar: [
+            //             ['bold', 'italic', 'underline'],
+            //             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            //             ['link', 'image']
+            //         ]
+            //     },
+            //     placeholder: 'Type your note here...'
+            // });
+        });
+
+        // Mention functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mentionButtons = document.querySelectorAll('button:has(.fa-at)');
+            mentionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const editor = document.getElementById('editor');
+                    const mention = document.createElement('span');
+                    mention.className = 'mention';
+                    mention.textContent = '@';
+                    editor.appendChild(mention);
+                    editor.focus();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

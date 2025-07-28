@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRN Entry | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            border-left: 4px solid #d97706;
+            background-color: #fef3c7;
+        }
+        .submodule-item.active {
+            background-color: #fef3c7;
+            font-weight: 600;
+        }
+        .file-upload {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .file-upload:hover {
+            border-color: #d97706;
+        }
+        .file-upload.dragover {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .qc-pass {
+            background-color: #ecfdf5;
+            color: #059669;
+        }
+        .qc-fail {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        .qc-pending {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+        .over-received {
+            background-color: #fee2e2;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+           <!-- Sidebar -->
+              <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Procurement Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./00_dashboard_procurement_reports.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Procurement Reports</span>
+                            </a>
+                            <a href="./01_list_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order List</span>
+                            </a>
+                            <a href="./02_add_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight">Create New Purchase Order</span>
+                            </a>
+                            <a href="./03_detail_view_purchase_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order Detail View</span>
+                            </a>
+                            <a href="./04_GRN_add.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">GRN Entry</span>
+                            </a>
+                            <a href="./05_GRN_list_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>GRN List View</span>
+                            </a>
+                            <a href="./06_vendor_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Vendor Management</span>
+                            </a>
+                        </div>
+                        
+        
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Header -->
+            <div class="bg-white border-b border-gray-200 p-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">New GRN Entry</h1>
+                        <p class="text-sm text-gray-500">Record receipt of raw materials against purchase orders</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 flex items-center">
+                            <i class="fas fa-save mr-2"></i> Save as Draft
+                        </button>
+                        <button id="submitBtn" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i> Submit GRN
+                        </button>
+                        <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 flex items-center">
+                            <i class="fas fa-times mr-2"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Form -->
+            <div class="p-6">
+                <!-- Step 1: Link to PO -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-medium text-gray-800 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center mr-2">1</span>
+                            Link to Purchase Order (Optional)
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Search PO</label>
+                                <div class="flex">
+                                    <input type="text" class="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" placeholder="PO Number or Vendor">
+                                    <button class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700">
+                                        <i class="fas fa-search mr-2"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex items-center h-5">
+                                    <input id="manual-grn" name="manual-grn" type="checkbox" class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
+                                </div>
+                                <label for="manual-grn" class="ml-2 block text-sm text-gray-700">
+                                    Create Manual GRN (without PO reference)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="po-details" class="mt-6 bg-amber-50 p-4 rounded-md border border-amber-200">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <p class="text-sm text-gray-500">PO Number</p>
+                                    <p class="font-medium">PO/2023/00456</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Vendor</p>
+                                    <p class="font-medium">Grain Traders India Pvt. Ltd.</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">PO Date</p>
+                                    <p class="font-medium">15-Mar-2023</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: GRN Information -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-medium text-gray-800 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center mr-2">2</span>
+                            GRN Information
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">GRN Number</label>
+                                <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border bg-gray-100" value="GRN/2023/00456" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">GRN Date</label>
+                                <div class="relative">
+                                    <input type="date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" value="2023-03-20">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <i class="fas fa-calendar text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Vendor Name</label>
+                                <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border bg-gray-100" value="Grain Traders India Pvt. Ltd." readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle Number</label>
+                                <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" placeholder="DL 01 AB 1234">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Driver Name</label>
+                                <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" placeholder="Optional">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Weighment Slip No.</label>
+                                <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" placeholder="WS/2023/00123">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Receiving Location</label>
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border">
+                                    <option>Main Warehouse - Delhi</option>
+                                    <option>Production Plant - Noida</option>
+                                    <option>Quality Control Lab</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Material Received -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-medium text-gray-800 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center mr-2">3</span>
+                            Material Received
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Code</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UOM</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordered Qty</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Received Qty</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Status</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Premium Wheat Grain</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kg</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5000</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="number" class="block w-24 rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" value="5100">
+                                            <span class="text-xs text-red-600 mt-1 block">Over received by 100 kg</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border qc-pending">
+                                                <option selected>Pending</option>
+                                                <option>Pass</option>
+                                                <option>Fail</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" placeholder="Remarks">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM005</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Fortification Premix</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kg</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="number" class="block w-24 rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" value="50">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border qc-pass">
+                                                <option>Pending</option>
+                                                <option selected>Pass</option>
+                                                <option>Fail</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" placeholder="Remarks" value="Batch No. FTX-456">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM012</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Packaging Bags (25kg)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pcs</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">200</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="number" class="block w-24 rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" value="195">
+                                            <span class="text-xs text-red-600 mt-1 block">Short received by 5 pcs</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border qc-fail">
+                                                <option>Pending</option>
+                                                <option>Pass</option>
+                                                <option selected>Fail</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-3 py-1 border" placeholder="Remarks" value="5 bags damaged in transit">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-amber-700 bg-amber-100 hover:bg-amber-200">
+                                <i class="fas fa-plus mr-1"></i> Add Another Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Attachments -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-medium text-gray-800 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center mr-2">4</span>
+                            Attachments
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div id="file-upload" class="file-upload rounded-lg p-8 text-center cursor-pointer">
+                            <div class="flex flex-col items-center justify-center">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                <p class="text-sm text-gray-600 mb-1">Drag & drop files here or click to browse</p>
+                                <p class="text-xs text-gray-500">Supports JPG, PNG, PDF (Max 5MB each)</p>
+                                <button class="mt-4 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    <i class="fas fa-folder-open mr-2"></i> Select Files
+                                </button>
+                            </div>
+                            <input type="file" class="hidden" multiple>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-700 mb-3">Uploaded Files</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 border border-gray-200 rounded-md">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-file-pdf text-2xl text-red-500"></i>
+                                    </div>
+                                    <div class="ml-4 flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 truncate">Invoice_GRN456.pdf</p>
+                                        <p class="text-xs text-gray-500">1.2 MB</p>
+                                    </div>
+                                    <div class="ml-4 flex-shrink-0">
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 border border-gray-200 rounded-md">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-file-image text-2xl text-blue-500"></i>
+                                    </div>
+                                    <div class="ml-4 flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 truncate">Weighment_Slip.jpg</p>
+                                        <p class="text-xs text-gray-500">2.4 MB</p>
+                                    </div>
+                                    <div class="ml-4 flex-shrink-0">
+                                        <button class="text-gray-400 hover:text-red-500">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Notes & Submit -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h2 class="text-lg font-medium text-gray-800 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center mr-2">5</span>
+                            Notes & Submit
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Internal Notes</label>
+                            <textarea id="notes" rows="3" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 px-4 py-2 border" placeholder="Any special instructions or observations..."></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-3">
+                            <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 flex items-center">
+                                <i class="fas fa-save mr-2"></i> Save as Draft
+                            </button>
+                            <button id="finalSubmitBtn" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 flex items-center">
+                                <i class="fas fa-check-circle mr-2"></i> Submit GRN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // File upload drag and drop functionality
+        const fileUpload = document.getElementById('file-upload');
+        const fileInput = fileUpload.querySelector('input[type="file"]');
+        
+        fileUpload.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.classList.add('dragover');
+        });
+        
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.classList.remove('dragover');
+        });
+        
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.classList.remove('dragover');
+            fileInput.files = e.dataTransfer.files;
+            // Here you would handle the file upload
+        });
+        
+        // QC Status dropdown styling
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function() {
+                // Remove all classes first
+                this.classList.remove('qc-pending', 'qc-pass', 'qc-fail');
+                
+                // Add appropriate class based on selection
+                if(this.value === 'Pending') {
+                    this.classList.add('qc-pending');
+                } else if(this.value === 'Pass') {
+                    this.classList.add('qc-pass');
+                } else if(this.value === 'Fail') {
+                    this.classList.add('qc-fail');
+                }
+            });
+        });
+        
+        // Submit button validation
+        document.getElementById('finalSubmitBtn').addEventListener('click', function() {
+            alert('GRN submitted successfully! This record will now be locked and sent to Inventory and Quality Control modules.');
+        });
+    </script>
+</body>
+</html>

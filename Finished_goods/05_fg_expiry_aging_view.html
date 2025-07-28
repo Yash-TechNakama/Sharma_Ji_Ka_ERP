@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FG Aging & Expiry View | Sharma Ji Ka Aata</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF6E9;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.child.active {
+            background-color: #FEF6E9;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.child.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .status-healthy {
+            background-color: #ECFDF3;
+            color: #027A48;
+        }
+        .status-near-expiry {
+            background-color: #FFFAEB;
+            color: #B54708;
+        }
+        .status-expired {
+            background-color: #FEF3F2;
+            color: #B42318;
+        }
+        .table-row:hover {
+            background-color: #F8F9FA;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden">
+    <!-- Left Sidebar -->
+         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                          <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_fg_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>FG Inventory Reports</span>
+                            </a>
+                            <a href="./01_fg_inward_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Stock Inward </span>
+                            </a>
+                             <a href="./02_fg_overview.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Inventory Overview </span>
+                            </a>
+                             <a href="./03_inter_location_transfer.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Inter-Location Transfer</span>
+                            </a>
+                             <a href="./04_rejected_stock_controler.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Hold / Rejected Stock Handler</span>
+                            </a>
+                             <a href="./05_fg_expiry_aging_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">FG Aging & Expiry View</span>
+                            </a>
+                             <a href="./06_fg_inventory_ajdustment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Inventory Adjustment</span>
+                            </a>
+  
+                        </div>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Navigation -->
+        <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-gray-800">Aging & Expiry Report</h2>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <i class="fas fa-bell text-gray-500"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500"></span>
+                </div>
+                <div class="flex items-center">
+                    <img src="https://ui-avatars.com/api/?name=Inventory+Manager&background=F7941D&color=fff" alt="User" class="w-8 h-8 rounded-full">
+                    <span class="ml-2 text-sm font-medium text-gray-700">Inventory Manager</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-auto p-6">
+            <!-- Filters Section -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6 sticky-header">
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Product Family / SKU</label>
+                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                            <option>All Products</option>
+                            <option>Whole Wheat Flour</option>
+                            <option>Energy Bars</option>
+                            <option>Ghee</option>
+                            <option>Special Atta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Packaging Type</label>
+                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                            <option>All Types</option>
+                            <option>1kg Pack</option>
+                            <option>500g Pack</option>
+                            <option>50g Pack</option>
+                            <option>Bulk Packaging</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Warehouse / Zone</label>
+                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                            <option>All Locations</option>
+                            <option>Warehouse A</option>
+                            <option>Warehouse B</option>
+                            <option>Zone C</option>
+                            <option>Cold Storage</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Range</label>
+                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                            <option>All Ranges</option>
+                            <option>0-30 Days</option>
+                            <option>30-60 Days</option>
+                            <option>60-90 Days</option>
+                            <option>90+ Days</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500">
+                            <option>All Statuses</option>
+                            <option>Healthy</option>
+                            <option>Near Expiry</option>
+                            <option>Expired</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Apply Filters
+                        </button>
+                        <button class="ml-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Batches</p>
+                            <p class="text-2xl font-semibold text-gray-800">142</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-orange-100 text-orange-500">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Expiring in 30 Days</p>
+                            <p class="text-2xl font-semibold text-gray-800">18</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-500">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Expired Stock</p>
+                            <p class="text-2xl font-semibold text-gray-800">5</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-red-100 text-red-500">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Table -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty in Stock</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Days Left</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Suggested Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG003</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Energy Bar – 50g</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/045</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12-Aug-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">18</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-near-expiry">
+                                         Near Expiry
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Warehouse B</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 text-sm font-medium">
+                                        [ Create Transfer ]
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat – 1kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/038</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4,500</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02-Nov-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-healthy">
+                                         🟢 Healthy
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Warehouse A</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG006</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Ghee – 500ml</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/032</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">800</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">29-Jul-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-near-expiry">
+                                         Near Expiry
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Zone C</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 text-sm font-medium">
+                                        [ Pullback from Dispatch ]
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Special Atta – 5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/029</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,200</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15-Jun-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-5</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-expired">
+                                         🔴 Expired
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Warehouse A</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-orange-500 hover:text-orange-700 text-sm font-medium">
+                                        [ Mark for Disposal ]
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG005</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multigrain Flour – 2kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/041</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3,750</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25-Sep-2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">63</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-healthy">
+                                         Healthy
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Warehouse B</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Previous
+                        </a>
+                        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Next
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">142</span> results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                <a href="#" aria-current="page" class="z-10 bg-orange-50 border-orange-500 text-orange-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    1
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    2
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    3
+                                </a>
+                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                    ...
+                                </span>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    8
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Panel (Right Sidebar) -->
+    <div class="w-80 bg-white border-l border-gray-200 hidden lg:flex flex-col">
+        <div class="p-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">Expiry Summary</h3>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 space-y-6">
+            <div>
+                <h4 class="text-sm font-medium text-gray-700 mb-3">Total Batches Expiring in 30 Days</h4>
+                <div class="bg-orange-50 border border-orange-100 rounded-lg p-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-2xl font-bold text-orange-600">18</p>
+                            <p class="text-xs text-orange-500">batches</p>
+                        </div>
+                        <div class="p-2 rounded-full bg-orange-100 text-orange-500">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium text-gray-700 mb-3">Total Expired Quantity</h4>
+                <div class="bg-red-50 border border-red-100 rounded-lg p-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-2xl font-bold text-red-600">5</p>
+                            <p class="text-xs text-red-500">batches (1,450 units)</p>
+                        </div>
+                        <div class="p-2 rounded-full bg-red-100 text-red-500">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium text-gray-700 mb-3">Top 5 Aged SKUs</h4>
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <ul class="divide-y divide-gray-200">
+                        <li class="px-3 py-2 text-sm flex justify-between">
+                            <span class="font-medium">Energy Bar – 50g</span>
+                            <span class="text-orange-500">18 days left</span>
+                        </li>
+                        <li class="px-3 py-2 text-sm flex justify-between">
+                            <span class="font-medium">Ghee – 500ml</span>
+                            <span class="text-orange-500">3 days left</span>
+                        </li>
+                        <li class="px-3 py-2 text-sm flex justify-between">
+                            <span class="font-medium">Special Atta – 5kg</span>
+                            <span class="text-red-500">Expired</span>
+                        </li>
+                        <li class="px-3 py-2 text-sm flex justify-between">
+                            <span class="font-medium">Whole Wheat – 10kg</span>
+                            <span class="text-orange-500">25 days left</span>
+                        </li>
+                        <li class="px-3 py-2 text-sm flex justify-between">
+                            <span class="font-medium">Besan – 1kg</span>
+                            <span class="text-orange-500">12 days left</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <button class="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center justify-center">
+                    <i class="fas fa-file-export mr-2"></i>
+                    Export Aging Report
+                </button>
+            </div>
+            <div class="border-t border-gray-200 pt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Quick Actions</h4>
+                <div class="space-y-2">
+                    <button class="w-full text-left text-sm text-gray-600 hover:bg-gray-100 px-3 py-2 rounded flex items-center">
+                        <i class="fas fa-exchange-alt mr-2 text-orange-500"></i>
+                        Create Bulk Transfer
+                    </button>
+                    <button class="w-full text-left text-sm text-gray-600 hover:bg-gray-100 px-3 py-2 rounded flex items-center">
+                        <i class="fas fa-ban mr-2 text-red-500"></i>
+                        Mark Multiple for Disposal
+                    </button>
+                    <button class="w-full text-left text-sm text-gray-600 hover:bg-gray-100 px-3 py-2 rounded flex items-center">
+                        <i class="fas fa-tags mr-2 text-blue-500"></i>
+                        Apply Discount to Clearance
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle functionality can be added here
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add JavaScript interactions here if needed
+            console.log('FG Aging & Expiry View loaded');
+        });
+    </script>
+</body>
+</html>

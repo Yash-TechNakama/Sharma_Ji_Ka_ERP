@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRN List View | Sharma Ji Ka Aata</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .submenu.active {
+            max-height: 500px;
+        }
+        .expanded-row {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .expanded-row.active {
+            max-height: 500px;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .filters-container {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            .filters-container.active {
+                max-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Procurement Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./00_dashboard_procurement_reports.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Procurement Reports</span>
+                            </a>
+                            <a href="./01_list_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order List</span>
+                            </a>
+                            <a href="./02_add_procurment_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight">Create New Purchase Order</span>
+                            </a>
+                            <a href="./03_detail_view_purchase_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Purchase Order Detail View</span>
+                            </a>
+                            <a href="./04_GRN_add.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>GRN Entry</span>
+                            </a>
+                            <a href="./05_GRN_list_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">GRN List View</span>
+                            </a>
+                            <a href="./06_vendor_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Vendor Management</span>
+                            </a>
+                        </div>
+                        
+        
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Main Content -->
+        <div class="flex-1 ml-64 overflow-auto">
+            <!-- Mobile Header -->
+            <div class="md:hidden bg-white p-4 shadow flex items-center justify-between">
+                <button id="sidebarToggle" class="text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <h1 class="text-lg font-bold text-orange-600">GRN List View</h1>
+                <div class="w-8"></div> <!-- Spacer for alignment -->
+            </div>
+
+            <!-- Desktop Header -->
+            <div class="bg-white p-6 shadow">
+                <h1 class="text-2xl font-bold text-gray-800">GRN List View</h1>
+                <p class="text-gray-600">Track all Goods Receipt Notes from vendors</p>
+            </div>
+
+            <!-- Filters and Controls -->
+            <div class="p-4">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex flex-wrap items-center justify-between mb-4">
+                        <div class="w-full md:w-auto mb-2 md:mb-0">
+                            <button id="filterToggle" class="md:hidden bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                                <i class="fas fa-filter mr-2"></i> Filters
+                            </button>
+                        </div>
+                        <div class="w-full md:w-auto">
+                            <div class="relative">
+                                <input type="text" placeholder="Search PO, GRN or material..." class="w-full md:w-64 pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="filtersContainer" class="filters-container md:block">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                                <div class="flex">
+                                    <input type="date" class="w-full p-2 border rounded-l-lg focus:outline-none focus:ring-1 focus:ring-orange-300">
+                                    <span class="bg-gray-100 flex items-center px-2 border-t border-b">to</span>
+                                    <input type="date" class="w-full p-2 border rounded-r-lg focus:outline-none focus:ring-1 focus:ring-orange-300">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Vendor</label>
+                                <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-300">
+                                    <option value="">All Vendors</option>
+                                    <option value="1">Sharma Flour Mills</option>
+                                    <option value="2">Goyal Packaging</option>
+                                    <option value="3">Agro Wheat Suppliers</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">PO Number</label>
+                                <input type="text" placeholder="PO-XXXXX" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">QC Status</label>
+                                <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-300">
+                                    <option value="">All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="pass">Pass</option>
+                                    <option value="fail">Fail</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap justify-between items-center">
+                            <div class="mb-2 md:mb-0">
+                                <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg mr-2">
+                                    <i class="fas fa-sync-alt mr-2"></i>Apply Filters
+                                </button>
+                                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg">
+                                    <i class="fas fa-times mr-2"></i>Clear
+                                </button>
+                            </div>
+                            <div>
+                                <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg mr-2">
+                                    <i class="fas fa-file-export mr-2"></i>Export CSV
+                                </button>
+                                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>View Incomplete GRNs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRN Table -->
+            <div class="p-4">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="bg-orange-600 text-white px-6 py-3">
+                        <h2 class="font-semibold">Recent GRNs</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GRN No.</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PO No.</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Qty</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- GRN 1 -->
+                                <tr class="cursor-pointer hover:bg-gray-50" onclick="toggleRow(this)">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="text-sm font-medium text-gray-900">GRN-2023-001</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">15 Jun 2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">PO-2023-045</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Agro Wheat Suppliers</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">3</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">5,000 kg</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Short Received (-200kg)
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex space-x-2">
+                                            <button class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-orange-600 hover:text-orange-900">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900 relative" title="2 Attachments">
+                                                <i class="fas fa-paperclip"></i>
+                                                <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Expanded Row for GRN 1 -->
+                                <tr class="expanded-row">
+                                    <td colspan="9" class="px-6 py-4 bg-gray-50">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                            <div>
+                                                <h3 class="font-medium text-gray-700 mb-2">GRN Details</h3>
+                                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                                    <div class="text-gray-500">GRN Date:</div>
+                                                    <div>15 Jun 2023</div>
+                                                    <div class="text-gray-500">Received By:</div>
+                                                    <div>Ramesh Kumar</div>
+                                                    <div class="text-gray-500">Store Location:</div>
+                                                    <div>Warehouse A</div>
+                                                    <div class="text-gray-500">Vehicle No.:</div>
+                                                    <div>RJ14-AB-1234</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium text-gray-700 mb-2">Vendor Details</h3>
+                                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                                    <div class="text-gray-500">Vendor Name:</div>
+                                                    <div>Agro Wheat Suppliers</div>
+                                                    <div class="text-gray-500">Contact:</div>
+                                                    <div>+91 9876543210</div>
+                                                    <div class="text-gray-500">Address:</div>
+                                                    <div>123, Grain Market, Jaipur</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h3 class="font-medium text-gray-700 mb-2">Items Received</h3>
+                                        <div class="overflow-x-auto">
+                                            <table class="min-w-full divide-y divide-gray-200">
+                                                <thead class="bg-gray-100">
+                                                    <tr>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordered Qty</th>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Received Qty</th>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UOM</th>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QC Result</th>
+                                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white divide-y divide-gray-200">
+                                                    <tr>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">Premium Wheat</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">3,000 kg</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
+                                                            <span class="text-red-600">2,800 kg</span>
+                                                            <span class="ml-2 text-xs text-red-600">(-200kg)</span>
+                                                        </td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">kg</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap">
+                                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                                Pending
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">Moisture content high</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">Standard Wheat</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">1,500 kg</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">1,500 kg</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">kg</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap">
+                                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                                Pending
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">Packaging Bags</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">500 pcs</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">500 pcs</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">pcs</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap">
+                                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                Pass
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-900">-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- GRN 2 -->
+                                <tr class="cursor-pointer hover:bg-gray-50" onclick="toggleRow(this)">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="text-sm font-medium text-gray-900">GRN-2023-002</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">18 Jun 2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">PO-2023-047</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Sharma Flour Mills</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">2</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">7,200 kg</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Pass
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Full Received
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex space-x-2">
+                                            <button class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-400 cursor-not-allowed" disabled>
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900 relative" title="1 Attachment">
+                                                <i class="fas fa-paperclip"></i>
+                                                <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">1</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Expanded Row for GRN 2 -->
+                                <tr class="expanded-row">
+                                    <td colspan="9" class="px-6 py-4 bg-gray-50">
+                                        <!-- Similar expanded content as GRN 1 -->
+                                        <div class="text-center text-gray-500 py-4">
+                                            Detailed view content would appear here when expanded
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- GRN 3 -->
+                                <tr class="cursor-pointer hover:bg-gray-50" onclick="toggleRow(this)">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="text-sm font-medium text-gray-900">GRN-2023-003</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">20 Jun 2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">PO-2023-051</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Goyal Packaging</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">1</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">10,000 pcs</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Fail
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Over Received (+500pcs)
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex space-x-2">
+                                            <button class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-orange-600 hover:text-orange-900">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-900 relative" title="3 Attachments">
+                                                <i class="fas fa-paperclip"></i>
+                                                <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Expanded Row for GRN 3 -->
+                                <tr class="expanded-row">
+                                    <td colspan="9" class="px-6 py-4 bg-gray-50">
+                                        <!-- Similar expanded content as GRN 1 -->
+                                        <div class="text-center text-gray-500 py-4">
+                                            Detailed view content would appear here when expanded
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
+                            </a>
+                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Next
+                            </a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">24</span> results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="z-10 bg-orange-50 border-orange-500 text-orange-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        1
+                                    </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        2
+                                    </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        3
+                                    </a>
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                        ...
+                                    </span>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        8
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Toggle filters on mobile
+        document.getElementById('filterToggle').addEventListener('click', function() {
+            document.getElementById('filtersContainer').classList.toggle('active');
+        });
+
+        // Toggle submenu
+        const submenuToggle = document.querySelector('.sidebar ul li.relative a');
+        if (submenuToggle) {
+            submenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                submenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        }
+
+        // Toggle table row expansion
+        function toggleRow(row) {
+            const expandedRow = row.nextElementSibling;
+            expandedRow.classList.toggle('active');
+            
+            // Close other expanded rows
+            const allExpandedRows = document.querySelectorAll('.expanded-row');
+            allExpandedRows.forEach(r => {
+                if (r !== expandedRow && r.classList.contains('active')) {
+                    r.classList.remove('active');
+                }
+            });
+        }
+
+        // Simulate data loading
+        document.addEventListener('DOMContentLoaded', function() {
+            // You could add AJAX calls here to load real data
+            console.log('GRN List View loaded');
+        });
+    </script>
+</body>
+</html>

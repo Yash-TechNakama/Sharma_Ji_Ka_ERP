@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel PO Entry | Sharma Ji Ka Aata</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            background-color: #FEF3E2;
+            border-left: 4px solid #F7941D;
+        }
+        .sidebar-item.active span {
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .highlight-item {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #F7941D;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #e07d0e;
+        }
+        .sku-row:hover {
+            background-color: #FFF9F0;
+        }
+        [contenteditable="true"]:focus {
+            outline: 1px dashed #F7941D;
+            background-color: #FFF9F0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans flex h-screen overflow-hidden">
+    <!-- Left Sidebar -->
+       <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                           Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                        
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                             Sales & Channel (POs & Order Tracking)
+                        </div>
+                        
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./01_channel_po_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">Channel PO Entry</span>
+                            </a>
+                            <a href="./02_po_calendar_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO Calendar & Fulfillment View</span>
+                            </a>
+                            <a href="./03_channel_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Channel-Wise Demand Summary</span>
+                            </a>
+                            <a href="./04_PO-to-batch-linking.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>PO-to-Batch Linking</span>
+                            </a>
+                            <a href="./05_sales_order.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Sales Order List</span>
+                            </a>
+                            <a href="./06_platform_add_settings.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Platform Account & Terms</span>
+                            </a>
+  
+                        </div>
+                        
+             
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                        <a href="../Index.html" class="highlight-orange sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                <i class="fas fa-file-invoice mr-2 text-orange-500"></i>
+                Enter New Channel Purchase Order
+            </h2>
+            <div class="flex items-center space-x-2">
+                <button id="saveDraftBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium flex items-center">
+                    <i class="fas fa-save mr-2"></i> Save Draft
+                </button>
+                <button id="confirmPoBtn" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i> Confirm PO
+                </button>
+                <button id="uploadExcelBtn" class="px-4 py-2 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 text-sm font-medium flex items-center">
+                    <i class="fas fa-file-excel mr-2"></i> Upload Excel
+                </button>
+                <button id="attachPdfBtn" class="px-4 py-2 bg-green-50 text-green-600 rounded-md hover:bg-green-100 text-sm font-medium flex items-center">
+                    <i class="fas fa-paperclip mr-2"></i> Attach PDF
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50 custom-scrollbar">
+            <!-- PO Entry Form -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h3 class="text-md font-semibold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-orange-500"></i>
+                    PO Basic Information
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Channel Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Select Channel <span class="text-red-500">*</span></label>
+                        <select id="channelSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                            <option value="">-- Select Channel --</option>
+                            <option value="zepto">Zepto</option>
+                            <option value="bigbasket">BigBasket</option>
+                            <option value="blinkit">Blinkit</option>
+                            <option value="d2c">D2C Website</option>
+                            <option value="amazon">Amazon</option>
+                            <option value="flipkart">Flipkart</option>
+                            <option value="distributor">Distributor</option>
+                        </select>
+                    </div>
+                    
+                    <!-- PO Number -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PO Number <span class="text-red-500">*</span></label>
+                        <input type="text" id="poNumber" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="PO-2023-XXXX">
+                    </div>
+                    
+                    <!-- PO Date -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PO Date <span class="text-red-500">*</span></label>
+                        <input type="date" id="poDate" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                    </div>
+                    
+                    <!-- Delivery Due Date -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Due Date <span class="text-red-500">*</span></label>
+                        <input type="date" id="dueDate" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                    </div>
+                    
+                    <!-- PO Status -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PO Status <span class="text-red-500">*</span></label>
+                        <select id="poStatus" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                            <option value="draft">Draft</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Upload Attachment -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Upload Attachment</label>
+                        <div class="flex items-center">
+                            <input type="file" id="poAttachment" class="hidden" accept=".pdf,.xlsx,.xls">
+                            <input type="text" id="attachmentName" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="No file chosen" readonly>
+                            <button onclick="document.getElementById('poAttachment').click()" class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md hover:bg-gray-200 text-sm font-medium">
+                                <i class="fas fa-folder-open mr-1"></i> Browse
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Supports PDF and Excel files (Max 5MB)</p>
+                    </div>
+                </div>
+                
+                <!-- Notes -->
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Notes / Reference</label>
+                    <textarea id="poNotes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Any special instructions or reference..."></textarea>
+                </div>
+            </div>
+            
+            <!-- SKU Line Items -->
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-md font-semibold text-gray-800 flex items-center">
+                        <i class="fas fa-boxes mr-2 text-orange-500"></i>
+                        SKU Line Items
+                    </h3>
+                    <button id="addSkuBtn" class="px-3 py-1.5 bg-orange-500 text-white rounded-md hover:bg-orange-600 text-sm font-medium flex items-center">
+                        <i class="fas fa-plus mr-1"></i> Add SKU
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variant / UOM</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordered Qty</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Packaging</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate (₹)</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="skuTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Sample row - will be dynamically added -->
+                            <tr class="sku-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat Atta</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1kg / Pouch</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Master Carton</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">58.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-orange-500 hover:text-orange-700 mr-2 edit-sku-btn">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700 delete-sku-btn">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- More rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Summary -->
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <div class="flex justify-end">
+                        <div class="w-64">
+                            <div class="flex justify-between py-1 text-sm text-gray-600">
+                                <span>Total SKUs:</span>
+                                <span id="totalSkus">1</span>
+                            </div>
+                            <div class="flex justify-between py-1 text-sm text-gray-600">
+                                <span>Total Quantity:</span>
+                                <span id="totalQty">5,000</span>
+                            </div>
+                            <div class="flex justify-between py-1 text-sm text-gray-600">
+                                <span>Estimated Value:</span>
+                                <span id="totalValue">₹290,000.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add SKU Modal -->
+    <div id="addSkuModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800">Add SKU Line Item</h3>
+            </div>
+            <div class="p-4">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">SKU Code <span class="text-red-500">*</span></label>
+                    <select id="skuCodeSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                        <option value="">-- Select SKU --</option>
+                        <option value="FG001">FG001 - Whole Wheat Atta (1kg)</option>
+                        <option value="FG002">FG002 - Multigrain Atta (1kg)</option>
+                        <option value="FG003">FG003 - Besan (500g)</option>
+                        <option value="FG004">FG004 - Sooji (1kg)</option>
+                        <option value="FG005">FG005 - Organic Atta (5kg)</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Quantity <span class="text-red-500">*</span></label>
+                    <input type="number" id="skuQuantity" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Enter quantity">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Packaging</label>
+                    <select id="skuPackaging" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                        <option value="Pouch">Pouch</option>
+                        <option value="Master Carton">Master Carton</option>
+                        <option value="Jar">Jar</option>
+                        <option value="Bag">Bag</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Rate (₹)</label>
+                    <input type="number" id="skuRate" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Optional">
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200 flex justify-end">
+                <button id="cancelAddSkuBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium mr-2">
+                    Cancel
+                </button>
+                <button id="saveSkuBtn" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 text-sm font-medium">
+                    Add SKU
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Excel Modal -->
+    <div id="uploadExcelModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg">
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800">Upload Excel PO</h3>
+            </div>
+            <div class="p-4">
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 mb-3">Upload purchase order in Excel format from platforms like Zepto, BigBasket, etc. The system will automatically map the fields.</p>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <i class="fas fa-file-excel text-4xl text-green-500 mb-2"></i>
+                        <p class="text-sm text-gray-600 mb-2">Drag & drop your Excel file here</p>
+                        <p class="text-xs text-gray-500 mb-3">or</p>
+                        <input type="file" id="excelFileInput" class="hidden" accept=".xlsx,.xls">
+                        <button onclick="document.getElementById('excelFileInput').click()" class="px-4 py-2 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 text-sm font-medium">
+                            <i class="fas fa-folder-open mr-2"></i> Browse Files
+                        </button>
+                        <p class="text-xs text-gray-500 mt-3">Supports .xlsx and .xls files (Max 5MB)</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="importAsDraft" class="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded">
+                    <label for="importAsDraft" class="ml-2 block text-sm text-gray-700">Import as Draft for review</label>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200 flex justify-end">
+                <button id="cancelUploadExcelBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium mr-2">
+                    Cancel
+                </button>
+                <button id="confirmUploadExcelBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm font-medium">
+                    <i class="fas fa-upload mr-2"></i> Upload & Map
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg flex items-center hidden">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="toastMessage">PO saved successfully!</span>
+    </div>
+
+    <script>
+        // DOM Elements
+        const addSkuBtn = document.getElementById('addSkuBtn');
+        const addSkuModal = document.getElementById('addSkuModal');
+        const cancelAddSkuBtn = document.getElementById('cancelAddSkuBtn');
+        const saveSkuBtn = document.getElementById('saveSkuBtn');
+        const skuTableBody = document.getElementById('skuTableBody');
+        const uploadExcelBtn = document.getElementById('uploadExcelBtn');
+        const uploadExcelModal = document.getElementById('uploadExcelModal');
+        const cancelUploadExcelBtn = document.getElementById('cancelUploadExcelBtn');
+        const confirmUploadExcelBtn = document.getElementById('confirmUploadExcelBtn');
+        const saveDraftBtn = document.getElementById('saveDraftBtn');
+        const confirmPoBtn = document.getElementById('confirmPoBtn');
+        const successToast = document.getElementById('successToast');
+        const poAttachment = document.getElementById('poAttachment');
+        const attachmentName = document.getElementById('attachmentName');
+        
+        // Sample SKU data
+        const skuData = {
+            'FG001': { name: 'Whole Wheat Atta', variant: '1kg / Pouch', packaging: 'Master Carton', rate: 58 },
+            'FG002': { name: 'Multigrain Atta', variant: '1kg / Pouch', packaging: 'Master Carton', rate: 68 },
+            'FG003': { name: 'Besan', variant: '500g / Pouch', packaging: 'Master Carton', rate: 45 },
+            'FG004': { name: 'Sooji', variant: '1kg / Pouch', packaging: 'Master Carton', rate: 52 },
+            'FG005': { name: 'Organic Atta', variant: '5kg / Bag', packaging: 'Bag', rate: 320 }
+        };
+        
+        // Event Listeners
+        addSkuBtn.addEventListener('click', () => {
+            addSkuModal.classList.remove('hidden');
+        });
+        
+        cancelAddSkuBtn.addEventListener('click', () => {
+            addSkuModal.classList.add('hidden');
+            resetSkuForm();
+        });
+        
+        saveSkuBtn.addEventListener('click', () => {
+            const skuCode = document.getElementById('skuCodeSelect').value;
+            const quantity = document.getElementById('skuQuantity').value;
+            const packaging = document.getElementById('skuPackaging').value;
+            const rate = document.getElementById('skuRate').value || skuData[skuCode]?.rate || 0;
+            
+            if (!skuCode || !quantity) {
+                showToast('Please fill all required fields', 'red-500');
+                return;
+            }
+            
+            addSkuToTable(skuCode, quantity, packaging, rate);
+            addSkuModal.classList.add('hidden');
+            resetSkuForm();
+            updateSummary();
+        });
+        
+        uploadExcelBtn.addEventListener('click', () => {
+            uploadExcelModal.classList.remove('hidden');
+        });
+        
+        cancelUploadExcelBtn.addEventListener('click', () => {
+            uploadExcelModal.classList.add('hidden');
+        });
+        
+        confirmUploadExcelBtn.addEventListener('click', () => {
+            // Simulate Excel upload
+            setTimeout(() => {
+                uploadExcelModal.classList.add('hidden');
+                showToast('Excel uploaded successfully! Mapping SKUs...', 'green-500');
+                
+                // Add sample data from Excel
+                setTimeout(() => {
+                    addSkuToTable('FG002', '2500', 'Master Carton', 68);
+                    addSkuToTable('FG003', '1500', 'Master Carton', 45);
+                    showToast('3 SKUs imported from Excel', 'green-500');
+                    updateSummary();
+                }, 1500);
+            }, 1000);
+        });
+        
+        saveDraftBtn.addEventListener('click', () => {
+            if (validateForm()) {
+                showToast('PO saved as draft', 'green-500');
+                // In a real app, would save to database here
+            }
+        });
+        
+        confirmPoBtn.addEventListener('click', () => {
+            if (validateForm()) {
+                showToast('PO confirmed successfully!', 'green-500');
+                document.getElementById('poStatus').value = 'confirmed';
+                // In a real app, would save to database and trigger workflows
+            }
+        });
+        
+        poAttachment.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                attachmentName.value = e.target.files[0].name;
+            }
+        });
+        
+        // Handle SKU row actions (edit/delete)
+        skuTableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-sku-btn') || e.target.parentElement.classList.contains('delete-sku-btn')) {
+                const row = e.target.closest('tr');
+                row.remove();
+                updateSummary();
+            } else if (e.target.classList.contains('edit-sku-btn') || e.target.parentElement.classList.contains('edit-sku-btn')) {
+                const row = e.target.closest('tr');
+                const cells = row.querySelectorAll('td');
+                
+                document.getElementById('skuCodeSelect').value = cells[0].textContent;
+                document.getElementById('skuQuantity').value = cells[3].textContent.replace(/,/g, '');
+                document.getElementById('skuPackaging').value = cells[4].textContent;
+                document.getElementById('skuRate').value = cells[5].textContent;
+                
+                row.remove();
+                addSkuModal.classList.remove('hidden');
+                updateSummary();
+            }
+        });
+        
+        // Functions
+        function addSkuToTable(skuCode, quantity, packaging, rate) {
+            const sku = skuData[skuCode];
+            const formattedQty = Number(quantity).toLocaleString();
+            const formattedRate = Number(rate).toFixed(2);
+            
+            const row = document.createElement('tr');
+            row.className = 'sku-row';
+            row.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${skuCode}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${sku.name}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${sku.variant}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedQty}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${packaging}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedRate}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button class="text-orange-500 hover:text-orange-700 mr-2 edit-sku-btn">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="text-red-500 hover:text-red-700 delete-sku-btn">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            `;
+            
+            skuTableBody.appendChild(row);
+        }
+        
+        function resetSkuForm() {
+            document.getElementById('skuCodeSelect').value = '';
+            document.getElementById('skuQuantity').value = '';
+            document.getElementById('skuPackaging').value = 'Master Carton';
+            document.getElementById('skuRate').value = '';
+        }
+        
+        function updateSummary() {
+            const rows = skuTableBody.querySelectorAll('tr');
+            let totalQty = 0;
+            let totalValue = 0;
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const qty = Number(cells[3].textContent.replace(/,/g, ''));
+                const rate = Number(cells[5].textContent);
+                
+                totalQty += qty;
+                totalValue += qty * rate;
+            });
+            
+            document.getElementById('totalSkus').textContent = rows.length;
+            document.getElementById('totalQty').textContent = totalQty.toLocaleString();
+            document.getElementById('totalValue').textContent = `₹${totalValue.toLocaleString('en-IN', {maximumFractionDigits: 2})}`;
+        }
+        
+        function validateForm() {
+            const channel = document.getElementById('channelSelect').value;
+            const poNumber = document.getElementById('poNumber').value;
+            const poDate = document.getElementById('poDate').value;
+            const dueDate = document.getElementById('dueDate').value;
+            const rows = skuTableBody.querySelectorAll('tr');
+            
+            if (!channel || !poNumber || !poDate || !dueDate) {
+                showToast('Please fill all required fields', 'red-500');
+                return false;
+            }
+            
+            if (rows.length === 0) {
+                showToast('Please add at least one SKU', 'red-500');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function showToast(message, bgColor = 'green-500') {
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            successToast.className = `fixed bottom-4 right-4 bg-${bgColor} text-white px-4 py-2 rounded-md shadow-lg flex items-center`;
+            successToast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                successToast.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Auto-save draft every 30 seconds
+        setInterval(() => {
+            if (document.getElementById('poStatus').value === 'draft' && validateForm()) {
+                console.log('Auto-saving draft...');
+                // In a real app, would save to database here
+            }
+        }, 30000);
+        
+        // Initialize date fields with today's date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('poDate').value = today;
+        
+        // Set due date to 7 days from today
+        const dueDate = new Date();
+        dueDate.setDate(dueDate.getDate() + 7);
+        document.getElementById('dueDate').value = dueDate.toISOString().split('T')[0];
+    </script>
+</body>
+</html>

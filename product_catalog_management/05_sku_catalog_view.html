@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - SKU List & Catalog View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F7941D',
+                        secondary: '#F8F9FA',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-link.active {
+            background-color: #FEF5E7;
+            border-left: 4px solid #F7941D;
+            color: #F7941D;
+            font-weight: 600;
+        }
+        .sidebar-link.active i {
+            color: #F7941D;
+        }
+        .sidebar-link:hover:not(.active) {
+            background-color: #f3f4f6;
+        }
+        .zebra-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .status-pill {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-live {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        .status-draft {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+        .status-archived {
+            background-color: #F3F4F6;
+            color: #6B7280;
+        }
+        .channel-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            background-color: #E5E7EB;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+        .drawer-open {
+            transform: translateX(0);
+        }
+        .drawer-closed {
+            transform: translateX(100%);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: absolute;
+                z-index: 40;
+                width: 80%;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .main-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden">
+    <!-- Mobile menu button -->
+    <div class="md:hidden fixed top-4 left-4 z-50">
+        <button id="mobileMenuButton" class="p-2 rounded-md bg-white shadow-md">
+            <i class="fas fa-bars text-gray-600"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+          <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                            <a href="./01_product_family_master.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Product Family Master</span>
+                            </a>
+                            
+                            <a href="./02_sku_crud.html" class="block px-3 py-2 text-sm font-medium rounded-md bg-gray-50">
+                                  <span>SKU Creation & Edit</span>
+                            </a>
+                            
+                            <a href="./03_label_media_upload.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Label & Media Upload</span>
+                            </a>
+                            
+                            <a href="./04_chanel_price_management.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Channel & Regional Pricing</span>
+                            </a>
+                            
+                            <a href="./05_sku_catalog_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">SKU List & Catalog View</span>
+                            </a>
+                            
+                            <a href="./06_batch_setting.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Settings (FG SKUs)</span>
+                            </a>
+                            
+                            <a href="./07_notes_audit_logs_sku.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>SKU Audit Log & Notes</span>
+                              
+
+                            </a>
+                        </div>
+                        
+                         <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Procurement Management
+                        </a>
+                        
+                        <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                      <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-industry mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Main content -->
+    <div class="main-content flex-1 flex flex-col overflow-hidden">
+        <!-- Top navigation -->
+        <header class="bg-white border-b border-gray-200">
+            <div class="px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-gray-800">SKU List & Catalog View</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <i class="fas fa-bell text-gray-500"></i>
+                        </button>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/32" alt="User" class="rounded-full h-8 w-8">
+                        <span class="ml-2 text-sm font-medium text-gray-700 hidden md:inline">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content area -->
+        <main class="flex-1 overflow-y-auto p-4 bg-secondary">
+            <!-- Search and action buttons -->
+            <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="relative flex-grow max-w-xl">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input type="text" id="searchInput" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" placeholder="Search by SKU Code or Product Name...">
+                </div>
+                <div class="flex space-x-2">
+                    <button class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <i class="fas fa-file-excel mr-2 text-green-600"></i> Export to Excel
+                    </button>
+                    <button class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <i class="fas fa-file-pdf mr-2 text-red-600"></i> Export to PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex flex-wrap gap-4">
+                    <div class="w-full md:w-auto">
+                        <label for="productFamily" class="block text-sm font-medium text-gray-700 mb-1">Product Family</label>
+                        <select id="productFamily" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                            <option value="">All Families</option>
+                            <option>Whole Wheat Atta</option>
+                            <option>Fortification Premix</option>
+                            <option>Energy Bar</option>
+                            <option>Packaging Material</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <label for="productType" class="block text-sm font-medium text-gray-700 mb-1">Product Type</label>
+                        <select id="productType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                            <option value="">All Types</option>
+                            <option>FG (Finished Goods)</option>
+                            <option>RM (Raw Material)</option>
+                            <option>Packaging</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select id="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                            <option value="">All Statuses</option>
+                            <option>Live</option>
+                            <option>Draft</option>
+                            <option>Archived</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <label for="channel" class="block text-sm font-medium text-gray-700 mb-1">Channel</label>
+                        <select id="channel" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                            <option value="">All Channels</option>
+                            <option>Zepto</option>
+                            <option>D2C</option>
+                            <option>HORECA</option>
+                            <option>Retail</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <label for="dateAdded" class="block text-sm font-medium text-gray-700 mb-1">Date Added</label>
+                        <input type="date" id="dateAdded" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                    </div>
+                    <div class="w-full md:w-auto flex items-end">
+                        <button id="resetFilters" class="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Reset Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKU Table -->
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 zebra-table">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variant</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UOM</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Type</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shelf Life</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Channels Assigned</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Whole Wheat Atta</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">FG</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">180 Days</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-pill status-live">Live</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <span class="channel-chip">Zepto</span>
+                                    <span class="channel-chip">D2C</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="openSkuDetail('FG001')" class="text-primary hover:text-orange-700 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RM004</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Fortification Premix</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">RM</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">365 Days</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-pill status-live">Live</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="openSkuDetail('RM004')" class="text-primary hover:text-orange-700 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG007</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Energy Bar</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50g</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pcs</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">FG</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">90 Days</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-pill status-draft">Draft</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <span class="channel-chip">HORECA</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="openSkuDetail('FG007')" class="text-primary hover:text-orange-700 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 mr-3">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Multigrain Atta</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">FG</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">180 Days</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-pill status-live">Live</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <span class="channel-chip">Retail</span>
+                                    <span class="channel-chip">D2C</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="openSkuDetail('FG002')" class="text-primary hover:text-orange-700 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PK001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PP Bags</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pcs</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Packaging</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">N/A</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-pill status-live">Live</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="openSkuDetail('PK001')" class="text-primary hover:text-orange-700 mr-3">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Previous
+                        </a>
+                        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Next
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                <a href="#" aria-current="page" class="z-10 bg-primary border-primary text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    1
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    2
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    3
+                                </a>
+                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                    ...
+                                </span>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    8
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SKU Detail Drawer -->
+    <div id="skuDetailDrawer" class="drawer drawer-closed fixed inset-y-0 right-0 w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg z-50 overflow-y-auto">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+            <h2 class="text-lg font-semibold text-gray-800">SKU Details</h2>
+            <button onclick="closeSkuDetail()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4">
+            <div class="mb-6">
+                <h3 class="text-xl font-medium text-gray-900" id="skuName">Whole Wheat Atta</h3>
+                <p class="text-sm text-gray-500" id="skuVariant">1kg</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">SKU Code</p>
+                    <p class="text-sm text-gray-900" id="skuCode">FG001</p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Product Type</p>
+                    <p class="text-sm text-gray-900" id="skuType">FG (Finished Goods)</p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">UOM</p>
+                    <p class="text-sm text-gray-900" id="skuUom">Kg</p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Shelf Life</p>
+                    <p class="text-sm text-gray-900" id="skuShelfLife">180 Days</p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Status</p>
+                    <p class="text-sm" id="skuStatus"><span class="status-pill status-live">Live</span></p>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Default Batch Size</p>
+                    <p class="text-sm text-gray-900" id="skuBatchSize">1000 units</p>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <p class="text-sm font-medium text-gray-500 mb-2">Product Images</p>
+                <div class="flex space-x-2">
+                    <img src="https://via.placeholder.com/80" alt="Front" class="h-20 w-20 object-cover rounded border border-gray-200">
+                    <img src="https://via.placeholder.com/80" alt="Back" class="h-20 w-20 object-cover rounded border border-gray-200">
+                    <img src="https://via.placeholder.com/80" alt="Label" class="h-20 w-20 object-cover rounded border border-gray-200">
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <p class="text-sm font-medium text-gray-500 mb-2">Channels Assigned</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="channel-chip">Zepto</span>
+                    <span class="channel-chip">D2C</span>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <p class="text-sm font-medium text-gray-500 mb-2">Linked QC Template</p>
+                <p class="text-sm text-gray-900">Wheat Flour QC v2.1</p>
+            </div>
+            
+            <div class="mb-6">
+                <p class="text-sm font-medium text-gray-500 mb-2">Current Pricing</p>
+                <div class="bg-gray-50 p-3 rounded">
+                    <div class="grid grid-cols-3 gap-2 text-sm">
+                        <div class="font-medium">Channel</div>
+                        <div class="font-medium">Region</div>
+                        <div class="font-medium">Price</div>
+                        <div>D2C</div>
+                        <div>All</div>
+                        <div>₹120.00</div>
+                        <div>Zepto</div>
+                        <div>North</div>
+                        <div>₹115.00</div>
+                        <div>Zepto</div>
+                        <div>South</div>
+                        <div>₹125.00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-3">
+                <button class="flex-1 inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <i class="fas fa-history mr-2"></i> View in Audit Log
+                </button>
+                <button class="flex-1 inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <i class="fas fa-edit mr-2"></i> Go to Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('sidebar-open');
+        });
+
+        // Filter functionality
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('productFamily').value = '';
+            document.getElementById('productType').value = '';
+            document.getElementById('status').value = '';
+            document.getElementById('channel').value = '';
+            document.getElementById('dateAdded').value = '';
+            document.getElementById('searchInput').value = '';
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // SKU Detail Drawer functions
+        function openSkuDetail(skuCode) {
+            // In a real app, you would fetch the SKU details based on skuCode
+            // For demo, we'll just update with sample data
+            const skuData = {
+                'FG001': {
+                    name: 'Whole Wheat Atta',
+                    variant: '1kg',
+                    code: 'FG001',
+                    type: 'FG (Finished Goods)',
+                    uom: 'Kg',
+                    shelfLife: '180 Days',
+                    status: 'Live',
+                    batchSize: '1000 units',
+                    channels: ['Zepto', 'D2C'],
+                    qcTemplate: 'Wheat Flour QC v2.1'
+                },
+                'RM004': {
+                    name: 'Fortification Premix',
+                    variant: '-',
+                    code: 'RM004',
+                    type: 'RM (Raw Material)',
+                    uom: 'Kg',
+                    shelfLife: '365 Days',
+                    status: 'Live',
+                    batchSize: '500 kg',
+                    channels: [],
+                    qcTemplate: 'Premix QC v1.2'
+                },
+                'FG007': {
+                    name: 'Energy Bar',
+                    variant: '50g',
+                    code: 'FG007',
+                    type: 'FG (Finished Goods)',
+                    uom: 'Pcs',
+                    shelfLife: '90 Days',
+                    status: 'Draft',
+                    batchSize: '2000 units',
+                    channels: ['HORECA'],
+                    qcTemplate: 'Snacks QC v3.0'
+                },
+                'FG002': {
+                    name: 'Multigrain Atta',
+                    variant: '5kg',
+                    code: 'FG002',
+                    type: 'FG (Finished Goods)',
+                    uom: 'Kg',
+                    shelfLife: '180 Days',
+                    status: 'Live',
+                    batchSize: '800 units',
+                    channels: ['Retail', 'D2C'],
+                    qcTemplate: 'Wheat Flour QC v2.1'
+                },
+                'PK001': {
+                    name: 'PP Bags',
+                    variant: '10kg',
+                    code: 'PK001',
+                    type: 'Packaging',
+                    uom: 'Pcs',
+                    shelfLife: 'N/A',
+                    status: 'Live',
+                    batchSize: '5000 units',
+                    channels: [],
+                    qcTemplate: 'Packaging QC v1.0'
+                }
+            };
+            
+            const sku = skuData[skuCode];
+            
+            document.getElementById('skuName').textContent = sku.name;
+            document.getElementById('skuVariant').textContent = sku.variant;
+            document.getElementById('skuCode').textContent = sku.code;
+            document.getElementById('skuType').textContent = sku.type;
+            document.getElementById('skuUom').textContent = sku.uom;
+            document.getElementById('skuShelfLife').textContent = sku.shelfLife;
+            document.getElementById('skuBatchSize').textContent = sku.batchSize;
+            
+            // Update status pill
+            const statusElement = document.getElementById('skuStatus');
+            statusElement.innerHTML = '';
+            const statusPill = document.createElement('span');
+            statusPill.className = `status-pill status-${sku.status.toLowerCase()}`;
+            statusPill.textContent = sku.status;
+            statusElement.appendChild(statusPill);
+            
+            // Update channels
+            const channelsContainer = document.querySelector('#skuDetailDrawer .flex-wrap');
+            channelsContainer.innerHTML = '';
+            sku.channels.forEach(channel => {
+                const chip = document.createElement('span');
+                chip.className = 'channel-chip';
+                chip.textContent = channel;
+                channelsContainer.appendChild(chip);
+            });
+            
+            document.getElementById('skuDetailDrawer').classList.remove('drawer-closed');
+            document.getElementById('skuDetailDrawer').classList.add('drawer-open');
+        }
+
+        function closeSkuDetail() {
+            document.getElementById('skuDetailDrawer').classList.remove('drawer-open');
+            document.getElementById('skuDetailDrawer').classList.add('drawer-closed');
+        }
+
+        // Close drawer when clicking outside
+        document.addEventListener('click', function(event) {
+            const drawer = document.getElementById('skuDetailDrawer');
+            if (!drawer.contains(event.target) && !event.target.closest('button[onclick^="openSkuDetail"]')) {
+                closeSkuDetail();
+            }
+        });
+    </script>
+</body>
+</html>

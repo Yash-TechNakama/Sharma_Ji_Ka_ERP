@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FG Inventory Adjustment | Sharma Ji Ka Aata ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .sidebar-subitem.active {
+            color: #F7941D;
+            font-weight: bold;
+        }
+        .positive-diff {
+            color: #10B981;
+        }
+        .negative-diff {
+            color: #EF4444;
+        }
+        .attachment-icon:hover {
+            color: #F7941D;
+        }
+        .sidebar-item.active {
+            border-left: 4px solid #F7941D;
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+          <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+                        
+                        <a href="../Planning_and_production/00_production_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                             Production & Planning
+                        </a>
+
+                          <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_fg_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>FG Inventory Reports</span>
+                            </a>
+                            <a href="./01_fg_inward_entry.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Stock Inward </span>
+                            </a>
+                             <a href="./02_fg_overview.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Inventory Overview </span>
+                            </a>
+                             <a href="./03_inter_location_transfer.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Inter-Location Transfer</span>
+                            </a>
+                             <a href="./04_rejected_stock_controler.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>Hold / Rejected Stock Handler</span>
+                            </a>
+                             <a href="./05_fg_expiry_aging_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span>FG Aging & Expiry View</span>
+                            </a>
+                             <a href="./06_fg_inventory_ajdustment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                              <span class="highlight-orange">FG Inventory Adjustment</span>
+                            </a>
+  
+                        </div>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold text-gray-800">Inventory Adjustment (Finished Goods)</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="px-3 py-1 bg-gray-100 rounded text-sm hover:bg-gray-200">
+                            <i class="fas fa-question-circle mr-1"></i> Help
+                        </button>
+                        <button class="px-3 py-1 bg-gray-100 rounded text-sm hover:bg-gray-200">
+                            <i class="fas fa-bell mr-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Filters -->
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-6 gap-2">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">SKU / Batch</label>
+                        <input type="text" placeholder="Search..." class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Date</label>
+                        <input type="date" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Location</label>
+                        <select class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option>All Locations</option>
+                            <option>Main Warehouse</option>
+                            <option>Production Store</option>
+                            <option>Dispatch Area</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Adjustment Type</label>
+                        <select class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option>All Types</option>
+                            <option>Manual</option>
+                            <option>Audit</option>
+                            <option>Damage</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">User</label>
+                        <select class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option>All Users</option>
+                            <option>Store Admin</option>
+                            <option>QA Manager</option>
+                            <option>Supervisor</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="px-3 py-1 bg-orange-500 text-white rounded text-sm hover:bg-orange-600 w-full">
+                            <i class="fas fa-filter mr-1"></i> Apply
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content -->
+            <main class="p-4">
+                <!-- Adjustment Table -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU Code</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">System Qty</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Physical Qty</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Difference</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adjusted By</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">28-Jul-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/045</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3,950</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium negative-diff">-50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-clipboard-check mr-1 text-gray-400"></i> Audit Count
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-user-shield mr-1 text-gray-400"></i> Store Admin
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Posted
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-orange-500 hover:text-orange-700">
+                                            <i class="fas fa-file-alt mr-1"></i> View Log
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">27-Jul-25</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">FG003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/032</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1,050</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium positive-diff">+50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-tag mr-1 text-gray-400"></i> Mislabelled Box
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-user-tie mr-1 text-gray-400"></i> QA Manager
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Posted
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-orange-500 hover:text-orange-700">
+                                            <i class="fas fa-file-alt mr-1"></i> View Log
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- New Adjustment Form -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">New Adjustment Entry</h2>
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">SKU Code</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                                    <option>Select SKU</option>
+                                    <option>FG001 - Premium Wheat Flour (5kg)</option>
+                                    <option>FG002 - Standard Wheat Flour (5kg)</option>
+                                    <option>FG003 - Organic Wheat Flour (5kg)</option>
+                                    <option>FG004 - Premium Wheat Flour (10kg)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Batch ID</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                                    <option>Select Batch</option>
+                                    <option>BATCH/045 (Exp: 15-Aug-25)</option>
+                                    <option>BATCH/046 (Exp: 20-Aug-25)</option>
+                                    <option>BATCH/047 (Exp: 25-Aug-25)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Current System Qty</label>
+                                <input type="text" value="4,000" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Actual Count</label>
+                                <input type="number" placeholder="Enter physical count" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Reason</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                                    <option>Select Reason</option>
+                                    <option>Audit</option>
+                                    <option>Repack</option>
+                                    <option>Damage</option>
+                                    <option>Manual</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                                <textarea rows="1" placeholder="Optional notes" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">File Attachment</label>
+                                <div class="flex items-center">
+                                    <label class="cursor-pointer">
+                                        <span class="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm bg-white hover:bg-gray-50">
+                                            <i class="fas fa-paperclip mr-1"></i> Choose File
+                                        </span>
+                                        <input type="file" class="hidden">
+                                    </label>
+                                    <span class="ml-2 text-xs text-gray-500">Max 5MB</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Authorized By</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-sm">
+                                    <option>Select Authorizer</option>
+                                    <option>Store Head</option>
+                                    <option>Inventory Manager</option>
+                                    <option>Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 mr-3">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                <i class="fas fa-check-circle mr-1"></i> Submit Adjustment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Simple script to show file name when selected
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                const fileName = this.files[0].name;
+                const label = this.previousElementSibling;
+                label.querySelector('span').textContent = fileName;
+            }
+        });
+    </script>
+</body>
+</html>

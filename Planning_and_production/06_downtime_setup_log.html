@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Downtime & Setup Log</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-item:hover {
+            background-color: #f3f4f6;
+        }
+        .active-sidebar-item {
+            background-color: #fef3e7;
+            border-left: 4px solid #f7941d;
+        }
+        .reason-cleaning {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        .reason-breakdown {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        .reason-setup {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .reason-changeover {
+            background-color: #ecfccb;
+            color: #3f6212;
+        }
+        .reason-maintenance {
+            background-color: #ede9fe;
+            color: #5b21b6;
+        }
+        .reason-hold {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        .highlight-orange {
+            color: #F7941D;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex h-screen">
+    <!-- Left Sidebar -->
+      <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-wheat-awn mr-2 text-yellow-600"></i>
+                    Sharma Ji Ka Aata
+                </h1>
+                <p class="text-xs text-gray-500 mt-1">ERP System v2.1</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-2">
+                <div class="space-y-1">
+                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Phase 1 Modules
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2 text-gray-500"></i>
+                            Access & Admin
+                        </a>
+                        
+                        <a href="../product_catalog_management/01_product_family_master.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-shopping-cart mr-2 text-gray-500"></i>
+                            Product & Catalog Management
+                        </a>
+
+                          <a href="../procurement/00_dashboard_procurement_reports.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                             Procurement Management (Store)
+                        </a>
+
+                          <a href="../Raw_material_management/00_Inventory_dashboard.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-warehouse mr-2 text-gray-500"></i>
+                            Raw Material Inventory (Store)
+                        </a>
+
+                        <div class="sidebar-item active block px-3 py-2 text-sm font-medium rounded-md">
+                            <i class="fas fa-boxes mr-2 text-gray-500"></i>
+                            Production & Planning
+                        </div>
+                        
+                        <div class="pl-8 space-y-1 mt-1">
+                             <a href="./00_production_report.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Reports</span>
+                            </a>
+                             <a href="./01_production_order_create.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Planning</span>
+                            </a>
+                             <a href="./02_material_checker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Material Availability Checker</span>
+                            </a>
+                             <a href="./03_production_order_view.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Production Order List</span>
+                            </a>
+                             <a href="./04_batch_create_and_assignment.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Creation & Assignment</span>
+                            </a>
+                             <a href="./05_batch_live_execution_tracker.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Live Batch Execution</span>
+                            </a>
+                             <a href="./06_downtime_setup_log.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span class="highlight-orange">Downtime & Setup Log</span>
+                            </a>
+                             <a href="./07_quality_check_trigger_and_batch_status.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>QC Trigger & Status Page</span>
+                            </a>
+                             <a href="./08_batch_closure.html" class="block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                                <span>Batch Closure Page</span>
+                            </a>
+                        </div>
+                
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-flask mr-2 text-gray-500"></i>
+                            Quality Control (RM + Production)
+                        </a>
+                        
+                            <a href="../Finished_goods/00_fg_report.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-pallet mr-2 text-gray-500"></i>
+                            Finished Goods Inventory
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-truck mr-2 text-gray-500"></i>
+                            Dispatch & Logistics
+                        </a>
+                        
+                          <a href="../Sales_and_Chanel/05_sales_order.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-receipt mr-2 text-gray-500"></i>
+                            Sales & Channel (POs & Order Tracking)
+                        </a>
+                        
+                        <a href="#" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-calculator mr-2 text-gray-500"></i>
+                            Accounts & Finance
+                        </a>
+                        
+                          <a href="../Index.html" class="sidebar-item block px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                            Reports & Dashboards
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <i class="fas fa-user text-gray-600"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-medium">Admin User</div>
+                    <div class="text-xs text-gray-500">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Main Content -->
+    <div class="flex-1 overflow-y-auto p-6">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Downtime & Setup Log</h1>
+            <p class="text-gray-600">Track and analyze production delays to improve equipment effectiveness (OEE)</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+            <div class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                    <input type="date" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Batch ID</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 text-sm w-40">
+                        <option>All Batches</option>
+                        <option>BATCH/2025/03</option>
+                        <option>BATCH/2025/04</option>
+                        <option>BATCH/2025/05</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Machine / Line</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 text-sm w-40">
+                        <option>All Lines</option>
+                        <option>Chakki Line 1</option>
+                        <option>Chakki Line 2</option>
+                        <option>Packaging Line A</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Reason Type</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 text-sm w-40">
+                        <option>All Reasons</option>
+                        <option>Cleaning</option>
+                        <option>Setup</option>
+                        <option>Changeover</option>
+                        <option>Breakdown</option>
+                        <option>Maintenance</option>
+                        <option>Manual Hold</option>
+                    </select>
+                </div>
+                <div class="ml-auto">
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-filter mr-2"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Downtime Table -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="font-medium text-gray-800">Recent Downtime Entries</h2>
+                <button onclick="openModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-plus mr-2"></i>Log New Entry
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Logged</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine / Line</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration (mins)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Entered By</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">12:30 PM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/2025/03</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chakki Line 1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full reason-cleaning">
+                                    <i class="fas fa-broom mr-1"></i>Cleaning
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operator A</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Routine after shift</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#" class="text-orange-500 hover:text-orange-700">View</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1:20 PM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/2025/03</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chakki Line 1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full reason-breakdown">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>Breakdown
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">40</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operator B</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Motor overheat</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#" class="text-orange-500 hover:text-orange-700">View</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2:15 PM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/2025/03</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chakki Line 1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full reason-changeover">
+                                    <i class="fas fa-exchange-alt mr-1"></i>Changeover
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operator A</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Bag size update</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#" class="text-orange-500 hover:text-orange-700">View</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3:45 PM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/2025/04</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Packaging Line A</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full reason-setup">
+                                    <i class="fas fa-cog mr-1"></i>Setup
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operator C</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">New packaging material</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#" class="text-orange-500 hover:text-orange-700">View</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4:30 PM</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BATCH/2025/04</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chakki Line 2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full reason-maintenance">
+                                    <i class="fas fa-tools mr-1"></i>Maintenance
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">45</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Operator D</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Scheduled belt replacement</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#" class="text-orange-500 hover:text-orange-700">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                <div class="text-sm text-gray-500">
+                    Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> entries
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        Previous
+                    </button>
+                    <button class="px-3 py-1 border rounded-md text-sm font-medium text-white bg-orange-500 hover:bg-orange-600">
+                        1
+                    </button>
+                    <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        2
+                    </button>
+                    <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-50 text-blue-500 mr-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Total Downtime Today</p>
+                        <p class="text-xl font-semibold">2h 35m</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-red-50 text-red-500 mr-4">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Breakdowns</p>
+                        <p class="text-xl font-semibold">1 (40m)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-orange-50 text-orange-500 mr-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">OEE Impact</p>
+                        <p class="text-xl font-semibold">-12%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Downtime Modal -->
+    <div id="downtimeModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center pb-3 border-b">
+                <h3 class="text-lg font-medium text-gray-900">Log New Downtime Entry</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="mt-4 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Batch ID</label>
+                        <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm">
+                            <option>Select Batch</option>
+                            <option>BATCH/2025/03</option>
+                            <option>BATCH/2025/04</option>
+                            <option>BATCH/2025/05</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Machine / Line</label>
+                        <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm">
+                            <option>Select Machine/Line</option>
+                            <option>Chakki Line 1</option>
+                            <option>Chakki Line 2</option>
+                            <option>Packaging Line A</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Downtime Reason</label>
+                        <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm">
+                            <option>Select Reason</option>
+                            <option>Cleaning</option>
+                            <option>Setup</option>
+                            <option>Changeover</option>
+                            <option>Breakdown</option>
+                            <option>Maintenance</option>
+                            <option>Manual Hold</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
+                        <input type="number" class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm" placeholder="Enter duration">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Operator Login / ID</label>
+                    <input type="text" class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm bg-gray-100" value="Operator A" readonly>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Remarks / Notes</label>
+                    <textarea rows="3" class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm" placeholder="Enter details about the downtime"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Image (Optional)</label>
+                    <div class="mt-1 flex items-center">
+                        <label for="file-upload" class="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                            <i class="fas fa-camera mr-2"></i>Choose File
+                        </label>
+                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                        <span class="ml-3 text-sm text-gray-500">No file chosen</span>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4 border-t">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600">
+                        <i class="fas fa-save mr-2"></i>Save Entry
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('downtimeModal').classList.remove('hidden');
+        }
+        
+        function closeModal() {
+            document.getElementById('downtimeModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

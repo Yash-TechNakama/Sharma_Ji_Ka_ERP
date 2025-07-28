@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharma Ji Ka Aata - Issue to Production</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'erp-orange': '#F7941D',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-item:hover {
+            background-color: rgba(247, 148, 29, 0.1);
+        }
+        .sidebar-item.active {
+            background-color: rgba(247, 148, 29, 0.2);
+            border-left: 4px solid #F7941D;
+        }
+        .fifo-warning {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(247, 148, 29, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 148, 29, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar -->
+           <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-white border-r border-gray-200">
+                <div class="flex items-center justify-center h-16 px-4 bg-white border-b border-gray-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-warehouse text-2xl text-orange-500 mr-2"></i>
+                        <span class="text-xl font-semibold text-gray-800">Sharma Ji ERP</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto">
+                    <nav class="flex-1 space-y-2">
+                        <div class="space-y-1">
+                            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Phase 1 ERP Modules</p>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-lock mr-3 text-gray-400"></i>
+                                Access & Admin
+                            </a>
+                              <a href="../product_catalog_management/01_product_family_master.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-boxes mr-3 text-gray-400"></i>
+                                Product & Catalog Management
+                            </a>
+                            <a href="../procurement/00_dashboard_procurement_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-shopping-cart mr-3 text-gray-400"></i>
+                                Procurement Management
+                            </a>
+                            <div class="space-y-1">
+                                <button class="flex items-center w-full px-3 py-2 text-sm font-medium text-left bg-orange-50 rounded-md text-orange-600">
+                                    <i class="fas fa-pallet mr-3 text-orange-500"></i>
+                                    Raw Material Inventory (Store)
+                                    <i class="fas fa-chevron-down ml-auto text-orange-400 text-xs"></i>
+                                </button>
+                                <div class="pl-8 space-y-1">
+                                    <a href="./00_Inventory_dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-tachometer-alt mr-3 text-gray-400"></i>
+                                        Inventory Dashboard
+                                    </a>
+                                    <a href="./01_add_inward_entry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-arrow-down mr-3 text-gray-400"></i>
+                                        Inward Entry (GRN)
+                                    </a>
+                                    <a href="./02_Qc_status_view.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-check-circle mr-3 text-gray-400"></i>
+                                        QC Status View
+                                    </a>
+                                    <a href="./03_inventory_movement.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md bg-gray-50">
+                                        <i class="fas fa-exchange-alt mr-3 text-gray-400"></i>
+                                        Inventory Movement
+                                    </a>
+                                    <a href="./04_stock_ledger.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-book mr-3 text-gray-400"></i>
+                                        Stock Ledger
+                                    </a>
+                                    <a href="./05_reorder_alerts.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-bell mr-3 text-gray-400"></i>
+                                        Reorder & Low Stock Alerts
+                                    </a>
+                                    <a href="./06_move_to_production.html" class="flex items-center px-3 py-2 text-sm font-medium text-orange-600 rounded-md hover:bg-orange-50">
+                                        <i class="fas fa-industry mr-3 text-orange-400"></i>
+                                        Issue to Production
+                                    </a>
+                                    <a href="./07_physical_stock_reconcilliation.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-clipboard-check mr-3 text-gray-400"></i>
+                                        Physical Stock Reconciliation
+                                    </a>
+                                    <a href="./08_reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                        <i class="fas fa-chart-bar mr-3 text-gray-400"></i>
+                                        Reports
+                                    </a>
+                                </div>
+                            </div>
+                             <a href="../Planning_and_production/00_production_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-cogs mr-3 text-gray-400"></i>
+                                Production & Planning
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-flask mr-3 text-gray-400"></i>
+                                Quality Control (RM + Production)
+                            </a>
+                           <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-truck mr-3 text-gray-400"></i>
+                                Dispatch & Logistics
+                            </a>
+                             <a href="../Finished_goods/00_fg_report.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-box-open mr-3 text-gray-400"></i>
+                                Finished Goods Inventory
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-money-bill-wave mr-3 text-gray-400"></i>
+                                Accounts & Finance
+                            </a>
+                            <a href="../Index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50">
+                                <i class="fas fa-chart-line mr-3 text-gray-400"></i>
+                                Reports & Dashboards
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <i class="fas fa-arrow-right text-erp-orange mr-3"></i> Issue to Production
+                        </h2>
+                        <p class="text-gray-600">Record raw material issuance against production orders with FIFO compliance</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="mr-4 text-right">
+                            <p class="text-sm text-gray-500">Current Date</p>
+                            <p class="font-medium">15 July 2023</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-erp-orange bg-opacity-20 text-erp-orange flex items-center justify-center">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue Form Section -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-pen-square text-erp-orange mr-2"></i> Issue Form
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Date of Issue -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Issue</label>
+                            <div class="relative">
+                                <input type="date" class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50" value="2023-07-15">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shift -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Shift <span class="text-erp-orange">*</span></label>
+                            <div class="relative">
+                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50">
+                                    <option value="">Select Shift</option>
+                                    <option value="A">A (6AM - 2PM)</option>
+                                    <option value="B" selected>B (2PM - 10PM)</option>
+                                    <option value="C">C (10PM - 6AM)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Production Order No -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Production Order No <span class="text-erp-orange">*</span></label>
+                            <div class="relative">
+                                <select class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50">
+                                    <option value="">Select PO</option>
+                                    <option value="PROD-2025-023">PROD-2025-023 (Wheat Flour 10kg)</option>
+                                    <option value="PROD-2025-024" selected>PROD-2025-024 (Pouch Packing)</option>
+                                    <option value="PROD-2025-025">PROD-2025-025 (Special Atta)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SKU/Material Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">SKU / Material Name <span class="text-erp-orange">*</span></label>
+                            <div class="relative">
+                                <select id="materialSelect" class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50">
+                                    <option value="">Select Material</option>
+                                    <option value="MP_WHEAT">MP Wheat (Wheat Flour)</option>
+                                    <option value="POUCH_FILM">Pouch Film (Packaging)</option>
+                                    <option value="VANASPATI">Vanaspati (Edible Oil)</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-wheat"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Batch No -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Batch No (FIFO) <span class="text-erp-orange">*</span></label>
+                            <div class="relative">
+                                <select id="batchSelect" class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50 fifo-warning">
+                                    <option value="">Select Batch</option>
+                                    <option value="BATCH-072" selected>BATCH-072 (15 Jun 2023) - 2,500 kg</option>
+                                    <option value="BATCH-071">BATCH-071 (10 Jun 2023) - 500 kg</option>
+                                    <option value="BATCH-070">BATCH-070 (05 Jun 2023) - 1,200 kg</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-barcode"></i>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-erp-orange flex items-center">
+                                <i class="fas fa-exclamation-circle mr-1"></i> Older batch available (BATCH-071)
+                            </p>
+                        </div>
+                        
+                        <!-- Quantity Issued -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantity Issued <span class="text-erp-orange">*</span></label>
+                            <div class="relative">
+                                <input type="number" class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50" placeholder="Enter quantity" value="1200">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <span id="unitLabel">kg</span>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Available: 2,500 kg</p>
+                        </div>
+                        
+                        <!-- Issued By -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Issued By</label>
+                            <div class="relative">
+                                <input type="text" class="w-full rounded-md border-gray-300 shadow-sm bg-gray-100" value="Store Manager (RM001)" readonly>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Storage Bin -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Storage Bin</label>
+                            <div class="relative">
+                                <input type="text" class="w-full rounded-md border-gray-300 shadow-sm bg-gray-100" value="BIN-A1" readonly>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                    <i class="fas fa-warehouse"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Remarks -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Remarks (Optional)</label>
+                            <textarea class="w-full rounded-md border-gray-300 shadow-sm focus:border-erp-orange focus:ring focus:ring-erp-orange focus:ring-opacity-50" rows="2" placeholder="Any special instructions..."></textarea>
+                        </div>
+                        
+                        <!-- QC Certificate -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Attach QC Certificate (Optional)</label>
+                            <div class="flex items-center">
+                                <label class="flex flex-col items-center px-4 py-2 bg-white rounded-md border border-gray-300 cursor-pointer hover:bg-gray-50">
+                                    <i class="fas fa-file-upload text-erp-orange mb-1"></i>
+                                    <span class="text-sm">Choose File</span>
+                                    <input type="file" class="hidden">
+                                </label>
+                                <span class="ml-3 text-sm text-gray-500">No file chosen</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button class="px-4 py-2 bg-erp-orange text-white rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-erp-orange focus:ring-opacity-50 flex items-center">
+                            <i class="fas fa-plus-circle mr-2"></i> Add to List
+                        </button>
+                        <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center">
+                            <i class="fas fa-save mr-2"></i> Save Issue Entry
+                        </button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 flex items-center">
+                            <i class="fas fa-times mr-2"></i> Clear Form
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Issue Summary Table -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-clipboard-list text-erp-orange mr-2"></i> Current Issue Session
+                    </h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch No</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty Issued</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shift</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Production Order</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Storage Bin</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-erp-orange bg-opacity-10 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-wheat text-erp-orange"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">MP Wheat</div>
+                                                <div class="text-sm text-gray-500">Wheat Flour</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">BATCH-072</div>
+                                        <div class="text-sm text-gray-500">15 Jun 2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">1,200 kg</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">PROD-2025-023</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BIN-A1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-erp-orange hover:text-orange-700 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-box-open text-blue-500"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Pouch Film</div>
+                                                <div class="text-sm text-gray-500">Packaging Material</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">BATCH-065</div>
+                                        <div class="text-sm text-gray-500">10 Jun 2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">5,000 U</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">PROD-2025-024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PACK-RM2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-erp-orange hover:text-orange-700 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-gray-50">
+                                <tr>
+                                    <td colspan="2" class="px-6 py-3 text-sm font-medium text-gray-900">Total Issued</td>
+                                    <td class="px-6 py-3 text-sm font-medium text-gray-900">1,200 kg + 5,000 U</td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- FIFO & Validity Checks Section -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-shield-alt text-erp-orange mr-2"></i> FIFO & Validity Checks
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border-l-4 border-erp-orange pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-sort-amount-down mr-2 text-erp-orange"></i> FIFO Compliance
+                            </h4>
+                            <p class="text-sm text-gray-600">System auto-suggests oldest approved batch first</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-2 text-red-400"></i> FIFO Bypass Alert
+                            </h4>
+                            <p class="text-sm text-gray-600">Warning shown when newer batch selected</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-check-circle mr-2 text-green-500"></i> QC Validation
+                            </h4>
+                            <p class="text-sm text-gray-600">Only QC-passed batches can be issued</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-400 pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-ban mr-2 text-blue-400"></i> Duplicate Prevention
+                            </h4>
+                            <p class="text-sm text-gray-600">Same batch can't be issued twice for same PO in same shift</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-purple-500 pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-link mr-2 text-purple-500"></i> Production Linking
+                            </h4>
+                            <p class="text-sm text-gray-600">All issues are linked to production orders for costing</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-yellow-500 pl-4 py-2">
+                            <h4 class="font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-history mr-2 text-yellow-500"></i> Immediate Inventory Update
+                            </h4>
+                            <p class="text-sm text-gray-600">Inventory debited immediately after save</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic unit label based on material selection
+        document.getElementById('materialSelect').addEventListener('change', function() {
+            const unitLabel = document.getElementById('unitLabel');
+            const selectedMaterial = this.value;
+            
+            if (selectedMaterial === 'MP_WHEAT') {
+                unitLabel.textContent = 'kg';
+            } else if (selectedMaterial === 'POUCH_FILM') {
+                unitLabel.textContent = 'U';
+            } else if (selectedMaterial === 'VANASPATI') {
+                unitLabel.textContent = 'L';
+            } else {
+                unitLabel.textContent = 'unit';
+            }
+        });
+
+        // FIFO warning animation toggle
+        const batchSelect = document.getElementById('batchSelect');
+        batchSelect.addEventListener('change', function() {
+            if (this.value === 'BATCH-071') {
+                this.classList.remove('fifo-warning');
+            } else if (this.value === 'BATCH-072') {
+                this.classList.add('fifo-warning');
+            }
+        });
+    </script>
+</body>
+</html>
